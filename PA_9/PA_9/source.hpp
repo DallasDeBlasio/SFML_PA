@@ -6,5 +6,8 @@
 //Dallas DeBlasio linker: C:\Users\dalla\OneDrive\Desktop\CPTS 121\SFML-2.6.1\lib
 
 
+//Connor c++ general: C:\Users\cchas\OneDrive\Desktop\cpts122\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include
+//connor linker: C:\Users\cchas\OneDrive\Desktop\cpts122\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\lib
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
