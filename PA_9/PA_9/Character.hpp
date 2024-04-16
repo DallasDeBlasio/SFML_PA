@@ -7,6 +7,7 @@ class Character
 public:
 	Character(int newDamage, int newHP, sf::RectangleShape newRectangle, sf::Sprite newSprite);
 
+	void moveCharacter(sf::Vector2f vector);
 
 
 
