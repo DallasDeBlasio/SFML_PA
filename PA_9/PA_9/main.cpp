@@ -7,15 +7,20 @@ int main()
 
 
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-
-    sf::Font font;
-    if (font.loadFromFile("edge.ttf")) {
-    }
-
-
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     // asa was here
+
+    //new changes:
+    sf::Texture texture;
+    if(!texture.loadFromFile("Assets/map.png"))
+    {
+        return 0;
+    }
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -26,7 +31,7 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(sprite);
         window.display();
     }
     //loud noises
