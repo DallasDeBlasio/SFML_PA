@@ -18,8 +18,8 @@ int main()
     {
         return 0;
     }
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
+ /*   sf::Sprite sprite;
+    sprite.setTexture(texture);*/
 
     sf::Vector2f origin(0, 0);
 
@@ -31,9 +31,9 @@ int main()
 
     //Character(const int& newDamage, const int& newHP, const sf::Vector2f & size, const sf::Vector2f & position, const sf::Vector2f & startIntRect, const sf::Texture texture);
 
-    sf::Texture hero;
+    sf::Texture heroTexture;
 
-    hero.loadFromFile("Assets/tempHero.png");
+    heroTexture.loadFromFile("Assets/tempHero.png");
 
 
 
@@ -44,9 +44,9 @@ int main()
 
     //48 difference in height 
 
-    sf::Sprite herotest;
+    Character herotest;
     herotest.setTextureRect(sf::IntRect(one + 48, two + 48, heroWidth, heroHeight));
-    herotest.setTexture(hero);
+    herotest.setTexture(heroTexture);
     herotest.setPosition(0.f, 0.f);
 
     float heroScale = 2.f;
@@ -56,10 +56,10 @@ int main()
 
 
    // Character todd(15, 30, sf::Vector2f(30, 30), origin, sf::Vector2f(0, 0), hero);
-    Character todd(15, 30, sf::Vector2f(100, 100), sf::Vector2f(30, 30), sf::Vector2f(0, 0), hero);
+    //Character todd(15, 30, sf::Vector2f(100, 100), sf::Vector2f(30, 30), sf::Vector2f(0, 0), hero);
    
 
-    todd.mRectangle.setFillColor(sf::Color::Black);
+    //todd.mRectangle.setFillColor(sf::Color::Black);
 
 
     int cycles = 0;
@@ -114,7 +114,7 @@ int main()
                 }
                 //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(hero);
+                herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
 
             }
@@ -145,7 +145,7 @@ int main()
                 }
                 //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(hero);
+                herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
 
             }
@@ -162,7 +162,7 @@ int main()
             if (herotest.getScale().x < 0)
             {
                 herotest.scale(-1.f, 1.f);
-                herotest.move(-48.f, 0.f);
+                herotest.move(-heroWidth * heroScale, 0.f);
             }
 
         }
@@ -182,11 +182,11 @@ int main()
                 }
                 //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(hero);
+                herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
 
             }
-            std::cout << herotest.getPosition().x << std::endl;
+            //std::cout << herotest.getPosition().x << std::endl;
             if(herotest.getPosition().x - heroWidth * heroScale > 0)
             {
                 herotest.move(-0.1f, 0.f);
@@ -199,7 +199,7 @@ int main()
             if (herotest.getScale().x > 0)
             {
                 herotest.scale(-1.f, 1.f);
-                herotest.move(48.f, 0.f);
+                herotest.move(heroWidth * heroScale, 0.f);
 
             }
 
@@ -220,7 +220,7 @@ int main()
                 }
                 //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(hero);
+                herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
 
             }
