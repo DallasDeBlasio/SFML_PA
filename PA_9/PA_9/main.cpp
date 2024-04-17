@@ -48,7 +48,7 @@ int main()
     herotest.setTextureRect(sf::IntRect(one + 48, two + 48, three, four));
     herotest.setTexture(hero);
     herotest.setPosition(0.f, 0.f);
-    herotest.setScale(10.f, 10.f);
+    herotest.setScale(2.f, 2.f);
     sf::FloatRect herotestbounds = herotest.getGlobalBounds();
     sf::RectangleShape herotestboundsDrawable(herotestbounds.getSize());
 
@@ -60,9 +60,12 @@ int main()
     todd.mRectangle.setFillColor(sf::Color::Black);
 
 
-    int i = 0;
+    int cycles = 0;
+    int walkframe = 0;
     while (window.isOpen())
     {
+        cycles++;
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -73,25 +76,118 @@ int main()
         window.clear();
 
         window.draw(room1);
-        window.draw(todd.mRectangle);
-        window.draw(todd.mSprite);
+        //window.draw(todd.mRectangle);
+        //window.draw(todd.mSprite);
 
         window.draw(herotestboundsDrawable);
         window.draw(herotest);
         //while(!sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         //{ }
-        Sleep(1000);
+        //Sleep(1000);//we probably need a walking frames counter
 
-        herotest.setTextureRect(sf::IntRect(one + 48*i, two + 48, three, four));
-        herotest.setTexture(hero);
-        i++;
-        if (i == 4)
-        {
-            i = 0;
-        }
+
+
         window.display();
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            //std::cout << "fuck";
+            //std::cout << walkframe % 100 << std::endl;
+            if (cycles % 100 == 0)
+            {
+                walkframe++;
+                if (walkframe % 4 == 0)
+                {
+                    walkframe = 0;
+                }
+                //std::cout << "fuck";
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTexture(hero);
+            }
+            herotest.move(0.f, 0.1f);
 
+            herotestbounds = herotest.getGlobalBounds();
+            herotestboundsDrawable.setSize(herotestbounds.getSize());
+            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
+
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            //std::cout << "fuck";
+            //std::cout << walkframe % 100 << std::endl;
+            if (cycles % 100 == 0)
+            {
+                walkframe++;
+                if (walkframe % 4 == 0)
+                {
+                    walkframe = 0;
+                }
+                //std::cout << "fuck";
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTexture(hero);
+            }
+            herotest.move(0.1f, 0.f);
+
+            herotestbounds = herotest.getGlobalBounds();
+            herotestboundsDrawable.setSize(herotestbounds.getSize());
+            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
+
+            if (herotest.getScale().x > 0)
+            {
+                herotest.scale(-1.f, 1.f);
+            }
+
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            //std::cout << "fuck";
+            //std::cout << walkframe % 100 << std::endl;
+            if (cycles % 100 == 0)
+            {
+                walkframe++;
+                if (walkframe % 4 == 0)
+                {
+                    walkframe = 0;
+                }
+                //std::cout << "fuck";
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTexture(hero);
+            }
+            herotest.move(-0.1f, 0.f);
+
+            herotestbounds = herotest.getGlobalBounds();
+            herotestboundsDrawable.setSize(herotestbounds.getSize());
+            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
+
+            if (herotest.getScale().x > 0)
+            {
+                herotest.scale(-1.f, 1.f);
+            }
+
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            //std::cout << "fuck";
+            //std::cout << walkframe % 100 << std::endl;
+            if (cycles % 100 == 0)
+            {
+                walkframe++;
+                if (walkframe % 4 == 0)
+                {
+                    walkframe = 0;
+                }
+                //std::cout << "fuck";
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTexture(hero);
+            }
+            herotest.move(0.f, -0.1f);
+
+            herotestbounds = herotest.getGlobalBounds();
+            herotestboundsDrawable.setSize(herotestbounds.getSize());
+            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
+
+        }
 
 
     }
