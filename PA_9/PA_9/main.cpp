@@ -39,16 +39,18 @@ int main()
 
     int one = 16;
     int two = 9;
-    int three = 16;
-    int four = 31;
+    int heroWidth = 16;
+    int heroHeight = 31;//
 
     //48 difference in height 
 
     sf::Sprite herotest;
-    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, three, four));
+    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, heroWidth, heroHeight));
     herotest.setTexture(hero);
     herotest.setPosition(0.f, 0.f);
-    herotest.setScale(2.f, 2.f);
+
+    float heroScale = 2.f;
+    herotest.setScale(heroScale, heroScale);
     sf::FloatRect herotestbounds = herotest.getGlobalBounds();
     sf::RectangleShape herotestboundsDrawable(herotestbounds.getSize());
 
@@ -64,6 +66,13 @@ int main()
     int walkframe = 0;
     while (window.isOpen())
     {
+        bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
+
+        //if (!hasWalkFramed)
+        //{
+        //    std::cout << walkframe;
+        //}
+
         cycles++;
 
         sf::Event event;
@@ -79,7 +88,7 @@ int main()
         //window.draw(todd.mRectangle);
         //window.draw(todd.mSprite);
 
-        window.draw(herotestboundsDrawable);
+        //window.draw(herotestboundsDrawable);
         window.draw(herotest);
         //while(!sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         //{ }
@@ -93,18 +102,26 @@ int main()
         {
             //std::cout << "fuck";
             //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 100 == 0)
+            if (cycles % 250 == 0)
             {
-                walkframe++;
+                if (!hasWalkFramed)
+                {
+                    walkframe++;
+                }
                 if (walkframe % 4 == 0)
                 {
                     walkframe = 0;
                 }
                 //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
                 herotest.setTexture(hero);
+                hasWalkFramed = true;
+
             }
-            herotest.move(0.f, 0.1f);
+            if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//times 2 because of scale
+            {
+                herotest.move(0.f, 0.1f);
+            }
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
@@ -116,26 +133,36 @@ int main()
         {
             //std::cout << "fuck";
             //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 100 == 0)
+            if (cycles % 250 == 0)
             {
-                walkframe++;
+                if (!hasWalkFramed)
+                {
+                    walkframe++;
+                }
                 if (walkframe % 4 == 0)
                 {
                     walkframe = 0;
                 }
                 //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
                 herotest.setTexture(hero);
+                hasWalkFramed = true;
+
             }
-            herotest.move(0.1f, 0.f);
+            if (herotest.getPosition().x + heroWidth * heroScale < windowWidth)//times 2 because of scale
+
+            {
+                herotest.move(0.1f, 0.f);
+            }
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
-            if (herotest.getScale().x > 0)
+            if (herotest.getScale().x < 0)
             {
                 herotest.scale(-1.f, 1.f);
+                herotest.move(-48.f, 0.f);
             }
 
         }
@@ -143,18 +170,27 @@ int main()
         {
             //std::cout << "fuck";
             //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 100 == 0)
+            if (cycles % 250 == 0)
             {
-                walkframe++;
+                if (!hasWalkFramed)
+                {
+                    walkframe++;
+                }
                 if (walkframe % 4 == 0)
                 {
                     walkframe = 0;
                 }
                 //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
                 herotest.setTexture(hero);
+                hasWalkFramed = true;
+
             }
-            herotest.move(-0.1f, 0.f);
+            std::cout << herotest.getPosition().x << std::endl;
+            if(herotest.getPosition().x - heroWidth * heroScale > 0)
+            {
+                herotest.move(-0.1f, 0.f);
+            }
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
@@ -163,6 +199,8 @@ int main()
             if (herotest.getScale().x > 0)
             {
                 herotest.scale(-1.f, 1.f);
+                herotest.move(48.f, 0.f);
+
             }
 
         }
@@ -170,18 +208,26 @@ int main()
         {
             //std::cout << "fuck";
             //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 100 == 0)
+            if (cycles % 250 == 0)
             {
-                walkframe++;
+                if (!hasWalkFramed)
+                {
+                    walkframe++;
+                }
                 if (walkframe % 4 == 0)
                 {
                     walkframe = 0;
                 }
                 //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, three, four));
+                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
                 herotest.setTexture(hero);
+                hasWalkFramed = true;
+
             }
-            herotest.move(0.f, -0.1f);
+            if (herotest.getPosition().y > 0)
+            {
+                herotest.move(0.f, -0.1f);
+            }
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
