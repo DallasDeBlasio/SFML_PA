@@ -45,7 +45,7 @@ int main()
     //48 difference in height 
 
     sf::Sprite herotest;
-    herotest.setTextureRect(sf::IntRect(one+48, two+48, three, four));
+    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, three, four));
     herotest.setTexture(hero);
     herotest.setPosition(0.f, 0.f);
     herotest.setScale(10.f, 10.f);
@@ -60,7 +60,7 @@ int main()
     todd.mRectangle.setFillColor(sf::Color::Black);
 
 
-
+    int i = 0;
     while (window.isOpen())
     {
         sf::Event event;
@@ -78,9 +78,17 @@ int main()
 
         window.draw(herotestboundsDrawable);
         window.draw(herotest);
+        //while(!sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        //{ }
+        Sleep(1000);
 
-
-
+        herotest.setTextureRect(sf::IntRect(one + 48*i, two + 48, three, four));
+        herotest.setTexture(hero);
+        i++;
+        if (i == 4)
+        {
+            i = 0;
+        }
         window.display();
 
 
@@ -88,6 +96,7 @@ int main()
 
     }
     //loud noises
+    //std::cout << i;
     return 14;
 
     //test

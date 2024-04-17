@@ -11,5 +11,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <iostream>
+#include <Windows.h>
 
 #include "Character.hpp"
