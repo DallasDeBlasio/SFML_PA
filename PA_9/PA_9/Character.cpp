@@ -8,6 +8,16 @@ Character::Character(int newDamage, int newHP, sf::RectangleShape newRectangle, 
 	this->mSprite = newSprite;
 }
 
+Character::Character(const int& newDamage, const int& newHP, const sf::Vector2f& size, const sf::Vector2f& position, const sf::Vector2f & startIntRect)
+{
+	this->mDamage = newDamage;
+	this->mHP = newHP;
+	this->mRectangle.setSize(size);
+	this->mRectangle.setPosition(position);
+	this->mSprite.setTextureRect(sf::IntRect(startIntRect.x, startIntRect.y, startIntRect.x + size.x, startIntRect.y + size.y));
+	this->mSprite.setPosition(position);
+}
+
 void Character::moveCharacter(sf::Vector2f vector)
 {
 	this->mRectangle.move(vector);
