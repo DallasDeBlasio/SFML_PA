@@ -32,7 +32,8 @@ public:
 	int mHP;
 	int walkFrame;
 
-	virtual void move(void);// moves hero speed distance along movementDirection
+	virtual void moveV(void);// moves hero speed distance along movementDirection
+	void decayMovment(void);
 
 private:
 

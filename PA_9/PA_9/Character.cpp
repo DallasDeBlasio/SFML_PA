@@ -47,15 +47,38 @@
 
 Character::Character():Sprite()
 {
-	this->speed = 0.;
+	this->speed = 0.2;
 	this->mHP = 30;
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
 	this->walkFrame = 0;
 }
 
-void Character::move(void)
+void Character::moveV(void)
 {
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
-	unitVector = unitVector * this->speed;
+	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
+	this->move(speed_in_direction_unitVector);
+	decayMovment();
+}
+
+void Character::decayMovment(void)
+{
+	if (this->movementDirection.x > this->movmentSpeed)
+	{
+		this->movementDirection.x -= this->movmentSpeed;
+	}
+	else
+	{
+		this->movementDirection.x = 0;
+	}
+
+	if (this->movementDirection.y > this->movmentSpeed)
+	{
+		this->movementDirection.y -= this->movmentSpeed;
+	}
+	else
+	{
+		this->movementDirection.y = 0;
+	}
 }

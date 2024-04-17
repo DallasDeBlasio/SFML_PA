@@ -8,8 +8,11 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
 
-    sf::CircleShape movementVector(10.f);
+    sf::CircleShape movementVector(15.f);
     movementVector.setFillColor(sf::Color::White);
+
+    sf::CircleShape movementUnitVector(7.5f);
+    movementUnitVector.setFillColor(sf::Color::Black);
 
     sf::Texture mapTexture;
     mapTexture.loadFromFile("Assets/map.png");
@@ -88,10 +91,14 @@ int main()
             }
 
 
-            if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//boundry check //times 2 because of scale
-            {
-                //herotest.move(0.f, 0.1f);
-            }
+
+            //if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//boundry check //times 2 because of scale
+            //{
+            //    //herotest.move(0.f, 0.1f);
+            //}
+
+            herotest.movementDirection.y += 1;
+            std::cout << herotest.movementDirection.y<<std::endl;
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
@@ -203,7 +210,8 @@ int main()
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
-            herotest.move();
+            herotest.moveV();
+            
         }
 
 
