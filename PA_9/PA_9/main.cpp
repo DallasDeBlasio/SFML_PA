@@ -4,22 +4,30 @@
 
 int main()
 {
+    int windowWidth = 960;
 
-
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     // asa was here
 
-    //new changes:
+
     sf::Texture texture;
-    if(!texture.loadFromFile("Assets/map.png"))
+    if (!texture.loadFromFile("Assets/map.png"))
+
     {
         return 0;
     }
     sf::Sprite sprite;
     sprite.setTexture(texture);
 
+    sf::Vector2f origin(0, 0);
+
+    sf::Sprite room1;
+    room1.setTexture(texture);
+    room1.setScale(10.f, 10.f);
+    origin.y = -320.f;
+    room1.setPosition(origin);
 
     while (window.isOpen())
     {
@@ -31,8 +39,14 @@ int main()
         }
 
         window.clear();
-        window.draw(sprite);
+
+        window.draw(room1);
+
         window.display();
+
+
+
+
     }
     //loud noises
     return 0;
