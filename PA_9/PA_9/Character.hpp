@@ -30,6 +30,7 @@ public:
 	float movmentSpeed;//maximum speed under normal movment
 	int mDamage;
 	int mHP;
+	int walkFrame;
 
 	virtual void move(void);// moves hero speed distance along movementDirection
 

@@ -51,6 +51,7 @@ Character::Character():Sprite()
 	this->mHP = 30;
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
+	this->walkFrame = 0;
 }
 
 void Character::move(void)
