@@ -210,10 +210,10 @@ int main()
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
-            herotest.moveV();
             
         }
 
+        herotest.moveV();
 
     }
     //loud noises

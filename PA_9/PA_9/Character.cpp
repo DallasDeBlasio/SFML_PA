@@ -52,6 +52,9 @@ Character::Character():Sprite()
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
 	this->walkFrame = 0;
+
+	this->movementDirection = sf::Vector2f(0.f, 0.f);
+	//this.
 }
 
 void Character::moveV(void)
