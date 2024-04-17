@@ -29,6 +29,15 @@ int main()
     origin.y = -320.f;
     room1.setPosition(origin);
 
+    //Character(const int& newDamage, const int& newHP, const sf::Vector2f & size, const sf::Vector2f & position, const sf::Vector2f & startIntRect, const sf::Texture texture);
+
+    sf::Texture hero;
+    hero.loadFromFile("tempHero.png");
+
+    Character todd(15, 30, sf::Vector2f(30, 30), origin, sf::Vector2f(0, 0), hero);
+
+
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -41,6 +50,9 @@ int main()
         window.clear();
 
         window.draw(room1);
+        window.draw(todd.mRectangle);
+        window.draw(todd.mSprite);
+
 
         window.display();
 
