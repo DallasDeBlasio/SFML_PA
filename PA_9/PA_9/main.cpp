@@ -11,8 +11,10 @@ int main()
     shape.setFillColor(sf::Color::Green);
     // asa was here
 
-    sf::Font font;
-    if (font.loadFromFile("edge.ttf")) {
+    sf::Texture texture;
+    if (!texture.loadFromFile("Assets/map.png"))
+    {
+        return 0;
     }
 
     sf::Vector2f origin(0, 0);
