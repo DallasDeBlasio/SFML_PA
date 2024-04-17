@@ -16,3 +16,9 @@
 #include <Windows.h>
 
 #include "Character.hpp"
+
+
+
+//Vector Utility
+double getVectorManitude(sf::Vector2f vector);
+sf::Vector2f getUnitVector(sf::Vector2f vector);

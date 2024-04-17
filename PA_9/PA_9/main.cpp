@@ -7,27 +7,27 @@ int main()
     int windowWidth = 960;
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    //sf::CircleShape shape(100.f);
+    //shape.setFillColor(sf::Color::Green);
     // asa was here
+    sf::CircleShape movementVector(10.f);
+    movementVector.setFillColor(sf::Color::White);
 
+    sf::Texture mapTexture;
+    mapTexture.loadFromFile("Assets/map.png");
 
-    sf::Texture texture;
-    if (!texture.loadFromFile("Assets/map.png"))
-
-    {
-        return 0;
-    }
  /*   sf::Sprite sprite;
     sprite.setTexture(texture);*/
 
-    sf::Vector2f origin(0, 0);
+    //sf::Vector2f origin(0, 0);
 
     sf::Sprite room1;
-    room1.setTexture(texture);
+    room1.setTexture(mapTexture);
     room1.setScale(10.f, 10.f);
-    origin.y = -320.f;
-    room1.setPosition(origin);
+    //origin.y = -320.f;
+    room1.setPosition(sf::Vector2f(0.f,-320.f));
+
+    
 
     //Character(const int& newDamage, const int& newHP, const sf::Vector2f & size, const sf::Vector2f & position, const sf::Vector2f & startIntRect, const sf::Texture texture);
 
@@ -120,7 +120,7 @@ int main()
             }
             if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//times 2 because of scale
             {
-                herotest.move(0.f, 0.1f);
+                //herotest.move(0.f, 0.1f);
             }
 
             herotestbounds = herotest.getGlobalBounds();
@@ -152,7 +152,7 @@ int main()
             if (herotest.getPosition().x + heroWidth * heroScale < windowWidth)//times 2 because of scale
 
             {
-                herotest.move(0.1f, 0.f);
+               // herotest.move(0.1f, 0.f);
             }
 
             herotestbounds = herotest.getGlobalBounds();
@@ -162,7 +162,7 @@ int main()
             if (herotest.getScale().x < 0)
             {
                 herotest.scale(-1.f, 1.f);
-                herotest.move(-heroWidth * heroScale, 0.f);
+                //herotest.move(-heroWidth * heroScale, 0.f);
             }
 
         }
@@ -189,7 +189,7 @@ int main()
             //std::cout << herotest.getPosition().x << std::endl;
             if(herotest.getPosition().x - heroWidth * heroScale > 0)
             {
-                herotest.move(-0.1f, 0.f);
+                //herotest.move(-0.1f, 0.f);
             }
 
             herotestbounds = herotest.getGlobalBounds();
@@ -199,7 +199,7 @@ int main()
             if (herotest.getScale().x > 0)
             {
                 herotest.scale(-1.f, 1.f);
-                herotest.move(heroWidth * heroScale, 0.f);
+                //herotest.move(heroWidth * heroScale, 0.f);
 
             }
 
@@ -226,19 +226,21 @@ int main()
             }
             if (herotest.getPosition().y > 0)
             {
-                herotest.move(0.f, -0.1f);
+                //herotest.move(0.f, -0.1f);
             }
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
+            herotest.move();
         }
 
 
     }
     //loud noises
     //std::cout << i;
+    //std::cout << getUnitVector(sf::Vector2f(1.f, 1.f)).x;
     return 14;
 
     //test

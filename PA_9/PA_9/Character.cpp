@@ -47,7 +47,14 @@
 
 Character::Character():Sprite()
 {
-	this->speed = 0.1;
+	this->speed = 0.;
 	this->mHP = 30;
 	this->mDamage = 0;
+	this->movmentSpeed = 0.2;
+}
+
+void Character::move(void)
+{
+	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
+	unitVector = unitVector * this->speed;
 }
