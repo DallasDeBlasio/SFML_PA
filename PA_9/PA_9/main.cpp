@@ -11,11 +11,15 @@ int main()
     shape.setFillColor(sf::Color::Green);
     // asa was here
 
+
     sf::Texture texture;
     if (!texture.loadFromFile("Assets/map.png"))
+
     {
         return 0;
     }
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
 
     sf::Vector2f origin(0, 0);
 
@@ -35,7 +39,9 @@ int main()
         }
 
         window.clear();
+
         window.draw(room1);
+
         window.display();
 
 
