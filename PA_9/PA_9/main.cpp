@@ -34,17 +34,17 @@ int main()
 
     //48 difference in height 
 
-    Character herotest(2,16,31);
+    Character herotest(3,16,31);
     herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
     herotest.setTexture(heroTexture);
-    herotest.setPosition(0.f, 0.f);
-
+    herotest.setPosition(herotest.width, herotest.height);
+    //herotest.setPosition(0,0);
 
 
 
     //hitbox information
-    sf::FloatRect herotestbounds = herotest.getGlobalBounds();
-    sf::RectangleShape herotestboundsDrawable(herotestbounds.getSize());
+    //sf::FloatRect herotestbounds = herotest.getGlobalBounds();
+    //sf::RectangleShape herotestboundsDrawable(herotestbounds.getSize());
 
  
     int cycles = 0;//increment for every cycle of the window
@@ -67,10 +67,10 @@ int main()
 
 
         window.draw(room1);//draw first room
-        window.draw(herotestboundsDrawable);
+        window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
-        window.draw(movementVector);
-        window.draw(movementUnitVector);
+        window.draw(herotest.movementVector);
+        //window.draw(movementUnitVector);
 
         window.display();//display drawings
 
@@ -89,18 +89,12 @@ int main()
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
                 herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
-
             }
-
-
             herotest.movementDirection.y += 1;
-
-
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-
             if (cycles % 250 == 0)
             {
                 if (!hasWalkFramed)
@@ -111,19 +105,15 @@ int main()
                 {
                     walkframe = 0;
                 }
-                //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
                 herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
-
             }
-
             herotest.movementDirection.x += 1;
-
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-
             if (cycles % 250 == 0)
             {
                 if (!hasWalkFramed)
@@ -134,20 +124,16 @@ int main()
                 {
                     walkframe = 0;
                 }
-                //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
                 herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
 
             }
-
             herotest.movementDirection.x -= 1;
-
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            //std::cout << "fuck";
-            //std::cout << walkframe % 100 << std::endl;
             if (cycles % 250 == 0)
             {
                 if (!hasWalkFramed)
@@ -158,19 +144,13 @@ int main()
                 {
                     walkframe = 0;
                 }
-                //std::cout << "fuck";
                 herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
                 herotest.setTexture(heroTexture);
                 hasWalkFramed = true;
-
             }
 
             herotest.movementDirection.y -= 1;
         }
-
-        herotestbounds = herotest.getGlobalBounds();
-        herotestboundsDrawable.setSize(herotestbounds.getSize());
-        herotestboundsDrawable.setPosition(herotestbounds.getPosition());
         herotest.moveV();
     }
     return 14;

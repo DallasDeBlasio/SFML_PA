@@ -58,8 +58,13 @@ Character::Character():Sprite()
 	this->width = 50;
 	this->setScale(this->mScale, this->mScale);
 
+	this->setOrigin(this->width / 2.f, this->height / 2.f);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
+	this->movementVector.setRadius(width / 8.f);
+
+	this->movementUnitVector.setRadius(width / 8.f * 3.f / 4.f);
+
 	//this.
 }
 
@@ -75,33 +80,56 @@ Character::Character(int scale,int width, int height)
 	this->width = width;
 	this->height = height;
 	this->setScale(this->mScale, this->mScale);
+
+	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
+	//this->movementVector.setOrigin(this->movementVector.getRadius() / 2.f, this->movementVector.getRadius() / 2.f);
 	
+	this->movementVector.setRadius(width / 4.f);
+	this->movementUnitVector.setRadius(width / 4.f * 3.f / 4.f);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	//this.
+	this->hitbox.setSize(this->getGlobalBounds().getSize());
+	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+
+	//this->setPosition(this->width / 2, this->height / 2);
 }
 
 void Character::moveV(void)
 {
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
-	this->move(speed_in_direction_unitVector);
+	this->movementVector.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y));
+	//std::cout << speed_in_direction_unitVector.x;
+	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x + this->width / 2 + speed_in_direction_unitVector.x, this->getPosition().y + this->height / 2 + speed_in_direction_unitVector.y));
+	//if (speed_in_direction_unitVector.x < 0 && this->getOrigin().x - this->width / 2.f + speed_in_direction_unitVector.x > 0)
+	//{
+		this->move(speed_in_direction_unitVector);
+	//}
+	//this->move(speed_in_direction_unitVector.x, 0);
+
+	//turning around
 	if (unitVector.x > 0 && this->facing == -1)
 	{
+		
 		this->scale(-1.f, 1.f);
 		this->facing = 1;
-		this->move(-this->width * this->mScale, 0);
+		//this->move(-this->width * this->mScale, 0);
+		//this->movementVector.move(-this->width * this->mScale, 0);
 	}
 	else if (unitVector.x < 0 && this->facing == 1)
 	{
 		this->scale(-1.f, 1.f);
 		this->facing = -1;
-		this->move(this->width * this->mScale, 0);
-
+		//this->move(this->width * this->mScale, 0);
+		//this->movementVector.move(this->width * this->mScale, 0);
 	}
+	
+	//update hitbox
+	this->hitbox.setSize(this->getGlobalBounds().getSize());
+	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+
 	decayMovment();
-	//    herotest.scale(-1.f, 1.f);
-//    herotest.move(-heroWidth * heroScale, 0.f);
 }
 
 void Character::decayMovment(void)
