@@ -1,5 +1,6 @@
 #include "source.hpp"
-
+#include "Character.hpp"
+#include "Snail.hpp"
 
 
 int main()
@@ -51,7 +52,9 @@ int main()
     int walkframe = 0;//which frame the animation is in
     while (window.isOpen())
     {
+
         bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
+
         cycles++;
 
         //close the window
@@ -76,81 +79,42 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//if s pressed
         {
-            if (cycles % 250 == 0)// walk cycle if statement
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-            }
+            hasWalkFramed = true;
             herotest.movementDirection.y += 1;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-            }
+            hasWalkFramed = true;
             herotest.movementDirection.x += 1;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-
-            }
+            hasWalkFramed = true;
             herotest.movementDirection.x -= 1;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-            }
-
+            hasWalkFramed = true;
             herotest.movementDirection.y -= 1;
         }
+
+        if (cycles % 250 == 0)// walk cycle if statement
+        {
+            if (hasWalkFramed)
+            {
+                walkframe++;
+            }
+            if (walkframe % 4 == 0)
+            {
+                walkframe = 0;
+            }
+            herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
+            herotest.setTexture(heroTexture);
+        }
+
         herotest.moveV();
     }
     return 14;

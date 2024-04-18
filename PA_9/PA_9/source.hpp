@@ -15,8 +15,8 @@
 #include <iostream>
 #include <Windows.h>
 
-#include "Character.hpp"
-#include "Snail.hpp"
+//#include "Character.hpp"
+//#include "Snail.hpp"
 
 
 
