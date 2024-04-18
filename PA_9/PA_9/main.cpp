@@ -1,5 +1,6 @@
 #include "source.hpp"
-
+#include "Character.hpp"
+#include "Snail.hpp"
 
 
 int main()
@@ -7,74 +8,45 @@ int main()
     int windowWidth = 960;
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    // asa was here
 
+    sf::CircleShape movementVector(10.f);
+    movementVector.setFillColor(sf::Color::White);
 
-    sf::Texture texture;
-    if (!texture.loadFromFile("Assets/map.png"))
+    sf::CircleShape movementUnitVector(7.5f);
+    movementUnitVector.setFillColor(sf::Color::Black);
 
-    {
-        return 0;
-    }
- /*   sf::Sprite sprite;
-    sprite.setTexture(texture);*/
-
-    sf::Vector2f origin(0, 0);
-
+    sf::Texture mapTexture;
+    mapTexture.loadFromFile("Assets/map.png");
     sf::Sprite room1;
-    room1.setTexture(texture);
+    room1.setTexture(mapTexture);
     room1.setScale(10.f, 10.f);
-    origin.y = -320.f;
-    room1.setPosition(origin);
+    room1.setPosition(sf::Vector2f(0.f,-320.f));//offset on map Texture to fill the window with room1
 
-    //Character(const int& newDamage, const int& newHP, const sf::Vector2f & size, const sf::Vector2f & position, const sf::Vector2f & startIntRect, const sf::Texture texture);
+    
+
 
     sf::Texture heroTexture;
-
     heroTexture.loadFromFile("Assets/tempHero.png");
-
-
 
     int one = 16;
     int two = 9;
-    int heroWidth = 16;
-    int heroHeight = 31;//
 
-    //48 difference in height 
-
-    Character herotest;
-    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, heroWidth, heroHeight));
+    Character herotest(3,16,31);
+    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
     herotest.setTexture(heroTexture);
-    herotest.setPosition(0.f, 0.f);
+    herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
 
-    float heroScale = 2.f;
-    herotest.setScale(heroScale, heroScale);
-    sf::FloatRect herotestbounds = herotest.getGlobalBounds();
-    sf::RectangleShape herotestboundsDrawable(herotestbounds.getSize());
-
-
-   // Character todd(15, 30, sf::Vector2f(30, 30), origin, sf::Vector2f(0, 0), hero);
-    //Character todd(15, 30, sf::Vector2f(100, 100), sf::Vector2f(30, 30), sf::Vector2f(0, 0), hero);
-   
-
-    //todd.mRectangle.setFillColor(sf::Color::Black);
-
-
-    int cycles = 0;
-    int walkframe = 0;
+ 
+    int cycles = 0;//increment for every cycle of the window
+    int walkframe = 0;//which frame the animation is in
     while (window.isOpen())
     {
-        bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
 
-        //if (!hasWalkFramed)
-        //{
-        //    std::cout << walkframe;
-        //}
+        bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
 
         cycles++;
 
+        //close the window
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -82,164 +54,57 @@ int main()
                 window.close();
         }
 
+        //wipe previous screen
         window.clear();
 
-        window.draw(room1);
-        //window.draw(todd.mRectangle);
-        //window.draw(todd.mSprite);
 
-        //window.draw(herotestboundsDrawable);
-        window.draw(herotest);
-        //while(!sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        //{ }
-        //Sleep(1000);//we probably need a walking frames counter
+        window.draw(room1);//draw first room
+        window.draw(herotest.hitbox);
+        window.draw(herotest);// draw hero
 
 
+        window.display();//display drawings
 
-        window.display();
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//if s pressed
         {
-            //std::cout << "fuck";
-            //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-
-            }
-            if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//times 2 because of scale
-            {
-                herotest.move(0.f, 0.1f);
-            }
-
-            herotestbounds = herotest.getGlobalBounds();
-            herotestboundsDrawable.setSize(herotestbounds.getSize());
-            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
-
+            hasWalkFramed = true;
+            herotest.movementDirection.y += 1;
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            //std::cout << "fuck";
-            //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-
-            }
-            if (herotest.getPosition().x + heroWidth * heroScale < windowWidth)//times 2 because of scale
-
-            {
-                herotest.move(0.1f, 0.f);
-            }
-
-            herotestbounds = herotest.getGlobalBounds();
-            herotestboundsDrawable.setSize(herotestbounds.getSize());
-            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
-
-            if (herotest.getScale().x < 0)
-            {
-                herotest.scale(-1.f, 1.f);
-                herotest.move(-heroWidth * heroScale, 0.f);
-            }
-
+            hasWalkFramed = true;
+            herotest.movementDirection.x += 1;
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            //std::cout << "fuck";
-            //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-
-            }
-            //std::cout << herotest.getPosition().x << std::endl;
-            if(herotest.getPosition().x - heroWidth * heroScale > 0)
-            {
-                herotest.move(-0.1f, 0.f);
-            }
-
-            herotestbounds = herotest.getGlobalBounds();
-            herotestboundsDrawable.setSize(herotestbounds.getSize());
-            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
-
-            if (herotest.getScale().x > 0)
-            {
-                herotest.scale(-1.f, 1.f);
-                herotest.move(heroWidth * heroScale, 0.f);
-
-            }
-
+            hasWalkFramed = true;
+            herotest.movementDirection.x -= 1;
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            //std::cout << "fuck";
-            //std::cout << walkframe % 100 << std::endl;
-            if (cycles % 250 == 0)
-            {
-                if (!hasWalkFramed)
-                {
-                    walkframe++;
-                }
-                if (walkframe % 4 == 0)
-                {
-                    walkframe = 0;
-                }
-                //std::cout << "fuck";
-                herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, heroWidth, heroHeight));
-                herotest.setTexture(heroTexture);
-                hasWalkFramed = true;
-
-            }
-            if (herotest.getPosition().y > 0)
-            {
-                herotest.move(0.f, -0.1f);
-            }
-
-            herotestbounds = herotest.getGlobalBounds();
-            herotestboundsDrawable.setSize(herotestbounds.getSize());
-            herotestboundsDrawable.setPosition(herotestbounds.getPosition());
-
+            hasWalkFramed = true;
+            herotest.movementDirection.y -= 1;
         }
 
+        if (cycles % 250 == 0)// walk cycle if statement
+        {
+            if (hasWalkFramed)
+            {
+                walkframe++;
+            }
+            if (walkframe % 4 == 0)
+            {
+                walkframe = 0;
+            }
+            herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
+            herotest.setTexture(heroTexture);
+        }
 
+        herotest.moveV();
     }
-    //loud noises
-    //std::cout << i;
     return 14;
 
-    //test
 }
