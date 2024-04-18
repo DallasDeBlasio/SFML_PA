@@ -56,6 +56,8 @@ Character::Character():Sprite()
 	this->mScale = 1;
 	this->height = 50;
 	this->width = 50;
+	this->setScale(this->mScale, this->mScale);
+
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	//this.
@@ -73,6 +75,7 @@ Character::Character(int scale,int width, int height)
 	this->width = width;
 	this->height = height;
 	this->setScale(this->mScale, this->mScale);
+	
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	//this.
@@ -87,11 +90,13 @@ void Character::moveV(void)
 	{
 		this->scale(-1.f, 1.f);
 		this->facing = 1;
+		this->move(-this->width * this->mScale, 0);
 	}
 	else if (unitVector.x < 0 && this->facing == 1)
 	{
 		this->scale(-1.f, 1.f);
 		this->facing = -1;
+		this->move(this->width * this->mScale, 0);
 
 	}
 	decayMovment();
