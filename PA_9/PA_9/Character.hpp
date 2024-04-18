@@ -41,8 +41,8 @@ public:
 	int facing; //-1 = left, 1 = right
 	int mScale;
 
-	sf::CircleShape movementVector;
-	sf::CircleShape movementUnitVector;
+	//sf::CircleShape movementVector;
+	//sf::CircleShape movementUnitVector;
 
 	sf::RectangleShape hitbox;
 

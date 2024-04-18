@@ -16,6 +16,7 @@
 #include <Windows.h>
 
 #include "Character.hpp"
+#include "Snail.hpp"
 
 
 

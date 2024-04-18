@@ -61,9 +61,9 @@ Character::Character():Sprite()
 	this->setOrigin(this->width / 2.f, this->height / 2.f);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
-	this->movementVector.setRadius(width / 8.f);
+	//this->movementVector.setRadius(width / 8.f);
 
-	this->movementUnitVector.setRadius(width / 8.f * 3.f / 4.f);
+	//this->movementUnitVector.setRadius(width / 8.f * 3.f / 4.f);
 
 	//this.
 }
@@ -85,8 +85,8 @@ Character::Character(int scale,int width, int height)
 
 	//this->movementVector.setOrigin(this->movementVector.getRadius() / 2.f, this->movementVector.getRadius() / 2.f);
 	
-	this->movementVector.setRadius(width / 4.f);
-	this->movementUnitVector.setRadius(width / 4.f * 3.f / 4.f);
+	//this->movementVector.setRadius(width / 4.f);
+	//this->movementUnitVector.setRadius(width / 4.f * 3.f / 4.f);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	//this.
@@ -100,7 +100,7 @@ void Character::moveV(void)
 {
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
-	this->movementVector.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y));
+	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y));
 	//std::cout << speed_in_direction_unitVector.x;
 	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x + this->width / 2 + speed_in_direction_unitVector.x, this->getPosition().y + this->height / 2 + speed_in_direction_unitVector.y));
 	//if (speed_in_direction_unitVector.x < 0 && this->getOrigin().x - this->width / 2.f + speed_in_direction_unitVector.x > 0)
