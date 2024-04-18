@@ -37,7 +37,7 @@ int main()
     Character herotest(3,16,31);
     herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
     herotest.setTexture(heroTexture);
-    herotest.setPosition(herotest.width, herotest.height);
+    herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
     //herotest.setPosition(0,0);
 
 
@@ -69,7 +69,7 @@ int main()
         window.draw(room1);//draw first room
         window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
-        window.draw(herotest.movementVector);
+        //window.draw(herotest.movementVector);
         //window.draw(movementUnitVector);
 
         window.display();//display drawings

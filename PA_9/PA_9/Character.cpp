@@ -79,9 +79,10 @@ Character::Character(int scale,int width, int height)
 	this->mScale = scale;
 	this->width = width;
 	this->height = height;
+	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
+
 	this->setScale(this->mScale, this->mScale);
 
-	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
 	//this->movementVector.setOrigin(this->movementVector.getRadius() / 2.f, this->movementVector.getRadius() / 2.f);
 	
 	this->movementVector.setRadius(width / 4.f);
@@ -104,7 +105,55 @@ void Character::moveV(void)
 	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x + this->width / 2 + speed_in_direction_unitVector.x, this->getPosition().y + this->height / 2 + speed_in_direction_unitVector.y));
 	//if (speed_in_direction_unitVector.x < 0 && this->getOrigin().x - this->width / 2.f + speed_in_direction_unitVector.x > 0)
 	//{
-		this->move(speed_in_direction_unitVector);
+	if (speed_in_direction_unitVector.x < 0)//left side boundry
+	{
+		if (this->getPosition().x - this->width / 2.f * this->mScale < 0)
+		{
+			this->setPosition(0 + this->width/2.f * this->mScale, this->getPosition().y);
+		}
+		else
+		{
+			this->move(speed_in_direction_unitVector.x, 0);
+		}
+	}
+	
+	if(speed_in_direction_unitVector.x > 0)//right side boundry
+	{
+		if (this->getPosition().x + this->width / 2.f * this->mScale > 960)//hardcoding window size as of right now
+		{
+			this->setPosition(960 - this->width / 2.f * this->mScale, this->getPosition().y);
+		}
+		else
+		{
+			this->move(speed_in_direction_unitVector.x, 0);
+		}
+	}
+
+	if (speed_in_direction_unitVector.y < 0)//top side boundry
+	{
+		if (this->getPosition().y - this->height / 2.f * this->mScale < 0)
+		{
+			this->setPosition(this->getPosition().x, 0 + this->height / 2.f * this->mScale);
+		}
+		else
+		{
+			this->move(0, speed_in_direction_unitVector.y);
+		}
+	}
+	
+	if(speed_in_direction_unitVector.y > 0)//bottom boundry
+	{
+		if (this->getPosition().y + this->height / 2.f * this->mScale > 960)//hardcoding window size right now
+		{
+			this->setPosition(this->getPosition().x, 960 - this->height / 2.f * this->mScale);
+		}
+		else
+		{
+			this->move(0, speed_in_direction_unitVector.y);
+		}
+	}
+
+	//this->move(speed_in_direction_unitVector);
 	//}
 	//this->move(speed_in_direction_unitVector.x, 0);
 
