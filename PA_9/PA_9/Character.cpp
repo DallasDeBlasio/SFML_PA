@@ -52,6 +52,27 @@ Character::Character():Sprite()
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
 	this->walkFrame = 0;
+	this->facing = 1;
+	this->mScale = 1;
+	this->height = 50;
+	this->width = 50;
+
+	this->movementDirection = sf::Vector2f(0.f, 0.f);
+	//this.
+}
+
+Character::Character(int scale,int width, int height)
+{
+	this->speed = 0.2;
+	this->mHP = 30;
+	this->mDamage = 0;
+	this->movmentSpeed = 0.2;
+	this->walkFrame = 0;
+	this->facing = 1;
+	this->mScale = scale;
+	this->width = width;
+	this->height = height;
+	this->setScale(this->mScale, this->mScale);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	//this.
@@ -62,23 +83,44 @@ void Character::moveV(void)
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
 	this->move(speed_in_direction_unitVector);
+	if (unitVector.x > 0 && this->facing == -1)
+	{
+		this->scale(-1.f, 1.f);
+		this->facing = 1;
+	}
+	else if (unitVector.x < 0 && this->facing == 1)
+	{
+		this->scale(-1.f, 1.f);
+		this->facing = -1;
+
+	}
 	decayMovment();
+	//    herotest.scale(-1.f, 1.f);
+//    herotest.move(-heroWidth * heroScale, 0.f);
 }
 
 void Character::decayMovment(void)
 {
-	if (this->movementDirection.x > this->movmentSpeed)
+	if (this->movementDirection.x > 1)
 	{
-		this->movementDirection.x -= this->movmentSpeed;
+		this->movementDirection.x -= 0.95;//this->movementSpeed
+	}
+	else if (this->movementDirection.y < -1)
+	{
+		this->movementDirection.x += 0.95;//this->movmentSpeed;
 	}
 	else
 	{
 		this->movementDirection.x = 0;
 	}
 
-	if (this->movementDirection.y > this->movmentSpeed)
+	if (this->movementDirection.y > 1)
 	{
-		this->movementDirection.y -= this->movmentSpeed;
+		this->movementDirection.y -= 0.95;//this->movmentSpeed;
+	}
+	else if (this->movementDirection.y < -1)
+	{
+		this->movementDirection.y += 0.95;//this->movmentSpeed;
 	}
 	else
 	{

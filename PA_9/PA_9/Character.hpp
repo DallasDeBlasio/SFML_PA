@@ -7,6 +7,7 @@ class Character:public sf::Sprite
 public:
 	Character();//default sprite constructor
 
+	Character(int scale, int width, int height);//default sprite constructor
 
 
 	//Character(int newDamage, int newHP, sf::RectangleShape newRectangle, sf::Sprite newSprite);
@@ -31,9 +32,14 @@ public:
 	int mDamage;
 	int mHP;
 	int walkFrame;
+	int width;
+	int height;
 
 	virtual void moveV(void);// moves hero speed distance along movementDirection
 	void decayMovment(void);
+
+	int facing; //-1 = left, 1 = right
+	int mScale;
 
 private:
 

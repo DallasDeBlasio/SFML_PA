@@ -8,7 +8,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
 
-    sf::CircleShape movementVector(15.f);
+    sf::CircleShape movementVector(10.f);
     movementVector.setFillColor(sf::Color::White);
 
     sf::CircleShape movementUnitVector(7.5f);
@@ -35,13 +35,13 @@ int main()
 
     //48 difference in height 
 
-    Character herotest;
+    Character herotest(2,16,31);
     herotest.setTextureRect(sf::IntRect(one + 48, two + 48, heroWidth, heroHeight));//+48 gets to the walking animations
     herotest.setTexture(heroTexture);
     herotest.setPosition(0.f, 0.f);
 
-    float heroScale = 2.f;
-    herotest.setScale(heroScale, heroScale);
+    //float heroScale = 2.f;
+   // herotest.setScale(herotest.mScale, herotest.mScale);
 
 
     //hitbox information
@@ -70,6 +70,8 @@ int main()
 
         window.draw(room1);//draw first room
         window.draw(herotest);// draw hero
+        window.draw(movementVector);
+        window.draw(movementUnitVector);
         window.display();//display drawings
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//if s pressed
@@ -91,14 +93,8 @@ int main()
             }
 
 
-
-            //if (herotest.getPosition().y + heroHeight * heroScale < windowWidth)//boundry check //times 2 because of scale
-            //{
-            //    //herotest.move(0.f, 0.1f);
-            //}
-
             herotest.movementDirection.y += 1;
-            std::cout << herotest.movementDirection.y<<std::endl;
+            //std::cout << herotest.movementDirection.y<<std::endl;
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
@@ -126,21 +122,22 @@ int main()
                 hasWalkFramed = true;
 
             }
-            if (herotest.getPosition().x + heroWidth * heroScale < windowWidth)//times 2 because of scale
+            if (herotest.getPosition().x + heroWidth * herotest.mScale < windowWidth)//times 2 because of scale
 
             {
                // herotest.move(0.1f, 0.f);
             }
+            herotest.movementDirection.x += 1;
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
-            if (herotest.getScale().x < 0)
-            {
-                herotest.scale(-1.f, 1.f);
-                //herotest.move(-heroWidth * heroScale, 0.f);
-            }
+            //if (herotest.getScale().x < 0)
+            //{
+            //    herotest.scale(-1.f, 1.f);
+            //    herotest.move(-heroWidth * heroScale, 0.f);
+            //}
 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -164,21 +161,22 @@ int main()
 
             }
             //std::cout << herotest.getPosition().x << std::endl;
-            if(herotest.getPosition().x - heroWidth * heroScale > 0)
+            if(herotest.getPosition().x - heroWidth * herotest.mScale > 0)
             {
                 //herotest.move(-0.1f, 0.f);
             }
+
+            herotest.movementDirection.x -= 1;
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
             herotestboundsDrawable.setPosition(herotestbounds.getPosition());
 
-            if (herotest.getScale().x > 0)
-            {
-                herotest.scale(-1.f, 1.f);
-                //herotest.move(heroWidth * heroScale, 0.f);
-
-            }
+            //if (herotest.getScale().x > 0)
+            //{
+            //    herotest.scale(-1.f, 1.f);
+            //    herotest.move(heroWidth * heroScale, 0.f);
+            //}
 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -201,10 +199,9 @@ int main()
                 hasWalkFramed = true;
 
             }
-            if (herotest.getPosition().y > 0)
-            {
-                //herotest.move(0.f, -0.1f);
-            }
+
+            herotest.movementDirection.y -= 1;
+
 
             herotestbounds = herotest.getGlobalBounds();
             herotestboundsDrawable.setSize(herotestbounds.getSize());
