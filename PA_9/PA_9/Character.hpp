@@ -9,23 +9,6 @@ public:
 
 	Character(int scale, int width, int height);//default sprite constructor
 
-
-	//Character(int newDamage, int newHP, sf::RectangleShape newRectangle, sf::Sprite newSprite);
-
-	//Character(const int& newDamage, const int& newHP, const sf::Vector2f& size, const sf::Vector2f& position, const sf::Vector2f& startIntRect, const sf::Texture texture);
-
-	//void moveCharacter(sf::Vector2f vector);
-
-
-
-	//void setDamage(int newDamage);
-	//void setHP(int newHP);
-
-	//int getDamage(void);
-	//int getHP(void);
-	//bool moving;
-
-
 	sf::Vector2f movementDirection;//points in the direction of movement, should decay back to 0,0 under no outside influence
 	float speed;//should be movementSpeed while moving, but should be higher if the character gets moved or launched
 	float movmentSpeed;//maximum speed under normal movment
@@ -40,9 +23,6 @@ public:
 
 	int facing; //-1 = left, 1 = right
 	int mScale;
-
-	//sf::CircleShape movementVector;
-	//sf::CircleShape movementUnitVector;
 
 	sf::RectangleShape hitbox;
 

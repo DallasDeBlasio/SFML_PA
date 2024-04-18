@@ -100,11 +100,7 @@ void Character::moveV(void)
 {
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
-	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y));
-	//std::cout << speed_in_direction_unitVector.x;
-	//this->movementVector.setPosition(sf::Vector2f(this->getPosition().x + this->width / 2 + speed_in_direction_unitVector.x, this->getPosition().y + this->height / 2 + speed_in_direction_unitVector.y));
-	//if (speed_in_direction_unitVector.x < 0 && this->getOrigin().x - this->width / 2.f + speed_in_direction_unitVector.x > 0)
-	//{
+
 	if (speed_in_direction_unitVector.x < 0)//left side boundry
 	{
 		if (this->getPosition().x - this->width / 2.f * this->mScale < 0)
@@ -153,25 +149,17 @@ void Character::moveV(void)
 		}
 	}
 
-	//this->move(speed_in_direction_unitVector);
-	//}
-	//this->move(speed_in_direction_unitVector.x, 0);
 
-	//turning around
 	if (unitVector.x > 0 && this->facing == -1)
 	{
 		
 		this->scale(-1.f, 1.f);
 		this->facing = 1;
-		//this->move(-this->width * this->mScale, 0);
-		//this->movementVector.move(-this->width * this->mScale, 0);
 	}
 	else if (unitVector.x < 0 && this->facing == 1)
 	{
 		this->scale(-1.f, 1.f);
 		this->facing = -1;
-		//this->move(this->width * this->mScale, 0);
-		//this->movementVector.move(this->width * this->mScale, 0);
 	}
 	
 	//update hitbox
