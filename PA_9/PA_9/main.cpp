@@ -1,9 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "MainMenu.hpp"
+#include "DialogBox.hpp"
 
 int main()
 {
+    //DialogBox box("Hello World");
+    DialogBox box;
+
+
     // window for main menu
     sf::RenderWindow menu(sf::VideoMode(960, 720), "Main Menu (use arrow keys)", sf::Style::Default);
     MainMenu mainMenu(menu.getSize().x, menu.getSize().y);
@@ -47,6 +52,8 @@ int main()
                     {
                         while (Play.isOpen())
                         {
+                            // GAME WINDOW --- GAME LOOP HERE 
+
                             sf::Event someEvent;
                             while (Play.pollEvent(someEvent))
                             {
@@ -62,10 +69,12 @@ int main()
                                     }
                                 }
                             }
-                            Options.close(); 
+                            Play.draw(box.getBox());
+                            Play.draw(box.getText());
+                            Play.display();
+                            Options.close();
                             About.close();
                             Play.clear();
-                            Play.display(); 
                         }
                     }
                     if (x == 1)
@@ -73,6 +82,7 @@ int main()
                         while (Options.isOpen())
                         {
                             sf::Event someEvent; 
+                            // OPTIONS WINDOW
                             while (Options.pollEvent(someEvent))
                             {
                                 if (someEvent.type == sf::Event::Closed)
@@ -98,6 +108,7 @@ int main()
                         while (About.isOpen())
                         {
                             sf::Event someEvent;
+                            // ABOUT WINDOW
                             while (About.pollEvent(someEvent))
                             {
                                 if (someEvent.type == sf::Event::Closed)
@@ -131,79 +142,4 @@ int main()
             menu.display(); 
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //sf::Font font;
-    //sf::Text text;
-    //font.loadFromFile("Jersey20-Regular.ttf");
-    //text.setFont(font);    
-    //text.setCharacterSize(30);
-    //text.setString("Hello world");
-    //text.setStyle(sf::Text::Regular); 
-    //text.setPosition(sf::Vector2f(500, 500));   
-    //text.setFillColor(sf::Color::Red);  
-
-    //sf::RenderWindow window(sf::VideoMode(2560, 1600), "SFML works!");
-    //sf::CircleShape shape(100.f);
-    //shape.setFillColor(sf::Color::Green);
-
-    //while (window.isOpen())
-    //{
-    //    sf::Event event;
-    //    while (window.pollEvent(event))
-    //    {
-    //        if (event.type == sf::Event::Closed)
-    //            window.close();
-    //    }
-
-    //    window.clear();
-    //    //window.draw(shape); 
-
-    //    window.draw(text);
-
-    //   window.display();
-
-    //}
-
-    //return 0;
-
-    ////test
 }

@@ -41,7 +41,7 @@ public:
 		menu[2].setPosition(400, 400);
 
 		// exit option
-		menu[3].setFont(font);
+		menu[3].setFont(font); 
 		menu[3].setFillColor(sf::Color::Blue);
 		menu[3].setString("EXIT");
 		menu[3].setCharacterSize(70);
@@ -51,7 +51,7 @@ public:
 	}
 	~MainMenu()
 	{
-		std::cout << "menu destroyed" << std::endl; 
+
 	}
 
 	void draw(sf::RenderWindow& window)
