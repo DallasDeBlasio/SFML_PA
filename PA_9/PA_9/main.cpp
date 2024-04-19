@@ -35,6 +35,15 @@ int main()
     //herotest.setTexture(heroTexture);
     herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
 
+
+
+    sf::Texture snailTexture;
+    snailTexture.loadFromFile("Assets/snail.png");
+
+    Snail bert(2, 16, 31);
+    bert.setTextureRect(sf::IntRect(64, 64, bert.width, bert.height));
+    bert.setTexture(snailTexture);
+    bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale); 
  
     int cycles = 0;//increment for every cycle of the window
     int walkframe = 0;//which frame the animation is in
@@ -61,8 +70,9 @@ int main()
         //window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
 
-        //these are the assumptions I'm making
 
+        window.draw(bert.hitbox);
+        window.draw(bert);
 
         window.display();//display drawings
 
@@ -105,8 +115,9 @@ int main()
         //    //herotest.setTexture(heroTexture);
         //}
 
+        bert.moveTowardsTarget(herotest);
         herotest.moveV();
     }
-    return 14;
+    return 15;
 
 }
