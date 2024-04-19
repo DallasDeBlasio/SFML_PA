@@ -15,7 +15,7 @@ public:
 	float movmentSpeed;//maximum speed under normal movment //dont change
 	int mDamage;
 	int mHP;
-	//int walkFrame;
+	int walkFrame;
 	int width;
 	int height;
 
