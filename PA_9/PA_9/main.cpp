@@ -26,7 +26,7 @@ int main()
     bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
     bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale); 
 
-    Snail kurt(2, 32, 20);
+    Snail kurt(2, 32, 20, 0.15);
     kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
     kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
  
