@@ -17,33 +17,25 @@ int main()
     room1.setScale(10.f, 10.f);
     room1.setPosition(sf::Vector2f(0.f,-320.f));//offset on map Texture to fill the window with room1
 
-    //herotest\\\
 
     Character herotest(3, 16, 31);
     int one = 16;
     int two = 9;
 
     herotest.fillTextureList(4, 64, 57, true, 48, "Assets/tempHero.png");
-    //herotest.firstTexture(4, one + 48, two + 48, true, 48, "Assets/tempHero.png");
-    //sf::Texture heroTexture;
-    //heroTexture.loadFromFile("Assets/tempHero.png",sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));
 
-    //herotest.setTexture(heroTexture);
-
-    //herotest.set
-    //herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
-    //herotest.setTexture(heroTexture);
     herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
-
-
 
     sf::Texture snailTexture;
     snailTexture.loadFromFile("Assets/snail.png");
 
-    Snail bert(2, 16, 31);
-    bert.setTextureRect(sf::IntRect(64, 64, bert.width, bert.height));
-    bert.setTexture(snailTexture);
+    Snail bert(2, 32, 20);
+    bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
     bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale); 
+
+    Snail kurt(2, 32, 20);
+    kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
+    kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
  
     int cycles = 0;//increment for every cycle of the window
     int walkframe = 0;//which frame the animation is in
@@ -71,8 +63,13 @@ int main()
         window.draw(herotest);// draw hero
 
 
-        window.draw(bert.hitbox);
+        //window.draw(bert.hitbox);
         window.draw(bert);
+        window.draw(kurt);
+
+
+        
+
 
         window.display();//display drawings
 
@@ -101,20 +98,7 @@ int main()
             herotest.movementDirection.y -= 1;
         }
 
-        //if (cycles % 250 == 0)// walk cycle if statement
-        //{
-        //    if (hasWalkFramed)
-        //    {
-        //        walkframe++;
-        //    }
-        //    if (walkframe % 4 == 0)
-        //    {
-        //        walkframe = 0;
-        //    }
-        //    //herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-        //    //herotest.setTexture(heroTexture);
-        //}
-
+        kurt.moveTowardsTarget(herotest);
         bert.moveTowardsTarget(herotest);
         herotest.moveV();
     }
