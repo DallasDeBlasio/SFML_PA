@@ -1,6 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "source.hpp"
+//#include <SFML/Graphics.hpp>
+//#include <iostream>
+
 
 /// <summary>
 /// Generates border/box around text. Use inherited functions from sf::Text to change position of box, change color of text, etc..

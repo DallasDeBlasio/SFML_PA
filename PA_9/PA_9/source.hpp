@@ -15,7 +15,7 @@
 #include <SFML/Audio.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <Windows.h>
+//#include <Windows.h>
 
 //Vector Utility
 float getVectorManitude(sf::Vector2f vector);

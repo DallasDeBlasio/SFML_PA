@@ -1,9 +1,10 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "source.hpp"
+//#include <SFML/Graphics.hpp>
+//#include <iostream>
 #include "DialogBox.hpp"
-
-
+#include "Character.hpp"
+#include "Snail.hpp"
 
 class MainMenu
 {
@@ -109,6 +110,36 @@ public:
 
         std::cout << "Opened runPlayWindow" << std::endl; 
 
+        int windowLength = 1080;
+        int windowWidth = 1920;
+
+        sf::Texture mapTexture;
+        mapTexture.loadFromFile("Assets/map.png");
+        sf::Sprite room1;
+        room1.setTexture(mapTexture);
+        room1.setScale(10.f, 10.f);
+        room1.setPosition(sf::Vector2f(0.f, -320.f));//offset on map Texture to fill the window with room1
+
+        Character herotest(3, 16, 31);
+        herotest.fillTextureList(4, 16, 57, true, 48, "Assets/tempHero.png");
+        herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
+
+        Snail bert(2, 32, 20);
+        bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
+        bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
+
+        Snail kurt(2, 32, 20, 0.15);
+        kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
+        kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
+
+        int walkframe = 0;//which frame the animation is in
+
+        //float standardMovement
+    //
+        sf::Clock timer;//credit martin
+        sf::Time DeltaTime;//credit martin
+        //DeltaTime.
+
         while (Play.isOpen())
         {
             sf::Event someEvent;
@@ -132,14 +163,62 @@ public:
             // GAME WINDOW --- GAME LOOP HERE 
 
 
-            Play.draw(box.getBox());
-            Play.draw(box.getText());
+        timer.restart();
+        
+        bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
 
-            //temp
-            Play.draw(box.getOriginPoint());
 
-            Play.display();
-            Play.clear();
+        //wipe previous screen
+        Play.clear();
+
+        Play.draw(room1);//draw first room
+        Play.draw(herotest);// draw hero
+        Play.draw(bert);
+        Play.draw(kurt);
+
+        Play.display();//display drawings
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//if s pressed
+        {
+            hasWalkFramed = true;
+            herotest.movementDirection.y += 1;
+            //herotest.setTexture(herotest.currentFrame->pNext->frame);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            hasWalkFramed = true;
+            herotest.movementDirection.x += 1;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            hasWalkFramed = true;
+            herotest.movementDirection.x -= 1;
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            hasWalkFramed = true;
+            herotest.movementDirection.y -= 1;
+        }
+
+        kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        herotest.moveV(DeltaTime.asSeconds());
+
+        DeltaTime = timer.getElapsedTime();
+        //std::cout << herotest.movmentSpeed << std::endl;
+   
+
+            //Play.draw(box.getBox());
+            //Play.draw(box.getText());
+
+            ////temp
+            //Play.draw(box.getOriginPoint());
+
+            //Play.display();
+            //Play.clear();
         }
     }
     void runOptionsWindow()
