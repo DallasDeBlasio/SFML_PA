@@ -373,6 +373,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+
+
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
@@ -396,3 +398,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+#PATH ERROR  stuff
+PA_9.vcxproj
+PA_9/PA_9/PA_9.vcxproj
