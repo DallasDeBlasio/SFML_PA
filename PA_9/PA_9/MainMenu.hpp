@@ -14,8 +14,12 @@ public:
         // load font for menu text
         if (!font.loadFromFile("Jersey20-Regular.ttf"))
         {
-            std::cout << "Error Loading Font\n";
+            std::cout << "Error Loading Menu Selections Font\n";
         }
+
+     
+
+
 
         // display different menu options to screen
 
@@ -23,29 +27,29 @@ public:
         menu[0].setFont(font);
         menu[0].setFillColor(sf::Color::Blue);
         menu[0].setString("PLAY");
-        menu[0].setCharacterSize(70);
-        menu[0].setPosition(400, 200);
+        menu[0].setCharacterSize(90);
+        menu[0].setPosition(835, 300);
 
         // option option
         menu[1].setFont(font);
         menu[1].setFillColor(sf::Color::Blue);
         menu[1].setString("OPTIONS");
-        menu[1].setCharacterSize(70);
-        menu[1].setPosition(400, 300);
+        menu[1].setCharacterSize(90);
+        menu[1].setPosition(835, 400);
 
         // about option
         menu[2].setFont(font);
         menu[2].setFillColor(sf::Color::Blue);
         menu[2].setString("ABOUT");
-        menu[2].setCharacterSize(70);
-        menu[2].setPosition(400, 400);
+        menu[2].setCharacterSize(90);
+        menu[2].setPosition(835, 500);
 
         // exit option
         menu[3].setFont(font);
         menu[3].setFillColor(sf::Color::Blue);
         menu[3].setString("EXIT");
-        menu[3].setCharacterSize(70);
-        menu[3].setPosition(400, 500);
+        menu[3].setCharacterSize(90);
+        menu[3].setPosition(835, 600);
 
         menuSelected = -1;
     }
@@ -95,155 +99,10 @@ public:
         return menuSelected;
     }
 
-    /// <summary>
-    /// runs main menu plus other windows
-    /// </summary>
-    //void mainMenuAll()
-    //{
-    //   // DialogBox box("Hello World");
-    //    // DialogBox box;
-
-
-
-    //    // window for main menu
-    //    sf::RenderWindow menu(sf::VideoMode(960, 720), "Main Menu (use arrow keys)", sf::Style::Default);
-    //    MainMenu mainMenu(menu.getSize().x, menu.getSize().y);
-
-    //    // background
-    //    sf::RectangleShape menuBackground;
-    //    menuBackground.setSize(sf::Vector2f(960, 720));
-    //    sf::Texture menuTexture;
-    //    menuTexture.loadFromFile("tex_molten_iron_a_256.PNG");
-    //    menuBackground.setTexture(&menuTexture);
-
-
-    //    while (menu.isOpen())
-    //    {
-    //        sf::Event event;
-    //        while (menu.pollEvent(event))
-    //        {
-    //            if (event.type == sf::Event::Closed)
-    //            {
-    //                menu.close();
-    //            }
-    //            if (event.type == sf::Event::KeyPressed)
-    //            {
-    //                if (event.key.code == sf::Keyboard::Up)
-    //                {
-    //                    mainMenu.MoveUp();
-    //                    break;
-    //                }
-    //                if (event.key.code == sf::Keyboard::Down)
-    //                {
-    //                    mainMenu.MoveDown();
-    //                    break;
-    //                }
-    //                if (event.key.code == sf::Keyboard::Return)
-    //                {
-    //                    sf::RenderWindow Play(sf::VideoMode(960, 720), "SUPER AWESOME GAME");
-    //                    sf::RenderWindow Options(sf::VideoMode(960, 720), "OPTIONS");
-    //                    sf::RenderWindow About(sf::VideoMode(960, 720), "ABOUT");
-
-    //                    int x = mainMenu.menuPressed();
-    //                    if (x == 0)
-    //                    {
-    //                        while (Play.isOpen())
-    //                        {
-    //                            // GAME WINDOW --- GAME LOOP HERE 
-
-    //                            sf::Event someEvent;
-    //                            while (Play.pollEvent(someEvent))
-    //                            {
-    //                                if (someEvent.type == sf::Event::Closed)
-    //                                {
-    //                                    Play.close();
-    //                                }
-    //                                if (someEvent.type == sf::Event::KeyPressed)
-    //                                {
-    //                                    if (someEvent.key.code == sf::Keyboard::Escape)
-    //                                    {
-    //                                        Play.close();
-    //                                    }
-    //                                }
-    //                            }
-    //                           // Play.draw(box.getBox());
-    //                            //Play.draw(box.getText());
-    //                            Play.display();
-    //                            Options.close();
-    //                            About.close();
-    //                            Play.clear();
-    //                        }
-    //                    }
-    //                    if (x == 1)
-    //                    {
-    //                        while (Options.isOpen())
-    //                        {
-    //                            sf::Event someEvent;
-    //                            // OPTIONS WINDOW
-    //                            while (Options.pollEvent(someEvent))
-    //                            {
-    //                                if (someEvent.type == sf::Event::Closed)
-    //                                {
-    //                                    Options.close();
-    //                                }
-    //                                if (someEvent.type == sf::Event::KeyPressed)
-    //                                {
-    //                                    if (someEvent.key.code == sf::Keyboard::Escape)
-    //                                    {
-    //                                        Options.close();
-    //                                    }
-    //                                }
-    //                            }
-    //                            Play.close();
-    //                            Options.clear();
-    //                            About.close();
-    //                            Play.display();
-    //                        }
-    //                    }
-    //                    if (x == 2)
-    //                    {
-    //                        while (About.isOpen())
-    //                        {
-    //                            sf::Event someEvent;
-    //                            // ABOUT WINDOW
-    //                            while (About.pollEvent(someEvent))
-    //                            {
-    //                                if (someEvent.type == sf::Event::Closed)
-    //                                {
-    //                                    About.close();
-    //                                }
-    //                                if (someEvent.type == sf::Event::KeyPressed)
-    //                                {
-    //                                    if (someEvent.key.code == sf::Keyboard::Escape)
-    //                                    {
-    //                                        About.close();
-    //                                    }
-    //                                }
-    //                            }
-    //                            Play.close();
-    //                            Options.close();
-    //                            About.clear();
-    //                            About.display();
-    //                        }
-    //                    }
-    //                    if (x == 3)
-    //                    {
-    //                        menu.close();
-    //                        break;
-    //                    }
-    //                }
-    //            }
-    //            menu.clear();
-    //            menu.draw(menuBackground);
-    //            mainMenu.draw(menu);
-    //            menu.display();
-    //        }
-    //    }
-    //}
 
     void runPlayWindow() 
     { 
-        sf::RenderWindow Play(sf::VideoMode(960, 720), "SNAIL GAME SNAIL GAME");
+        sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
 
 
@@ -285,7 +144,7 @@ public:
     }
     void runOptionsWindow()
     {
-        sf::RenderWindow Options(sf::VideoMode(960, 720), "Options Window");
+        sf::RenderWindow Options(sf::VideoMode(1920, 1080), "Options Window");
 
         std::cout << "Opened runOptionsWindow" << std::endl;
 
@@ -314,9 +173,21 @@ public:
     }
     void runAboutWindow()
     {
-        sf::RenderWindow About(sf::VideoMode(960, 720), "About window");
+        sf::RenderWindow About(sf::VideoMode(1920, 1080), "About window");
 
         std::cout << "Opened runAboutWindow" << std::endl;
+
+        sf::Text aboutTitle;
+        sf::Font aboutFont;
+        // load font
+        if (!aboutFont.loadFromFile("Jersey20-Regular.ttf"))  
+        {
+            std::cout << "Error Loading about title Font\n";
+        }
+        aboutTitle.setCharacterSize(80);
+        aboutTitle.setString("ABOUT");
+        aboutTitle.setPosition(200, 50);
+        aboutTitle.setFont(aboutFont); 
 
         while (About.isOpen()) 
         {
@@ -337,6 +208,7 @@ public:
                     }
                 }
             }
+            About.draw(aboutTitle);
             About.display();
             About.clear();
         }
@@ -346,15 +218,35 @@ public:
     void mainMenuWindow()
     {
         // window for main menu
-        sf::RenderWindow menu(sf::VideoMode(960, 720), "Main Menu (use arrow keys)", sf::Style::Default); 
+        sf::RenderWindow menu(sf::VideoMode(1920, 1080), "Main Menu (use arrow keys)", sf::Style::Default); 
         MainMenu mainMenu(menu.getSize().x, menu.getSize().y);
 
         // background
         sf::RectangleShape menuBackground;
-        menuBackground.setSize(sf::Vector2f(960, 720));
+        menuBackground.setSize(sf::Vector2f(1920, 1080));
         sf::Texture menuTexture;
-        menuTexture.loadFromFile("tex_molten_iron_a_256.PNG");
+        menuTexture.loadFromFile("battleback1.png");
         menuBackground.setTexture(&menuTexture);
+
+        // game title
+
+        sf::Text title;
+        sf::Font titleFont;
+        if (!titleFont.loadFromFile("BungeeSpice-Regular.ttf")) 
+        {
+            std::cout << "Error Loading Title Font\n";
+        }
+        title.setString("SNAIL RUN");
+        title.setPosition(625, 100);
+        title.setCharacterSize(120);
+        title.setFont(titleFont);
+        
+
+ /*       sf::Sprite title;
+        sf::Texture titleTexture;
+        titleTexture.loadFromFile("game_title.png");
+        title.setTexture(titleTexture);
+        title.setPosition(100, 100);*/
 
         int x = 0;
 
@@ -410,6 +302,8 @@ public:
                     menu.clear();
                     menu.draw(menuBackground);
                     mainMenu.draw(menu);
+                    menu.draw(title);
+
                     menu.display();
             }
         }

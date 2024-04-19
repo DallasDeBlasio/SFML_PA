@@ -33,7 +33,7 @@ public:
 	}
 	DialogBox(sf::String stringToDisplay, sf::Vector2f position)
 	{
-		font.loadFromFile("Jersey20-Regular.ttf");
+		font.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
 		text.setFont(font);
 		text.setFillColor(sf::Color::Blue);
 		text.setString(stringToDisplay); 
