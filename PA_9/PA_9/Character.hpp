@@ -11,10 +11,10 @@ public:
 
 	sf::Vector2f movementDirection;//points in the direction of movement, should decay back to 0,0 under no outside influence
 	float speed;//should be movementSpeed while moving, but should be higher if the character gets moved or launched
-	float movmentSpeed;//maximum speed under normal movment
+	float movmentSpeed;//maximum speed under normal movment //dont change
 	int mDamage;
 	int mHP;
-	int walkFrame;
+	//int walkFrame;
 	int width;
 	int height;
 
