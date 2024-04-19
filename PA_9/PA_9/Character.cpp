@@ -1,49 +1,5 @@
 #include "Character.hpp"
 
-//Character::Character(int newDamage, int newHP, sf::RectangleShape newRectangle, sf::Sprite newSprite)
-//{
-//	this->mDamage = newDamage;
-//	this->mHP = newHP;
-//	this->mRectangle = newRectangle;
-//	this->mSprite = newSprite;
-//}
-//
-//Character::Character(const int& newDamage, const int& newHP, const sf::Vector2f& size, const sf::Vector2f& position, const sf::Vector2f & startIntRect, const sf::Texture texture)
-//{
-//	this->mDamage = newDamage;
-//	this->mHP = newHP;
-//	this->mRectangle.setSize(size);
-//	this->mRectangle.setPosition(position);
-//	this->mSprite.setTextureRect(sf::IntRect(startIntRect.x, startIntRect.y, startIntRect.x + size.x, startIntRect.y + size.y));
-//	this->mSprite.setPosition(position);
-//	this->mSprite.setTexture(texture);
-//}
-//
-//void Character::moveCharacter(sf::Vector2f vector)
-//{
-//	this->mRectangle.move(vector);
-//	this->mSprite.move(vector);
-//}
-//
-//void Character::setDamage(int newDamage)
-//{
-//	this->mDamage = newDamage;
-//}
-//
-//void Character::setHP(int newHP)
-//{
-//	this->mHP = newHP;
-//}
-//
-//int Character::getDamage(void)
-//{
-//	return this->mDamage;
-//}
-//
-//int Character::getHP(void)
-//{
-//	return this->mHP;
-//}
 
 Character::Character():Sprite()
 {
@@ -51,7 +7,6 @@ Character::Character():Sprite()
 	this->mHP = 30;
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
-	this->walkFrame = 0;
 	this->facing = 1;
 	this->mScale = 1;
 	this->height = 50;
@@ -61,11 +16,7 @@ Character::Character():Sprite()
 	this->setOrigin(this->width / 2.f, this->height / 2.f);
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
-	//this->movementVector.setRadius(width / 8.f);
 
-	//this->movementUnitVector.setRadius(width / 8.f * 3.f / 4.f);
-
-	//this.
 }
 
 Character::Character(int scale,int width, int height)
@@ -74,7 +25,6 @@ Character::Character(int scale,int width, int height)
 	this->mHP = 30;
 	this->mDamage = 0;
 	this->movmentSpeed = 0.2;
-	this->walkFrame = 0;
 	this->facing = 1;
 	this->mScale = scale;
 	this->width = width;
@@ -83,17 +33,10 @@ Character::Character(int scale,int width, int height)
 
 	this->setScale(this->mScale, this->mScale);
 
-	//this->movementVector.setOrigin(this->movementVector.getRadius() / 2.f, this->movementVector.getRadius() / 2.f);
-	
-	//this->movementVector.setRadius(width / 4.f);
-	//this->movementUnitVector.setRadius(width / 4.f * 3.f / 4.f);
-
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
-	//this.
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
-	//this->setPosition(this->width / 2, this->height / 2);
 }
 
 void Character::moveV(void)
@@ -149,10 +92,9 @@ void Character::moveV(void)
 		}
 	}
 
-
+	//changing direction
 	if (unitVector.x > 0 && this->facing == -1)
 	{
-		
 		this->scale(-1.f, 1.f);
 		this->facing = 1;
 	}
