@@ -14,6 +14,8 @@ Character::Character():Sprite()
 	this->setScale(this->mScale, this->mScale);
 
 	this->setOrigin(this->width / 2.f, this->height / 2.f);
+	this->walkFrame = 0;
+
 
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 
@@ -30,6 +32,7 @@ Character::Character(int scale,int width, int height)
 	this->width = width;
 	this->height = height;
 	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
+	this->walkFrame = 0;
 
 	this->setScale(this->mScale, this->mScale);
 
@@ -41,7 +44,7 @@ Character::Character(int scale,int width, int height)
 
 void Character::moveV(void)
 {
-	static int cycle = 0;
+	//static int cycle = 0;
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
 
@@ -93,9 +96,9 @@ void Character::moveV(void)
 		}
 	}
 
-	if (cycle > 200 && getVectorManitude(speed_in_direction_unitVector) != 0)
+	if (this->walkFrame > 200)
 	{
-		cycle = 0;
+		this->walkFrame = 0;
 		this->nextWalkFrame();
 	}
 	//std::cout << cycle << std::endl;
@@ -108,7 +111,10 @@ void Character::moveV(void)
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
 	decayMovment();
-	cycle++;
+	if (getVectorManitude(speed_in_direction_unitVector) != 0)
+	{
+		this->walkFrame++;
+	}
 
 }
 
@@ -167,7 +173,7 @@ void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, floa
 	frameIndex++;
 	
 	textureNode* pCur = this->currentFrame;
-	while (frameIndex < numFrames-1)
+	while (frameIndex < numFrames)
 	{
 		pCur->pNext = new textureNode;
 		pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, width, height));

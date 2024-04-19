@@ -22,7 +22,7 @@ int main()
     int one = 16;
     int two = 9;
 
-    herotest.fillTextureList(4, 64, 57, true, 48, "Assets/tempHero.png");
+    herotest.fillTextureList(4, 16, 57, true, 48, "Assets/tempHero.png");
 
     herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
 
@@ -37,14 +37,14 @@ int main()
     kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
     kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
  
-    int cycles = 0;//increment for every cycle of the window
+    //int cycles = 0;//increment for every cycle of the window
     int walkframe = 0;//which frame the animation is in
     while (window.isOpen())
     {
 
         bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
 
-        cycles++;
+        //cycles++;
 
         //close the window
         sf::Event event;

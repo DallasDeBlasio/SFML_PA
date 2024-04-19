@@ -5,6 +5,11 @@ Snail::Snail(int scale, int width, int height) : Character(scale, width, height)
 	this->speed = 0.1;
 }
 
+Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(scale, width, height)
+{
+	this->speed = initialSpeed;
+}
+
 void Snail::moveTowardsTarget(Character target)
 {
 	sf::Vector2f moveToTargetVector(target.getPosition().x - this->getPosition().x, target.getPosition().y - this->getPosition().y);
