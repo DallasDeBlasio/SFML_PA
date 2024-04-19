@@ -41,6 +41,7 @@ Character::Character(int scale,int width, int height)
 
 void Character::moveV(void)
 {
+	static int cycle = 0;
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
 
@@ -92,23 +93,22 @@ void Character::moveV(void)
 		}
 	}
 
-	//changing direction
-	if (unitVector.x > 0 && this->facing == -1)
+	if (cycle > 20)
 	{
-		this->scale(-1.f, 1.f);
-		this->facing = 1;
+		cycle = 0;
+
 	}
-	else if (unitVector.x < 0 && this->facing == 1)
-	{
-		this->scale(-1.f, 1.f);
-		this->facing = -1;
-	}
+
+	this->shouldITurnAround(unitVector);
+
 	
 	//update hitbox
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
 	decayMovment();
+	cycle++;
+
 }
 
 void Character::decayMovment(void)
@@ -138,4 +138,97 @@ void Character::decayMovment(void)
 	{
 		this->movementDirection.y = 0;
 	}
+}
+
+
+// true for horizontal spacing, false for verticle
+// gap is the gap between corners
+void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
+{
+	int frameIndex = 0;
+	sf::Vector2f gapVector(0.f,0.f);
+
+	//set gap vector
+	if (horizontal)
+	{
+		gapVector.x = gap;
+	}
+	else
+	{
+		gapVector.y = gap;
+	}
+
+	//sf::Texture wholeSheet;
+	//wholeSheet.loadFromFile(filename);
+	this->currentFrame = new textureNode;
+	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+	
+	frameIndex++;
+	textureNode* pCur = this->currentFrame;
+	while (frameIndex < numFrames)
+	{
+		pCur->pNext = new textureNode;
+		pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+		pCur = pCur->pNext;
+		frameIndex++;
+	}
+
+	pCur->pNext = this->currentFrame;
+	this->setTexture(this->currentFrame->frame);
+
+}
+
+void Character::firstTexture(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
+{
+	int frameIndex = 0;
+	sf::Vector2f gapVector(0.f, 0.f);
+
+	//set gap vector
+	if (horizontal)
+	{
+		gapVector.x = gap;
+	}
+	else
+	{
+		gapVector.y = gap;
+	}
+
+	//sf::Texture wholeSheet;
+	//wholeSheet.loadFromFile(filename);
+	this->currentFrame = new textureNode;
+	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+
+	//frameIndex++;
+	//textureNode* pCur = this->currentFrame;
+	//while (frameIndex < numFrames)
+	//{
+	//	pCur->pNext = new textureNode;
+	//	pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+	//	pCur = pCur->pNext;
+	//}
+
+	//pCur->pNext = this->currentFrame;
+	this->setTexture(this->currentFrame->frame);
+
+}
+
+void Character::shouldITurnAround(sf::Vector2f directionVector)
+{
+	//changing direction
+	if (directionVector.x > 0 && this->facing == -1)
+	{
+		this->scale(-1.f, 1.f);
+		this->facing = 1;
+	}
+	else if (directionVector.x < 0 && this->facing == 1)
+	{
+		this->scale(-1.f, 1.f);
+		this->facing = -1;
+	}
+}
+
+void Character::nextWalkFrame(void)
+{
+	this->currentFrame = this->currentFrame->pNext;
+	this->setTexture(this->currentFrame->frame);
 }

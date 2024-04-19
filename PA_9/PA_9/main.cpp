@@ -9,11 +9,6 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
 
-    sf::CircleShape movementVector(10.f);
-    movementVector.setFillColor(sf::Color::White);
-
-    sf::CircleShape movementUnitVector(7.5f);
-    movementUnitVector.setFillColor(sf::Color::Black);
 
     sf::Texture mapTexture;
     mapTexture.loadFromFile("Assets/map.png");
@@ -22,18 +17,22 @@ int main()
     room1.setScale(10.f, 10.f);
     room1.setPosition(sf::Vector2f(0.f,-320.f));//offset on map Texture to fill the window with room1
 
-    
+    //herotest\\\
 
-
-    sf::Texture heroTexture;
-    heroTexture.loadFromFile("Assets/tempHero.png");
-
+    Character herotest(3, 16, 31);
     int one = 16;
     int two = 9;
 
-    Character herotest(3,16,31);
-    herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
-    herotest.setTexture(heroTexture);
+    herotest.fillTextureList(4, 64, 57, true, 48, "Assets/tempHero.png");
+    //herotest.firstTexture(4, one + 48, two + 48, true, 48, "Assets/tempHero.png");
+    //sf::Texture heroTexture;
+    //heroTexture.loadFromFile("Assets/tempHero.png",sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));
+
+    //herotest.setTexture(heroTexture);
+
+    //herotest.set
+    //herotest.setTextureRect(sf::IntRect(one + 48, two + 48, herotest.width, herotest.height));//+48 gets to the walking animations
+    //herotest.setTexture(heroTexture);
     herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
 
  
@@ -59,7 +58,7 @@ int main()
 
 
         window.draw(room1);//draw first room
-        window.draw(herotest.hitbox);
+        //window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
 
 
@@ -69,6 +68,7 @@ int main()
         {
             hasWalkFramed = true;
             herotest.movementDirection.y += 1;
+            herotest.setTexture(herotest.currentFrame->pNext->frame);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -99,8 +99,8 @@ int main()
             {
                 walkframe = 0;
             }
-            herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-            herotest.setTexture(heroTexture);
+            //herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
+            //herotest.setTexture(heroTexture);
         }
 
         herotest.moveV();

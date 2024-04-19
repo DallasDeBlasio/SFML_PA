@@ -137,6 +137,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Snail.cpp" />
     <ClCompile Include="source.cpp" />
+    <ClCompile Include="textureNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
