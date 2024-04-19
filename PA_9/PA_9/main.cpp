@@ -61,6 +61,8 @@ int main()
         //window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
 
+        //these are the assumptions I'm making
+
 
         window.display();//display drawings
 
@@ -68,7 +70,7 @@ int main()
         {
             hasWalkFramed = true;
             herotest.movementDirection.y += 1;
-            herotest.setTexture(herotest.currentFrame->pNext->frame);
+            //herotest.setTexture(herotest.currentFrame->pNext->frame);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -89,19 +91,19 @@ int main()
             herotest.movementDirection.y -= 1;
         }
 
-        if (cycles % 250 == 0)// walk cycle if statement
-        {
-            if (hasWalkFramed)
-            {
-                walkframe++;
-            }
-            if (walkframe % 4 == 0)
-            {
-                walkframe = 0;
-            }
-            //herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
-            //herotest.setTexture(heroTexture);
-        }
+        //if (cycles % 250 == 0)// walk cycle if statement
+        //{
+        //    if (hasWalkFramed)
+        //    {
+        //        walkframe++;
+        //    }
+        //    if (walkframe % 4 == 0)
+        //    {
+        //        walkframe = 0;
+        //    }
+        //    //herotest.setTextureRect(sf::IntRect(one + 48 * walkframe, two + 48, herotest.width, herotest.height));
+        //    //herotest.setTexture(heroTexture);
+        //}
 
         herotest.moveV();
     }

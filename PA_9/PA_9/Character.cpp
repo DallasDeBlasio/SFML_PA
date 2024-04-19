@@ -93,11 +93,12 @@ void Character::moveV(void)
 		}
 	}
 
-	if (cycle > 20)
+	if (cycle > 200 && getVectorManitude(speed_in_direction_unitVector) != 0)
 	{
 		cycle = 0;
-
+		this->nextWalkFrame();
 	}
+	//std::cout << cycle << std::endl;
 
 	this->shouldITurnAround(unitVector);
 
@@ -161,14 +162,15 @@ void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, floa
 	//sf::Texture wholeSheet;
 	//wholeSheet.loadFromFile(filename);
 	this->currentFrame = new textureNode;
-	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, width, height));
 	
 	frameIndex++;
+	
 	textureNode* pCur = this->currentFrame;
-	while (frameIndex < numFrames)
+	while (frameIndex < numFrames-1)
 	{
 		pCur->pNext = new textureNode;
-		pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
+		pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, width, height));
 		pCur = pCur->pNext;
 		frameIndex++;
 	}
