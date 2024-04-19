@@ -1,6 +1,7 @@
 #pragma once
 
 #include "source.hpp"
+#include "textureNode.hpp"
 
 class Character:public sf::Sprite
 {
@@ -20,14 +21,22 @@ public:
 
 	virtual void moveV(void);// moves hero speed distance along movementDirection
 	void decayMovment(void);
+	void fillTextureList(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
+	void firstTexture(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
+
 
 	int facing; //-1 = left, 1 = right
 	int mScale;
 
 	sf::RectangleShape hitbox;
 
+	textureNode* currentFrame;
+
 private:
 
+	//if directionVector is the opposite of facing, flip sprite
+	void shouldITurnAround(sf::Vector2f directionVector);
+	void nextWalkFrame(void);
 
 	
 };
