@@ -19,15 +19,8 @@ int main()
 
 
     Character herotest(3, 16, 31);
-    int one = 16;
-    int two = 9;
-
     herotest.fillTextureList(4, 16, 57, true, 48, "Assets/tempHero.png");
-
     herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
-
-    sf::Texture snailTexture;
-    snailTexture.loadFromFile("Assets/snail.png");
 
     Snail bert(2, 32, 20);
     bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
@@ -37,14 +30,11 @@ int main()
     kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
     kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
  
-    //int cycles = 0;//increment for every cycle of the window
     int walkframe = 0;//which frame the animation is in
     while (window.isOpen())
     {
 
         bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
-
-        //cycles++;
 
         //close the window
         sf::Event event;
@@ -57,19 +47,10 @@ int main()
         //wipe previous screen
         window.clear();
 
-
         window.draw(room1);//draw first room
-        //window.draw(herotest.hitbox);
         window.draw(herotest);// draw hero
-
-
-        //window.draw(bert.hitbox);
         window.draw(bert);
         window.draw(kurt);
-
-
-        
-
 
         window.display();//display drawings
 
