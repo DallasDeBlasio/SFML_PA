@@ -231,6 +231,9 @@ void Character::shouldITurnAround(sf::Vector2f directionVector)
 
 void Character::nextWalkFrame(void)
 {
-	this->currentFrame = this->currentFrame->pNext;
-	this->setTexture(this->currentFrame->frame);
+	if (this->currentFrame != nullptr)
+	{
+		this->currentFrame = this->currentFrame->pNext;
+		this->setTexture(this->currentFrame->frame);
+	}
 }
