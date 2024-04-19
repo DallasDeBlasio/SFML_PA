@@ -4,7 +4,6 @@
 #include "DialogBox.hpp"
 
 
-#define maxMenu 4;
 
 class MainMenu
 {
@@ -245,7 +244,9 @@ public:
     void runPlayWindow() 
     { 
         sf::RenderWindow Play(sf::VideoMode(960, 720), "SNAIL GAME SNAIL GAME");
-        DialogBox box("hello world");
+        DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
+
+
 
         std::cout << "Opened runPlayWindow" << std::endl; 
 
@@ -274,6 +275,10 @@ public:
 
             Play.draw(box.getBox());
             Play.draw(box.getText());
+
+            //temp
+            Play.draw(box.getOriginPoint());
+
             Play.display();
             Play.clear();
         }

@@ -19,7 +19,6 @@ public:
 		text.setCharacterSize(40);
 		text.setPosition(400, 200);
 
-
 		bounds = text.getLocalBounds();  
 		position = text.getPosition();
 
@@ -32,28 +31,25 @@ public:
 
 		std::cout << "loaded Default dialog box" << std::endl; 
 	}
-	DialogBox(sf::String stringToDisplay)
+	DialogBox(sf::String stringToDisplay, sf::Vector2f position)
 	{
 		font.loadFromFile("Jersey20-Regular.ttf");
 		text.setFont(font);
 		text.setFillColor(sf::Color::Blue);
 		text.setString(stringToDisplay); 
 		text.setCharacterSize(40);
-		text.setPosition(400, 200);
-
+		text.setPosition(position); 
 
 		bounds = text.getLocalBounds(); 
-		position = text.getPosition();
 
-		bounds.height* text.getCharacterSize();
-		bounds.width* text.getCharacterSize();
-		
-		box.setPosition((position.x - 9), position.y);  
+		//bounds.height* text.getCharacterSize();
+		//bounds.width* text.getCharacterSize();
+
+		box.setPosition((position.x - 9), (position.y));
 		box.setSize(sf::Vector2f((bounds.width + 20), (bounds.height + 23)));
 		box.setFillColor(sf::Color::Yellow);
-
-		std::string stringForPrintDebugging = stringToDisplay; 
 		
+		std::string stringForPrintDebugging = stringToDisplay; 
 		std::cout << "loaded dialog box with \"" << stringForPrintDebugging << "\"" << std::endl;  
 	}
 
@@ -129,6 +125,13 @@ public:
 		sf::Vector2f dimensions = box.getSize(); 
 		box.setSize(sf::Vector2f((dimensions.x + difference), dimensions.y)); 
 	}
+	/// <summary>
+	/// temp for making origin visible
+	/// </summary>
+	sf::CircleShape getOriginPoint()
+	{
+		return originPoint; 
+	}
 private:
 
 	sf::RectangleShape box;
@@ -137,4 +140,8 @@ private:
 	sf::Text text;
 	sf::Font font;
 	sf::Vector2f position;
+
+	//temp
+	sf::CircleShape originPoint;
+
 };
