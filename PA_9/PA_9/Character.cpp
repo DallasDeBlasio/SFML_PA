@@ -3,10 +3,10 @@
 
 Character::Character():Sprite()
 {
-	this->speed = 0.2;
-	this->mHP = 30;
+	this->speed = 0.2 * 1000;
+	this->maxHP = 30;
 	this->mDamage = 0;
-	this->movmentSpeed = 0.2;
+	this->movmentSpeed = 0.2 * 1000;
 	this->facing = 1;
 	this->mScale = 1;
 	this->height = 50;
@@ -23,10 +23,10 @@ Character::Character():Sprite()
 
 Character::Character(int scale,int width, int height)
 {
-	this->speed = 0.2;
-	this->mHP = 30;
+	this->speed = 0.2 * 1000;
+	this->maxHP = 30;
 	this->mDamage = 0;
-	this->movmentSpeed = 0.2;
+	this->movmentSpeed = 0.2 * 10000;
 	this->facing = 1;
 	this->mScale = scale;
 	this->width = width;
@@ -42,11 +42,12 @@ Character::Character(int scale,int width, int height)
 
 }
 
-void Character::moveV(void)
+void Character::moveV(float  deltaTime)
 {
 	//static int cycle = 0;
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
+	speed_in_direction_unitVector *= deltaTime;
 
 	if (speed_in_direction_unitVector.x < 0)//left side boundry
 	{
@@ -115,6 +116,10 @@ void Character::moveV(void)
 	{
 		this->walkFrame++;
 	}
+	std::cout << this->height << std::endl;
+	std::cout << speed_in_direction_unitVector.x << std::endl;
+	std::cout << speed_in_direction_unitVector.y << std::endl << std::endl;
+
 
 }
 
@@ -186,39 +191,10 @@ void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, floa
 
 }
 
-void Character::firstTexture(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
-{
-	int frameIndex = 0;
-	sf::Vector2f gapVector(0.f, 0.f);
-
-	//set gap vector
-	if (horizontal)
-	{
-		gapVector.x = gap;
-	}
-	else
-	{
-		gapVector.y = gap;
-	}
-
-	//sf::Texture wholeSheet;
-	//wholeSheet.loadFromFile(filename);
-	this->currentFrame = new textureNode;
-	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
-
-	//frameIndex++;
-	//textureNode* pCur = this->currentFrame;
-	//while (frameIndex < numFrames)
-	//{
-	//	pCur->pNext = new textureNode;
-	//	pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.x * frameIndex, width, height));
-	//	pCur = pCur->pNext;
-	//}
-
-	//pCur->pNext = this->currentFrame;
-	this->setTexture(this->currentFrame->frame);
-
-}
+//void Character::moveV(float deltaTime)
+//{
+//	this->movmentSpeed 
+//}
 
 void Character::shouldITurnAround(sf::Vector2f directionVector)
 {

@@ -31,9 +31,16 @@ int main()
     kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
  
     int walkframe = 0;//which frame the animation is in
+
+    //float standardMovement
+
+    sf::Clock timer;//credit martin
+    sf::Time DeltaTime;//credit martin
+    //DeltaTime.
     while (window.isOpen())
     {
-
+        timer.restart();
+        
         bool hasWalkFramed = false; //stop walkframe from being incremented twice if multiple keys pressed
 
         //close the window
@@ -79,10 +86,13 @@ int main()
             herotest.movementDirection.y -= 1;
         }
 
-        kurt.moveTowardsTarget(herotest);
-        bert.moveTowardsTarget(herotest);
-        herotest.moveV();
+        kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        herotest.moveV(DeltaTime.asSeconds());
+
+        DeltaTime = timer.getElapsedTime();
+        //std::cout << herotest.movmentSpeed << std::endl;
     }
-    return 15;
+    return 14;
 
 }
