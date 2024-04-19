@@ -9,5 +9,5 @@ public:
 	Snail(int scale, int width, int height, float initialSpeed);
 
 
-	void moveTowardsTarget(Character target);
+	void moveTowardsTarget(Character target , float  deltaTime);
 };

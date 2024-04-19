@@ -2,15 +2,15 @@
 
 Snail::Snail(int scale, int width, int height) : Character(scale, width, height)
 {
-	this->speed = 0.1;
+	this->speed = 0.1f * 1000;
 }
 
 Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(scale, width, height)
 {
-	this->speed = initialSpeed;
+	this->speed = initialSpeed * 1000;
 }
 
-void Snail::moveTowardsTarget(Character target)
+void Snail::moveTowardsTarget(Character target, float  deltaTime)
 {
 	sf::Vector2f moveToTargetVector(target.getPosition().x - this->getPosition().x, target.getPosition().y - this->getPosition().y);
 
@@ -37,6 +37,6 @@ void Snail::moveTowardsTarget(Character target)
 		}
 	}
 
-	this->moveV();
+	this->moveV(deltaTime);
 
 }

@@ -1,6 +1,6 @@
 #include "source.hpp"
 
-double getVectorManitude(sf::Vector2f vector)
+float getVectorManitude(sf::Vector2f vector)
 {
 	return sqrt(vector.x * vector.x + vector.y * vector.y);
 }

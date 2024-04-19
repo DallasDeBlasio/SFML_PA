@@ -14,15 +14,15 @@ public:
 	float speed;//should be movementSpeed while moving, but should be higher if the character gets moved or launched
 	float movmentSpeed;//maximum speed under normal movment //dont change
 	int mDamage;
-	int mHP;
+	int maxHP;
 	int walkFrame;
 	int width;
 	int height;
 
-	virtual void moveV(void);// moves hero speed distance along movementDirection
+	virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 	void decayMovment(void);
 	void fillTextureList(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
-	void firstTexture(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
+	//virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 
 
 	int facing; //-1 = left, 1 = right
