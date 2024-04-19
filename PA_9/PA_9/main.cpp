@@ -5,9 +5,10 @@
 
 int main()
 {
-    int windowWidth = 960;
+    int windowLength = 1080;
+    int windowWidth = 1920;
 
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowWidth), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowLength), "SFML works!");
 
 
     sf::Texture mapTexture;
@@ -20,7 +21,7 @@ int main()
 
     Character herotest(3, 16, 31);
     herotest.fillTextureList(4, 16, 57, true, 48, "Assets/tempHero.png");
-    herotest.setPosition(herotest.width / 2.0f * herotest.mScale, herotest.height / 2.0f * herotest.mScale);
+    herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
 
     Snail bert(2, 32, 20);
     bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
@@ -28,7 +29,7 @@ int main()
 
     Snail kurt(2, 32, 20, 0.15);
     kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
-    kurt.setPosition(960 - kurt.width / 2.0f * kurt.mScale,960 - kurt.height / 2.0f * kurt.mScale);
+    kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale,windowLength - kurt.height / 2.0f * kurt.mScale);
  
     int walkframe = 0;//which frame the animation is in
 

@@ -63,9 +63,9 @@ void Character::moveV(float  deltaTime)
 	
 	if(speed_in_direction_unitVector.x > 0)//right side boundry
 	{
-		if (this->getPosition().x + this->width / 2.f * this->mScale > 960)//hardcoding window size as of right now
+		if (this->getPosition().x + this->width / 2.f * this->mScale > 1920)//hardcoding window size as of right now
 		{
-			this->setPosition(960 - this->width / 2.f * this->mScale, this->getPosition().y);
+			this->setPosition(1920 - this->width / 2.f * this->mScale, this->getPosition().y);
 		}
 		else
 		{
@@ -87,9 +87,9 @@ void Character::moveV(float  deltaTime)
 	
 	if(speed_in_direction_unitVector.y > 0)//bottom boundry
 	{
-		if (this->getPosition().y + this->height / 2.f * this->mScale > 960)//hardcoding window size right now
+		if (this->getPosition().y + this->height / 2.f * this->mScale > 1080)//hardcoding window size right now
 		{
-			this->setPosition(this->getPosition().x, 960 - this->height / 2.f * this->mScale);
+			this->setPosition(this->getPosition().x, 1080 - this->height / 2.f * this->mScale);
 		}
 		else
 		{
