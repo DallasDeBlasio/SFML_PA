@@ -21,7 +21,7 @@ public:
 
 	virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 	void decayMovment(void);
-	void fillTextureList(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
+	void fillTextureList(textureNode* startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
 	//virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 
 

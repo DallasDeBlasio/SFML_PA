@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
+    <ClInclude Include="player.hpp" />
     <ClInclude Include="Snail.hpp" />
     <ClInclude Include="source.hpp" />
     <ClInclude Include="textureNode.hpp" />

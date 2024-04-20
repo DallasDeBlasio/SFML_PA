@@ -155,7 +155,7 @@ void Character::decayMovment(void)
 
 // true for horizontal spacing, false for verticle
 // gap is the gap between corners
-void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
+void Character::fillTextureList(textureNode* startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
 {
 	int frameIndex = 0;
 	sf::Vector2f gapVector(0.f,0.f);
@@ -172,8 +172,8 @@ void Character::fillTextureList(int numFrames, float XCoordinateFirstFrame, floa
 
 	//sf::Texture wholeSheet;
 	//wholeSheet.loadFromFile(filename);
-	this->currentFrame = new textureNode;
-	this->currentFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, width, height));
+	startFrame = new textureNode;
+	startFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, width, height));
 	
 	frameIndex++;
 	
