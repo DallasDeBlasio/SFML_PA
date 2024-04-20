@@ -121,15 +121,15 @@ public:
         room1.setPosition(sf::Vector2f(0.f, -320.f));//offset on map Texture to fill the window with room1
 
         Character herotest(3, 16, 31);
-        herotest.fillTextureList(4, 16, 57, true, 48, "Assets/tempHero.png");
+        herotest.fillTextureList(herotest.currentFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
         herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
 
         Snail bert(2, 32, 20);
-        bert.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
+        bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
 
         Snail kurt(2, 32, 20, 0.15);
-        kurt.fillTextureList(3, 0, 72, true, 32, "Assets/snail.png");
+        kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
 
         int walkframe = 0;//which frame the animation is in

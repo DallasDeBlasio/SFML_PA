@@ -186,8 +186,8 @@ void Character::fillTextureList(textureNode* startFrame, int numFrames, float XC
 		frameIndex++;
 	}
 
-	pCur->pNext = this->currentFrame;
-	this->setTexture(this->currentFrame->frame);
+	pCur->pNext = startFrame;
+	//this->setTexture(startFrame->frame);
 
 }
 
