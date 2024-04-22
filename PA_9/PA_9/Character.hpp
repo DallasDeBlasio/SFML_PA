@@ -21,12 +21,14 @@ public:
 	int width;
 	int height;
 
+	float invinciblityTime;// = 0.f;//0 if not invincible
+
 	virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 	void fillTextureList(textureNode*& startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename);//firstTexture
 	void fillTextureList(textureNode*& startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, float width, float height, bool horizontal, int gap, const char* filename, bool loop);//firstTexture
 
 	//virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
-
+	
 
 	int facing; //-1 = left, 1 = right
 	int mScale;
@@ -42,8 +44,8 @@ private:
 	void nextWalkFrame(void);
 
 	//work in tandem to decay speed and the movement vector such that if an outside force moves the character, they eventually re
-	void decayMovment(void);
-	void decaySpeed(void);
+	void decayMovment(float  deltaTime);
+	void decaySpeed(float  deltaTime);
 
 	
 };

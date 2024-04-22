@@ -2,54 +2,54 @@
 
 int speedFactor = 2000;
 
-Character::Character():Sprite()
+Character::Character(): Character(1,50,50,0.2)
 {
-	this->maxHP = 30;
-	this->mDamage = 0;
-	this->movmentSpeed = 0.2 * speedFactor;
-	this->speed = this->movmentSpeed;
-	this->facing = 1;
-	this->mScale = 1;
-	this->height = 50;
-	this->width = 50;
-	this->setScale(this->mScale, this->mScale);
-	this->currentFrame = nullptr;
+	//this->maxHP = 30;
+	//this->mDamage = 5;
+	//this->movmentSpeed = 0.2 * speedFactor;
+	//this->speed = this->movmentSpeed;
+	//this->facing = 1;
+	//this->mScale = 1;
+	//this->height = 50;
+	//this->width = 50;
+	//this->setScale(this->mScale, this->mScale);
+	//this->currentFrame = nullptr;
 
 
-	this->setOrigin(this->width / 2.f, this->height / 2.f);
-	this->walkFrame = 0;
+	//this->setOrigin(this->width / 2.f, this->height / 2.f);
+	//this->walkFrame = 0;
 
 
-	this->movementDirection = sf::Vector2f(0.f, 0.f);
+	//this->movementDirection = sf::Vector2f(0.f, 0.f);
 
 }
 
-Character::Character(int scale,int width, int height)
+Character::Character(int scale, int width, int height) :Character(scale, width, height, 0.2) //: Sprite()
 {
-	this->maxHP = 30;
-	this->mDamage = 0;
-	this->movmentSpeed = 0.2 * speedFactor;
-	this->speed = this->movmentSpeed;
-	this->facing = 1;
-	this->mScale = scale;
-	this->width = width;
-	this->height = height;
-	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
-	this->walkFrame = 0;
-	this->currentFrame = nullptr;
+	//this->maxHP = 30;
+	//this->mDamage = 5;
+	//this->movmentSpeed = 0.2 * speedFactor;
+	//this->speed = this->movmentSpeed;
+	//this->facing = 1;
+	//this->mScale = scale;
+	//this->width = width;
+	//this->height = height;
+	//this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
+	//this->walkFrame = 0;
+	//this->currentFrame = nullptr;
 
-	this->setScale(this->mScale, this->mScale);
+	//this->setScale(this->mScale, this->mScale);
 
-	this->movementDirection = sf::Vector2f(0.f, 0.f);
-	this->hitbox.setSize(this->getGlobalBounds().getSize());
-	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+	//this->movementDirection = sf::Vector2f(0.f, 0.f);
+	//this->hitbox.setSize(this->getGlobalBounds().getSize());
+	//this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
 }
 
-Character::Character(int scale, int width, int height, float initialSpeed)
+Character::Character(int scale, int width, int height, float initialSpeed):Sprite()
 {
 	this->maxHP = 30;
-	this->mDamage = 0;
+	this->mDamage = 5;
 	this->movmentSpeed = initialSpeed * speedFactor;
 	this->speed = this->movmentSpeed;
 
@@ -67,6 +67,7 @@ Character::Character(int scale, int width, int height, float initialSpeed)
 	this->movementDirection = sf::Vector2f(0.f, 0.f);
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+	this->invinciblityTime = 0.f;
 
 }
 //
@@ -87,6 +88,7 @@ void Character::moveV(float  deltaTime)
 		if (this->getPosition().x - this->width / 2.f * this->mScale < 0)
 		{
 			this->setPosition(0 + this->width/2.f * this->mScale, this->getPosition().y);
+			this->movementDirection.x = 0;
 		}
 		else
 		{
@@ -99,6 +101,7 @@ void Character::moveV(float  deltaTime)
 		if (this->getPosition().x + this->width / 2.f * this->mScale > 1920)//hardcoding window size as of right now
 		{
 			this->setPosition(1920 - this->width / 2.f * this->mScale, this->getPosition().y);
+			this->movementDirection.x = 0;
 		}
 		else
 		{
@@ -111,6 +114,8 @@ void Character::moveV(float  deltaTime)
 		if (this->getPosition().y - this->height / 2.f * this->mScale < 0)
 		{
 			this->setPosition(this->getPosition().x, 0 + this->height / 2.f * this->mScale);
+			this->movementDirection.y = 0;
+
 		}
 		else
 		{
@@ -123,6 +128,7 @@ void Character::moveV(float  deltaTime)
 		if (this->getPosition().y + this->height / 2.f * this->mScale > 1080)//hardcoding window size right now
 		{
 			this->setPosition(this->getPosition().x, 1080 - this->height / 2.f * this->mScale);
+			this->movementDirection.y = 0;
 		}
 		else
 		{
@@ -144,8 +150,8 @@ void Character::moveV(float  deltaTime)
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
-	this->decayMovment();
-	this->decaySpeed();
+	this->decayMovment(deltaTime);
+	this->decaySpeed(deltaTime);
 
 
 	if (getVectorManitude(speed_in_direction_unitVector) != 0)
@@ -270,7 +276,7 @@ void Character::nextWalkFrame(void)
 	}
 }
 
-void Character::decaySpeed(void)
+void Character::decaySpeed(float  deltaTime)
 {
 
 	this->speed -= this->speed * 0.001;
@@ -281,11 +287,11 @@ void Character::decaySpeed(void)
 	//}
 }
 
-void Character::decayMovment(void)
+void Character::decayMovment(float  deltaTime)
 {
 	if (this->movementDirection.x > 1)
 	{
-		this->movementDirection.x -= 0.1;
+		this->movementDirection.x -= 0.1 * deltaTime;
 		//this->movementDirection.x -= this->movementDirection.x * 0.000001f;//this->movementSpeed
 	}
 	else if (this->movementDirection.x < -1)

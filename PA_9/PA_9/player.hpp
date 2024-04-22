@@ -10,6 +10,7 @@ public:
 	float attackLength;
 	float attackCoolDown;
 	bool attacking;
+	sf::RectangleShape weaponHitBox;
 	//textureNode* currentAttackNode;
 
 
@@ -19,4 +20,5 @@ public:
 
 
 	void attackOne(void);
+	void setWeaponHitBox(void);
 };

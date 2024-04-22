@@ -27,3 +27,10 @@ sf::Vector2f getUnitVector(sf::Vector2f vector);
 
 
 //things i'd like to see change, how not to hardcode window size in seperate functions
+
+
+//what we need to do that I'm skipping
+//{
+//destructors, copy constructor, and equals operator for any class with allocated memory
+
+//}

@@ -6,6 +6,8 @@
 #include "Character.hpp"
 #include "Snail.hpp"
 #include "player.hpp"
+#include "characterNode.hpp"
+#include "characterList.hpp"
 
 class MainMenu
 {
@@ -152,16 +154,16 @@ public:
 
         int walkframe = 0;//which frame the animation is in
 
-        //bool attacking = false;
 
-        //float standardMovement
     //
         sf::Clock timer;//credit martin
         sf::Time DeltaTime;//credit martin
         //DeltaTime.
         float attackCoolDown = 0;
 
-        //textureNode* pCurAttack = herotest.
+
+        
+
 
         while (Play.isOpen())
         {
@@ -196,10 +198,14 @@ public:
 
         Play.draw(room1);//draw first room
         //Play.draw(herotest.hitbox);
-
+        //herotest.weaponHitBox.setFillColor(sf::Color::Black);
+        //Play.draw(herotest.weaponHitBox);
         Play.draw(herotest);// draw hero
-        Play.draw(bert);
-        Play.draw(kurt);
+        if(bert.maxHP>0)
+        {
+            Play.draw(bert);
+        }
+        //Play.draw(kurt);
         Play.draw(poop);
 
 
@@ -208,34 +214,32 @@ public:
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.attacking)//if s pressed
         {
             hasWalkFramed = true;
-            herotest.movementDirection.y += 0.1;
+            herotest.movementDirection.y += 0.1 * DeltaTime.asSeconds();
             //herotest.setTexture(herotest.currentFrame->pNext->frame);
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.x += 0.1;
+            herotest.movementDirection.x += 0.1 * DeltaTime.asSeconds();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.x -= 0.1;
+            herotest.movementDirection.x -= 0.1 * DeltaTime.asSeconds();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.y -= 0.1;
+            herotest.movementDirection.y -= 0.1 * DeltaTime.asSeconds();
         }
         
 
         if (attackCoolDown != 0)
         {
             attackCoolDown += DeltaTime.asSeconds();
-
-
             if (attackCoolDown > herotest.attackCoolDown)
             {
                 attackCoolDown = 0;
@@ -248,15 +252,14 @@ public:
             {
                 herotest.attacking = true;
                 herotest.setTexture(herotest.initalAttackNode->frame, true);
+                herotest.setWeaponHitBox();
+                
 
                 attackCoolDown = 0.001;
             }
         }
 
-        if (attackCoolDown > 0)
-        {
-            std::cout << attackCoolDown << std::endl;
-        }
+
 
 
         if (herotest.attacking)
@@ -268,41 +271,26 @@ public:
             }
             else
             {
-                //std::cout << attackCoolDown << "\t" << herotest.attacking << std::endl;
 
-     /*           if (attackCoolDown > 0)
-                {
-                    std::cout << attackCoolDown << std::endl;
-                }*/
-                //textureNode* pCurAttack = herotest.initalAttackNode;
                 float i = 0;
                 i = (float)herotest.attackLength / (float)herotest.numAttackFrames / 6;
-                //i = attackCoolDown / i;
-                //for (float k = 0; k < i; k+=0.1)
-                //{
-                //    if (pCurAttack->pNext != nullptr)
-                //    {
-                //        pCurAttack = pCurAttack->pNext;
-                //    }
-                //}
-                //herotest.setTexture(pCurAttack->frame, true);
                 textureNode* pCurAttack = herotest.initalAttackNode;
                 if (0.1 < attackCoolDown)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
                 }
-
                 if (0.15 < attackCoolDown)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
                 }
-                //else
-                //{
-                //    std::cout << attackCoolDown << std::endl;
-                //}
+
             }
+        }
+        else
+        {
+            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
         }
 
         kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
@@ -314,6 +302,33 @@ public:
         }
 
         DeltaTime = timer.getElapsedTime();
+
+
+        if (bert.invinciblityTime == 0 && herotest.weaponHitBox.getGlobalBounds().intersects(bert.getGlobalBounds()))
+        {
+            sf::Vector2f bounceDirection(bert.getPosition().x - herotest.getPosition().x, bert.getPosition().y - herotest.getPosition().y);
+            float bounceSpeed = getVectorManitude(bounceDirection);
+            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
+            bert.movementDirection = unitBounceDirection * 2000.f;
+            bert.speed = 700;
+            bert.maxHP -= herotest.mDamage;
+            bert.invinciblityTime = 0.01f;
+            
+        }
+
+        if (bert.invinciblityTime > 0.f)
+        {
+            if (bert.invinciblityTime > 0.25f)
+            {
+                bert.invinciblityTime = 0.f;
+            }
+            else
+            {
+                bert.invinciblityTime += DeltaTime.asSeconds();
+            }
+        }
+
+        
         //std::cout << herotest.movmentSpeed << std::endl;
    
 
