@@ -1,3 +1,5 @@
+#pragma once
+
 //C : \Panic\SFML - 2.6.1\include //general
 //C:\Panic\SFML - 2.6.1\lib //not general
 
@@ -13,8 +15,12 @@
 #include <SFML/Audio.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <Windows.h>
+//#include <Windows.h>
 
 //Vector Utility
-double getVectorManitude(sf::Vector2f vector);
+float getVectorManitude(sf::Vector2f vector);
 sf::Vector2f getUnitVector(sf::Vector2f vector);
+
+//extern int windowWidth = 960;
+//
+//extern float standardMovement = 1000;

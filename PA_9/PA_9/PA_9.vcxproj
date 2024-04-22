@@ -145,6 +145,10 @@
     <ClInclude Include="source.hpp" />
     <ClInclude Include="textureNode.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainMenu.hpp" />
+    <ClInclude Include="DialogBox.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
