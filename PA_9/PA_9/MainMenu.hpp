@@ -200,7 +200,10 @@ public:
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
-        Play.draw(herotest);// draw hero
+        if(herotest.maxHP> 0)
+        {
+            Play.draw(herotest);// draw hero
+        }
         if(bert.maxHP>0)
         {
             Play.draw(bert);
@@ -309,12 +312,24 @@ public:
             sf::Vector2f bounceDirection(bert.getPosition().x - herotest.getPosition().x, bert.getPosition().y - herotest.getPosition().y);
             float bounceSpeed = getVectorManitude(bounceDirection);
             sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            bert.movementDirection = unitBounceDirection * 2000.f;
+            bert.movementDirection = unitBounceDirection * 1000.f;
             bert.speed = 700;
             bert.maxHP -= herotest.mDamage;
-            bert.invinciblityTime = 0.01f;
-            
+            bert.invinciblityTime = 0.01f;   
         }
+
+        if (herotest.invinciblityTime == 0 && bert.getGlobalBounds().intersects(herotest.hitbox.getGlobalBounds()))
+        {
+            sf::Vector2f bounceDirection(herotest.getPosition().x - bert.getPosition().x, herotest.getPosition().y - bert.getPosition().y);
+            float bounceSpeed = getVectorManitude(bounceDirection);
+            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
+            herotest.movementDirection = unitBounceDirection * 20.f;
+            herotest.speed = 700;
+            herotest.maxHP -= bert.mDamage;
+            herotest.invinciblityTime = 0.01f;
+
+        }
+
 
         if (bert.invinciblityTime > 0.f)
         {
@@ -325,6 +340,18 @@ public:
             else
             {
                 bert.invinciblityTime += DeltaTime.asSeconds();
+            }
+        }
+
+        if (herotest.invinciblityTime > 0.f)
+        {
+            if (herotest.invinciblityTime > 0.25f)
+            {
+                herotest.invinciblityTime = 0.f;
+            }
+            else
+            {
+                herotest.invinciblityTime += DeltaTime.asSeconds();
             }
         }
 
