@@ -24,3 +24,13 @@ sf::Vector2f getUnitVector(sf::Vector2f vector);
 //extern int windowWidth = 960;
 //
 //extern float standardMovement = 1000;
+
+
+//things i'd like to see change, how not to hardcode window size in seperate functions
+
+
+//what we need to do that I'm skipping
+//{
+//destructors, copy constructor, and equals operator for any class with allocated memory
+
+//}

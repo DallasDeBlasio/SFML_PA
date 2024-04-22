@@ -1,13 +1,12 @@
 #include "Snail.hpp"
 
-Snail::Snail(int scale, int width, int height) : Character(scale, width, height)
+Snail::Snail(int scale, int width, int height) : Character(scale, width, height, 0.1f)
 {
-	this->speed = 0.1f * 1000;
 }
 
-Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(scale, width, height)
+Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(scale, width, height, initialSpeed)
 {
-	this->speed = initialSpeed * 1000;
+	//this->speed = initialSpeed * 1000;
 }
 
 void Snail::moveTowardsTarget(Character target, float  deltaTime)
