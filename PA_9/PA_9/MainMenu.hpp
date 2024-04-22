@@ -5,6 +5,7 @@
 #include "DialogBox.hpp"
 #include "Character.hpp"
 #include "Snail.hpp"
+#include "player.hpp"
 
 class MainMenu
 {
@@ -107,6 +108,7 @@ public:
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
 
 
+        
 
         std::cout << "Opened runPlayWindow" << std::endl; 
 
@@ -120,25 +122,46 @@ public:
         room1.setScale(10.f, 10.f);
         room1.setPosition(sf::Vector2f(0.f, -320.f));//offset on map Texture to fill the window with room1
 
-        Character herotest(3, 16, 31);
+        Player herotest(3, 16, 31, 0.2);
         herotest.fillTextureList(herotest.currentFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
         herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
+        herotest.setTexture(herotest.currentFrame->frame);
+        herotest.fillTextureList(herotest.initalAttackNode, 3, 16, 297, herotest.width * 2, herotest.height, true, 48, "Assets/tempHero.png", false);
+        //herotest.fillTextureList(herotest.initalAttackNode, 3, 16 * 2, 297, herotest.width, herotest.height, true, 48, "Assets/tempHero.png");
+
+
+       // herotest.initalAttackNode = new textureNode();
+        //herotest.initalAttackNode->frame.loadFromFile("Assets/tempHero.png", sf::IntRect(16+48, 297, 32, 31));
+
+        sf::Texture newtexture;
+        newtexture.loadFromFile("Assets/tempHero.png", sf::IntRect(16 + 48, 297, 16 * 2, 31));
+        sf::Sprite poop;
+        poop.setTexture(newtexture);
+        poop.setPosition(100, 100);
+
 
         Snail bert(2, 32, 20);
         bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
+        bert.setTexture(bert.currentFrame->frame);
 
         Snail kurt(2, 32, 20, 0.15);
         kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
+        kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
+
+        //bool attacking = false;
 
         //float standardMovement
     //
         sf::Clock timer;//credit martin
         sf::Time DeltaTime;//credit martin
         //DeltaTime.
+        float attackCoolDown = 0;
+
+        //textureNode* pCurAttack = herotest.
 
         while (Play.isOpen())
         {
@@ -172,45 +195,141 @@ public:
         Play.clear();
 
         Play.draw(room1);//draw first room
+        //Play.draw(herotest.hitbox);
+
         Play.draw(herotest);// draw hero
         Play.draw(bert);
         Play.draw(kurt);
+        Play.draw(poop);
+
 
         Play.display();//display drawings
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))//if s pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.attacking)//if s pressed
         {
             hasWalkFramed = true;
-            herotest.movementDirection.y += 1;
+            herotest.movementDirection.y += 0.1;
             //herotest.setTexture(herotest.currentFrame->pNext->frame);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.x += 1;
+            herotest.movementDirection.x += 0.1;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.x -= 1;
+            herotest.movementDirection.x -= 0.1;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.attacking)
         {
             hasWalkFramed = true;
-            herotest.movementDirection.y -= 1;
+            herotest.movementDirection.y -= 0.1;
+        }
+        
+
+        if (attackCoolDown != 0)
+        {
+            attackCoolDown += DeltaTime.asSeconds();
+
+
+            if (attackCoolDown > herotest.attackCoolDown)
+            {
+                attackCoolDown = 0;
+            }
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        {
+            if (attackCoolDown == 0)
+            {
+                herotest.attacking = true;
+                herotest.setTexture(herotest.initalAttackNode->frame, true);
+
+                attackCoolDown = 0.001;
+            }
+        }
+
+        if (attackCoolDown > 0)
+        {
+            std::cout << attackCoolDown << std::endl;
+        }
+
+
+        if (herotest.attacking)
+        {
+            if (attackCoolDown == 0 || attackCoolDown > herotest.attackLength)
+            {
+                herotest.attacking = false;
+                herotest.setTexture(herotest.currentFrame->frame, true);
+            }
+            else
+            {
+                //std::cout << attackCoolDown << "\t" << herotest.attacking << std::endl;
+
+     /*           if (attackCoolDown > 0)
+                {
+                    std::cout << attackCoolDown << std::endl;
+                }*/
+                //textureNode* pCurAttack = herotest.initalAttackNode;
+                float i = 0;
+                i = (float)herotest.attackLength / (float)herotest.numAttackFrames / 6;
+                //i = attackCoolDown / i;
+                //for (float k = 0; k < i; k+=0.1)
+                //{
+                //    if (pCurAttack->pNext != nullptr)
+                //    {
+                //        pCurAttack = pCurAttack->pNext;
+                //    }
+                //}
+                //herotest.setTexture(pCurAttack->frame, true);
+                textureNode* pCurAttack = herotest.initalAttackNode;
+                if (0.1 < attackCoolDown)
+                {
+                    pCurAttack = pCurAttack->pNext;
+                    herotest.setTexture(pCurAttack->frame, true);
+                }
+
+                if (0.15 < attackCoolDown)
+                {
+                    pCurAttack = pCurAttack->pNext;
+                    herotest.setTexture(pCurAttack->frame, true);
+                }
+                //else
+                //{
+                //    std::cout << attackCoolDown << std::endl;
+                //}
+            }
         }
 
         kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
         bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
-        herotest.moveV(DeltaTime.asSeconds());
+
+        if(!herotest.attacking)
+        {
+            herotest.moveV(DeltaTime.asSeconds());
+        }
 
         DeltaTime = timer.getElapsedTime();
         //std::cout << herotest.movmentSpeed << std::endl;
    
 
+
+
+
+        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        //{
+        //    herotest.movementDirection.y = 0;
+        //    herotest.movementDirection.x = -125;
+        //    herotest.speed = 2000;
+        //}
+        
+        //std::cout << herotest.movementDirection.x << ", " << herotest.movementDirection.y <<herotest.movementDirection.y << std::endl;
+        //std::cout << herotest.speed << std::endl << std::endl;
+        //st
             //Play.draw(box.getBox());
             //Play.draw(box.getText());
 

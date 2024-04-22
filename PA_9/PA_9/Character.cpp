@@ -1,17 +1,20 @@
 #include "Character.hpp"
 
+int speedFactor = 2000;
 
 Character::Character():Sprite()
 {
-	this->speed = 0.2 * 1000;
 	this->maxHP = 30;
 	this->mDamage = 0;
-	this->movmentSpeed = 0.2 * 1000;
+	this->movmentSpeed = 0.2 * speedFactor;
+	this->speed = this->movmentSpeed;
 	this->facing = 1;
 	this->mScale = 1;
 	this->height = 50;
 	this->width = 50;
 	this->setScale(this->mScale, this->mScale);
+	this->currentFrame = nullptr;
+
 
 	this->setOrigin(this->width / 2.f, this->height / 2.f);
 	this->walkFrame = 0;
@@ -23,16 +26,17 @@ Character::Character():Sprite()
 
 Character::Character(int scale,int width, int height)
 {
-	this->speed = 0.2 * 1000;
 	this->maxHP = 30;
 	this->mDamage = 0;
-	this->movmentSpeed = 0.2 * 10000;
+	this->movmentSpeed = 0.2 * speedFactor;
+	this->speed = this->movmentSpeed;
 	this->facing = 1;
 	this->mScale = scale;
 	this->width = width;
 	this->height = height;
 	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
 	this->walkFrame = 0;
+	this->currentFrame = nullptr;
 
 	this->setScale(this->mScale, this->mScale);
 
@@ -42,9 +46,38 @@ Character::Character(int scale,int width, int height)
 
 }
 
+Character::Character(int scale, int width, int height, float initialSpeed)
+{
+	this->maxHP = 30;
+	this->mDamage = 0;
+	this->movmentSpeed = initialSpeed * speedFactor;
+	this->speed = this->movmentSpeed;
+
+	this->facing = 1;
+	this->mScale = scale;
+	this->width = width;
+	this->height = height;
+	this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
+	this->walkFrame = 0;
+	this->currentFrame = nullptr;
+
+
+	this->setScale(this->mScale, this->mScale);
+
+	this->movementDirection = sf::Vector2f(0.f, 0.f);
+	this->hitbox.setSize(this->getGlobalBounds().getSize());
+	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+
+}
+//
+
 void Character::moveV(float  deltaTime)
 {
 	//static int cycle = 0;
+	if (this->speed < this->movmentSpeed)
+	{
+		this->speed = this->movmentSpeed;
+	}
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
 	speed_in_direction_unitVector *= deltaTime;
@@ -111,51 +144,27 @@ void Character::moveV(float  deltaTime)
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 
-	decayMovment();
+	this->decayMovment();
+	this->decaySpeed();
+
+
 	if (getVectorManitude(speed_in_direction_unitVector) != 0)
 	{
 		this->walkFrame++;
 	}
-	std::cout << this->height << std::endl;
-	std::cout << speed_in_direction_unitVector.x << std::endl;
-	std::cout << speed_in_direction_unitVector.y << std::endl << std::endl;
+	//std::cout << this->height << std::endl;
+	//std::cout << speed_in_direction_unitVector.x << std::endl;
+	//std::cout << speed_in_direction_unitVector.y << std::endl << std::endl;
 
 
 }
 
-void Character::decayMovment(void)
-{
-	if (this->movementDirection.x > 1)
-	{
-		this->movementDirection.x -= 0.95;//this->movementSpeed
-	}
-	else if (this->movementDirection.y < -1)
-	{
-		this->movementDirection.x += 0.95;//this->movmentSpeed;
-	}
-	else
-	{
-		this->movementDirection.x = 0;
-	}
 
-	if (this->movementDirection.y > 1)
-	{
-		this->movementDirection.y -= 0.95;//this->movmentSpeed;
-	}
-	else if (this->movementDirection.y < -1)
-	{
-		this->movementDirection.y += 0.95;//this->movmentSpeed;
-	}
-	else
-	{
-		this->movementDirection.y = 0;
-	}
-}
 
 
 // true for horizontal spacing, false for verticle
 // gap is the gap between corners
-void Character::fillTextureList(textureNode* startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
+void Character::fillTextureList(textureNode*& startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, bool horizontal, int gap, const char* filename)
 {
 	int frameIndex = 0;
 	sf::Vector2f gapVector(0.f,0.f);
@@ -177,7 +186,7 @@ void Character::fillTextureList(textureNode* startFrame, int numFrames, float XC
 	
 	frameIndex++;
 	
-	textureNode* pCur = this->currentFrame;
+	textureNode* pCur = startFrame;
 	while (frameIndex < numFrames)
 	{
 		pCur->pNext = new textureNode;
@@ -189,6 +198,47 @@ void Character::fillTextureList(textureNode* startFrame, int numFrames, float XC
 	pCur->pNext = startFrame;
 	//this->setTexture(startFrame->frame);
 
+}
+
+void Character::fillTextureList(textureNode*& startFrame, int numFrames, float XCoordinateFirstFrame, float YCoordinateFirstFrame, float frameWidth, float frameHeight, bool horizontal, int gap, const char* filename , bool loop)
+{
+	{
+		int frameIndex = 0;
+		sf::Vector2f gapVector(0.f, 0.f);
+
+		//set gap vector
+		if (horizontal)
+		{
+			gapVector.x = gap;
+		}
+		else
+		{
+			gapVector.y = gap;
+		}
+
+		//sf::Texture wholeSheet;
+		//wholeSheet.loadFromFile(filename);
+		startFrame = new textureNode;
+		startFrame->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, frameWidth, frameHeight));
+
+		frameIndex++;
+
+		textureNode* pCur = startFrame;
+		while (frameIndex < numFrames)
+		{
+			pCur->pNext = new textureNode;
+			pCur->pNext->frame.loadFromFile(filename, sf::IntRect(XCoordinateFirstFrame + gapVector.x * frameIndex, YCoordinateFirstFrame + gapVector.y * frameIndex, frameWidth, frameHeight));
+			pCur = pCur->pNext;
+			frameIndex++;
+		}
+
+		if (loop)
+		{
+			pCur->pNext = startFrame;
+		}
+		//this->setTexture(startFrame->frame);
+
+	}
 }
 
 //void Character::moveV(float deltaTime)
@@ -216,6 +266,50 @@ void Character::nextWalkFrame(void)
 	if (this->currentFrame != nullptr)
 	{
 		this->currentFrame = this->currentFrame->pNext;
-		this->setTexture(this->currentFrame->frame);
+		this->setTexture(this->currentFrame->frame, true);
+	}
+}
+
+void Character::decaySpeed(void)
+{
+
+	this->speed -= this->speed * 0.001;
+
+	//if (this->speed < this->movmentSpeed)
+	//{
+	//	this->speed = this->movmentSpeed;
+	//}
+}
+
+void Character::decayMovment(void)
+{
+	if (this->movementDirection.x > 1)
+	{
+		this->movementDirection.x -= 0.1;
+		//this->movementDirection.x -= this->movementDirection.x * 0.000001f;//this->movementSpeed
+	}
+	else if (this->movementDirection.x < -1)
+	{
+		this->movementDirection.x += 0.1;
+		//this->movementDirection.x += this->movementDirection.x * 0.000001f;//this->movmentSpeed;
+	}
+	else
+	{
+		this->movementDirection.x = 0;
+	}
+
+	if (this->movementDirection.y > 1)
+	{
+		this->movementDirection.y -= 0.1;
+		//this->movementDirection.y -= this->movementDirection.y * 0.000001f;//this->movmentSpeed;
+	}
+	else if (this->movementDirection.y < -1)
+	{
+		this->movementDirection.y += 0.1;
+		//this->movementDirection.y += this->movementDirection.y * 0.000001f;//this->movmentSpeed;
+	}
+	else
+	{
+		this->movementDirection.y = 0;
 	}
 }
