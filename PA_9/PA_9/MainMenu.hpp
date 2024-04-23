@@ -55,7 +55,6 @@ public:
     ~MainMenu()
     {
         std::cout << "destroying main menu" << std::endl;
- 
     }
 
     void draw(sf::RenderWindow& window)
@@ -243,7 +242,7 @@ public:
         sf::Font optionsFont;
         if (!optionsFont.loadFromFile("BungeeSpice-Regular.ttf"))
         {
-            std::cout << "Error Loading about title Font\n";
+            std::cout << "Error Loading testing title Font\n";
         }
 
         //Options title settings-----------------------------------<<<
@@ -265,14 +264,14 @@ public:
                 if (someEvent.type == sf::Event::Closed)
                 {
                     Options.close();
-                    std::cout << "Closed runOptionsWindow" << std::endl;
+                    std::cout << "Closed runTestingWindow" << std::endl;
                 }
                 if (someEvent.type == sf::Event::KeyPressed)
                 {
                     if (someEvent.key.code == sf::Keyboard::Escape)
                     {
                         Options.close();
-                        std::cout << "Closed runOptionsWindow" << std::endl;
+                        std::cout << "Closed runTestingWindow" << std::endl;
                     }
                 }
             }
@@ -321,7 +320,7 @@ public:
         }
         aboutText.setLineSpacing(1.5);
         aboutText.setCharacterSize(30);
-        aboutText.setString("Made by Dallas DeBlasio, Connor Chase, James Richards-Perhatch, and Asa Fischer,\nwe present SNAIL RUN; our our final project for CptS_122. SNAIL RUN is a birds-eye\nview game where the player fights (or runs) from evil snails who want to\ntake away your vast riches and imortality. ***ill make a better description\nwhen more of the game is done***\n\nCONTROLS:\nMove with (WASD).\nNavigate menu with (WS) or UP and DOWN arrows.\nGo back to MainMenu (Esc)");
+        aboutText.setString("Made by Dallas DeBlasio, Connor Chase, James Richards-Perhatch, and Asa Fischer,\nwe present SNAIL RUN; our our final project for CptS_122. SNAIL RUN is a birds-eye\nview game where the player fights (or runs) from evil snails who want to\ntake away your vast riches and imortality. ***ill make a better description\nwhen more of the game is done***\n\nCONTROLS:\nMove (WASD).\nNavigate menu (WS) or UP and DOWN arrows.\nAttack (space)\nGo back to MainMenu (Esc)");
         aboutText.setPosition(200, 250);
         aboutText.setFont(aboutTextFont); 
         //---------------------------------------------------------------------<<<
@@ -391,6 +390,7 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     menuWindow.close();
+                    exit(0);
                 }
                 if (event.type == sf::Event::KeyPressed)
                 {
