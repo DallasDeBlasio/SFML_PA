@@ -12,5 +12,5 @@ public:
 	void insertAtFront(Character* newCharacter);
 	void deleteAtFront(void);
 	void deleteCharacter(Character* newCharacter);
-
+	characterList();
 };

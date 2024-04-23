@@ -37,3 +37,8 @@ void characterList::deleteCharacter(Character* newCharacter)
 		}
 	}
 }
+
+characterList::characterList()
+{
+	this->pHead = nullptr;
+}

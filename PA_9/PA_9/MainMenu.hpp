@@ -106,8 +106,10 @@ public:
 
     void runPlayWindow() 
     { 
+
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
+        Play.clear();
 
 
         
@@ -143,14 +145,14 @@ public:
 
 
         Snail bert(2, 32, 20);
-        bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+        //bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
-        bert.setTexture(bert.currentFrame->frame);
+        //bert.setTexture(bert.currentFrame->frame);
 
         Snail kurt(2, 32, 20, 0.15);
-        kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+        //kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
-        kurt.setTexture(kurt.currentFrame->frame);
+        //kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
 
@@ -162,7 +164,8 @@ public:
         float attackCoolDown = 0;
 
 
-        
+        characterList CharacterList;
+        bool spawnEnemy = true;
 
 
         while (Play.isOpen())
@@ -195,8 +198,9 @@ public:
 
         //wipe previous screen
         Play.clear();
-
+        
         Play.draw(room1);//draw first room
+
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
@@ -208,8 +212,29 @@ public:
         {
             Play.draw(bert);
         }
+
         //Play.draw(kurt);
-        Play.draw(poop);
+        //Play.draw(poop);
+        //Play.draw(CharacterList.pHead.)
+
+
+
+        CharacterNode* pCur = CharacterList.pHead;
+
+        while (pCur != nullptr)
+        {
+            //if (pCur->currentHP == 0)
+            //{
+            //    delete pCur
+            //}
+            //else
+            //{
+            Play.draw(*(pCur->mCharacter));
+            //pCur->mCharacter->moveV(DeltaTime.asSeconds());
+            pCur->mCharacter.
+            //}
+            pCur = pCur->pNext;
+        }
 
 
         Play.display();//display drawings
@@ -297,6 +322,7 @@ public:
         }
 
         kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        
         bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
 
         if(!herotest.attacking)
@@ -323,7 +349,7 @@ public:
             sf::Vector2f bounceDirection(herotest.getPosition().x - bert.getPosition().x, herotest.getPosition().y - bert.getPosition().y);
             float bounceSpeed = getVectorManitude(bounceDirection);
             sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            herotest.movementDirection = unitBounceDirection * 20.f;
+            herotest.movementDirection = unitBounceDirection * 100.f;
             herotest.speed = 700;
             herotest.maxHP -= bert.mDamage;
             herotest.invinciblityTime = 0.01f;
@@ -355,6 +381,20 @@ public:
             }
         }
 
+
+        //        Snail kurt(2, 32, 20, 0.15);
+
+        if (spawnEnemy)
+        {
+            Character* pNewCharacter = new Snail(2, 32, 20, 0.15);
+            //pNewCharacter.
+            spawnEnemy = false;
+            CharacterList.insertAtFront(pNewCharacter);
+            pNewCharacter->setPosition(pNewCharacter->width * pNewCharacter->mScale / 2.f, pNewCharacter->height * pNewCharacter->mScale / 2.f);
+            //Play.draw(pNewCharacter);
+
+        }
+
         
         //std::cout << herotest.movmentSpeed << std::endl;
    
@@ -378,7 +418,6 @@ public:
             ////temp
             //Play.draw(box.getOriginPoint());
 
-            //Play.display();
             //Play.clear();
         }
     }
