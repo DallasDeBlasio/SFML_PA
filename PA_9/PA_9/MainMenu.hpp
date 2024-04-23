@@ -231,7 +231,7 @@ public:
             //{
             Play.draw(*(pCur->mCharacter));
             //pCur->mCharacter->moveV(DeltaTime.asSeconds());
-            pCur->mCharacter.
+            //pCur->mCharacter.
             //}
             pCur = pCur->pNext;
         }
