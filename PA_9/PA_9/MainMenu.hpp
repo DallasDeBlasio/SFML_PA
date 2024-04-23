@@ -116,11 +116,11 @@ public:
         int windowWidth = 1920;
 
         sf::Texture mapTexture;
-        mapTexture.loadFromFile("Assets/map.png");
+        mapTexture.loadFromFile("Assets/level1.png");
         sf::Sprite room1;
         room1.setTexture(mapTexture);
-        room1.setScale(10.f, 10.f);
-        room1.setPosition(sf::Vector2f(0.f, -320.f));//offset on map Texture to fill the window with room1
+        room1.setScale(0.385f, 0.385f);
+        room1.setPosition(sf::Vector2f(0.f, 0.f));//offset on map Texture to fill the window with room1
 
         Player herotest(3, 16, 31, 0.2);
         herotest.fillTextureList(herotest.currentFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
@@ -138,6 +138,35 @@ public:
         sf::Sprite poop;
         poop.setTexture(newtexture);
         poop.setPosition(100, 100);
+
+        sf::Texture well;
+        well.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        sf::Sprite spawnner;
+        spawnner.setTexture(well);
+        spawnner.setPosition(0, 0);
+        spawnner.scale(3, 3);
+
+        sf::Texture well1;
+        well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        sf::Sprite spawnner1;
+        spawnner1.setTexture(well1);
+        spawnner1.setPosition(1920 - 30*3, 0);
+        spawnner1.scale(3, 3);
+
+        sf::Texture well2;
+        well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        sf::Sprite spawnner2;
+        spawnner2.setTexture(well2);
+        spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
+        spawnner2.scale(3, 3);
+
+        sf::Texture well3;
+        well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        sf::Sprite spawnner3;
+        spawnner3.setTexture(well3);
+        spawnner3.setPosition(0, 1080 - 33 * 3);
+        spawnner3.scale(3, 3);
+      
 
 
         Snail bert(2, 32, 20);
@@ -215,7 +244,10 @@ public:
         }
         //Play.draw(kurt);
         Play.draw(poop);
-
+        Play.draw(spawnner);
+        Play.draw(spawnner1);
+        Play.draw(spawnner2);
+        Play.draw(spawnner3);
 
         Play.display();//display drawings
 
