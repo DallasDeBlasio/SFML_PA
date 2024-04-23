@@ -2,6 +2,7 @@
 
 #include "source.hpp"
 #include "textureNode.hpp"
+#include "HealthBar.hpp"
 
 class Character:public sf::Sprite
 {
@@ -17,6 +18,7 @@ public:
 	float movmentSpeed;//maximum speed under normal movment //dont change
 	int mDamage;
 	int maxHP;
+	int currentHP;
 	int walkFrame;
 	int width;
 	int height;
@@ -36,6 +38,8 @@ public:
 	sf::RectangleShape hitbox;
 
 	textureNode* currentFrame;
+
+	HealthBar mHealthBar;
 
 private:
 

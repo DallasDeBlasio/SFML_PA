@@ -49,6 +49,7 @@ Character::Character(int scale, int width, int height) :Character(scale, width, 
 Character::Character(int scale, int width, int height, float initialSpeed):Sprite()
 {
 	this->maxHP = 30;
+	this->currentHP = this->maxHP;
 	this->mDamage = 5;
 	this->movmentSpeed = initialSpeed * speedFactor;
 	this->speed = this->movmentSpeed;
@@ -68,6 +69,13 @@ Character::Character(int scale, int width, int height, float initialSpeed):Sprit
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
 	this->invinciblityTime = 0.f;
+
+
+	this->mHealthBar.mBottomRectangle.setSize(sf::Vector2f(scale * this->width, 3.f)); 
+	this->mHealthBar.mTopRectangle.setSize(sf::Vector2f(scale * this->width, 4.f));
+
+	this->mHealthBar.mBottomRectangle.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y + 30));
+	this->mHealthBar.mTopRectangle.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y + 30));
 
 }
 //
@@ -149,6 +157,11 @@ void Character::moveV(float  deltaTime)
 	//update hitbox
 	this->hitbox.setSize(this->getGlobalBounds().getSize());
 	this->hitbox.setPosition(this->getGlobalBounds().getPosition());
+
+	this->mHealthBar.mTopRectangle.setPosition(sf::Vector2f(this->getPosition().x - width*this->mScale/2, this->getPosition().y - 10 - height*this->mScale/2));
+	this->mHealthBar.mBottomRectangle.setPosition(sf::Vector2f(this->getPosition().x - width*this->mScale/2, this->getPosition().y - 10 - height*this->mScale/2));
+
+	this->mHealthBar.mTopRectangle.setSize(sf::Vector2f(this->mScale * this->width * ((float)this->currentHP / (float)this->maxHP), 4.f));
 
 	this->decayMovment(deltaTime);
 	this->decaySpeed(deltaTime);

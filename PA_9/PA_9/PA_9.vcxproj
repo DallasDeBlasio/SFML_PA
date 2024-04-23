@@ -105,11 +105,13 @@
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\dalla\OneDrive\Desktop\CPTS 121\SFML-2.6.1\include</AdditionalIncludeDirectories>
+
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\dalla\OneDrive\Desktop\CPTS 121\SFML-2.6.1\lib</AdditionalLibraryDirectories>
+
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-main-d.lib;sfml-audio-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -122,6 +124,7 @@
       <PreprocessorDefinitions>SFML_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\dalla\OneDrive\Desktop\CPTS 121\SFML-2.6.1\include</AdditionalIncludeDirectories>
+
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +132,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\dalla\OneDrive\Desktop\CPTS 121\SFML-2.6.1\lib</AdditionalLibraryDirectories>
+
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-main.lib;sfml-audio-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -136,6 +140,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="characterList.cpp" />
     <ClCompile Include="characterNode.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Snail.cpp" />
@@ -146,14 +151,19 @@
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="characterList.hpp" />
     <ClInclude Include="characterNode.hpp" />
+    <ClInclude Include="HealthBar.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Snail.hpp" />
     <ClInclude Include="source.hpp" />
+    <ClInclude Include="TestCases.hpp" />
     <ClInclude Include="textureNode.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="DialogBox.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Hes_gonna_shoot_you.MP4" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
