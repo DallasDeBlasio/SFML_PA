@@ -193,7 +193,7 @@ public:
 
         characterList CharacterList;
         bool spawnEnemy = true;
-
+        float enemySpawnTimer = 0.f;
 
         while (Play.isOpen())
         {
@@ -441,7 +441,7 @@ public:
 
         if (spawnEnemy)
         {
-            float snailSpeed = (rand() % 24 + 1) / 100.f;
+            float snailSpeed = (rand() % 19 + 1) / 100.f;
             Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
             //pNewCharacter.
             spawnEnemy = false;
@@ -452,6 +452,18 @@ public:
             pNewCharacter->setPosition(x,y);
             //Play.draw(pNewCharacter);
 
+        }
+        else
+        {
+            if (enemySpawnTimer > 5)
+            {
+                spawnEnemy = true;
+                enemySpawnTimer = 0.f;
+            }
+            else
+            {
+                enemySpawnTimer += DeltaTime.asSeconds();
+            }
         }
 
         
