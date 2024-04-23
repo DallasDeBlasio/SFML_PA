@@ -57,7 +57,6 @@ public:
     ~MainMenu()
     {
         std::cout << "destroying main menu" << std::endl;
-        exit(0);  
     }
 
     void draw(sf::RenderWindow& window)
@@ -441,7 +440,7 @@ public:
 
         if (spawnEnemy)
         {
-            float snailSpeed = (rand() % 19 + 1) / 100.f;
+            float snailSpeed = (rand() % 19    + 1) / 100.f;
             Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
             //pNewCharacter.
             spawnEnemy = false;
@@ -659,6 +658,7 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     menuWindow.close();
+                    exit(0);
                 }
                 if (event.type == sf::Event::KeyPressed)
                 {
