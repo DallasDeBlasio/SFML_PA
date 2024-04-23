@@ -21,9 +21,6 @@ public:
             std::cout << "Error Loading Menu Selections Font\n";
         }
 
-     
-
-
 
         // display different menu options to screen
 
@@ -37,7 +34,7 @@ public:
         // option option
         menu[1].setFont(font);
         menu[1].setFillColor(sf::Color::Blue);
-        menu[1].setString("OPTIONS");
+        menu[1].setString("TESTING");
         menu[1].setCharacterSize(90);
         menu[1].setPosition(835, 400);
 
@@ -59,7 +56,8 @@ public:
     }
     ~MainMenu()
     {
-
+        std::cout << "destroying main menu" << std::endl;
+        exit(0);  
     }
 
     void draw(sf::RenderWindow& window)
@@ -104,7 +102,7 @@ public:
     }
 
 
-    void runPlayWindow() 
+    bool runPlayWindow() 
     { 
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
@@ -388,13 +386,40 @@ public:
             //Play.display();
             //Play.clear();
         }
+        return true;
     }
-    void runOptionsWindow()
+    void runTestWindow()
     {
         sf::RenderWindow Options(sf::VideoMode(1920, 1080), "Options Window");
-
         std::cout << "Opened runOptionsWindow" << std::endl;
 
+        //background-----------------------------------------------<<<
+        sf::RectangleShape optionsBackground;
+        optionsBackground.setSize(sf::Vector2f(1920, 1080));
+        sf::Texture optionsTexture;
+        optionsTexture.loadFromFile("battleback1.png");
+        optionsBackground.setTexture(&optionsTexture);
+        //---------------------------------------------------------<<<
+
+        sf::Text optionsTitle;
+        sf::Text option1;
+        sf::Font optionsFont;
+        if (!optionsFont.loadFromFile("BungeeSpice-Regular.ttf"))
+        {
+            std::cout << "Error Loading about title Font\n";
+        }
+
+        //Options title settings-----------------------------------<<<
+        optionsTitle.setCharacterSize(100);
+        optionsTitle.setString("TESTING");
+        optionsTitle.setPosition(725, 100);
+        optionsTitle.setFont(optionsFont);
+        //---------------------------------------------------------<<<
+
+        //option1 settings-----------------------------------------<<<
+        option1.setCharacterSize(30);
+        option1.setString("");
+        //---------------------------------------------------------<<<
         while (Options.isOpen()) 
         {
             sf::Event someEvent;
@@ -414,6 +439,12 @@ public:
                     }
                 }
             }
+
+
+
+            Options.draw(optionsBackground);
+            Options.draw(optionsTitle);
+            Options.draw(option1);
             Options.display();
             Options.clear();
         }
@@ -421,21 +452,42 @@ public:
     void runAboutWindow()
     {
         sf::RenderWindow About(sf::VideoMode(1920, 1080), "About window");
-
         std::cout << "Opened runAboutWindow" << std::endl;
 
+        sf::RectangleShape aboutBackground;
+        aboutBackground.setSize(sf::Vector2f(1920, 1080));
+        sf::Texture aboutTexture;
+        aboutTexture.loadFromFile("battleback1.png");
+        aboutBackground.setTexture(&aboutTexture); 
+
+        //--------------------------------------------------------------------<<<
+    // test and font settings for title
         sf::Text aboutTitle;
         sf::Font aboutFont;
         // load font
-        if (!aboutFont.loadFromFile("Jersey20-Regular.ttf"))  
+        if (!aboutFont.loadFromFile("BungeeSpice-Regular.ttf"))  
         {
             std::cout << "Error Loading about title Font\n";
         }
-        aboutTitle.setCharacterSize(80);
+        aboutTitle.setCharacterSize(100);
         aboutTitle.setString("ABOUT");
-        aboutTitle.setPosition(200, 50);
+        aboutTitle.setPosition(775, 100);
         aboutTitle.setFont(aboutFont); 
-
+        //---------------------------------------------------------------------<<<
+        // --------------------------------------------------------------------<<<
+        // font and text setting for main block of text
+        sf::Text aboutText;
+        sf::Font aboutTextFont;
+        if (!aboutTextFont.loadFromFile("BungeeSpice-Regular.ttf"))
+        {
+            std::cout << "Error Loading about title Font\n";
+        }
+        aboutText.setLineSpacing(1.5);
+        aboutText.setCharacterSize(30);
+        aboutText.setString("Made by Dallas DeBlasio, Connor Chase, James Richards-Perhatch, and Asa Fischer,\nwe present SNAIL RUN; our our final project for CptS_122. SNAIL RUN is a birds-eye\nview game where the player fights (or runs) from evil snails who want to\ntake away your vast riches and imortality. ***ill make a better description\nwhen more of the game is done***\n\nCONTROLS:\nMove with (WASD).\nNavigate menu with (WS) or UP and DOWN arrows.\nGo back to MainMenu (Esc)");
+        aboutText.setPosition(200, 250);
+        aboutText.setFont(aboutTextFont); 
+        //---------------------------------------------------------------------<<<
         while (About.isOpen()) 
         {
             sf::Event someEvent;
@@ -455,7 +507,9 @@ public:
                     }
                 }
             }
+            About.draw(aboutBackground);
             About.draw(aboutTitle);
+            About.draw(aboutText);
             About.display();
             About.clear();
         }
@@ -465,8 +519,8 @@ public:
     void mainMenuWindow()
     {
         // window for main menu
-        sf::RenderWindow menu(sf::VideoMode(1920, 1080), "Main Menu (use arrow keys)", sf::Style::Default); 
-        MainMenu mainMenu(menu.getSize().x, menu.getSize().y);
+        sf::RenderWindow menuWindow(sf::VideoMode(1920, 1080), "Main Menu (WASD or arrow keys)", sf::Style::Default); 
+        MainMenu mainMenu(menuWindow.getSize().x, menuWindow.getSize().y);
 
         // background
         sf::RectangleShape menuBackground;
@@ -488,25 +542,18 @@ public:
         title.setCharacterSize(120);
         title.setFont(titleFont);
         
-
- /*       sf::Sprite title;
-        sf::Texture titleTexture;
-        titleTexture.loadFromFile("game_title.png");
-        title.setTexture(titleTexture);
-        title.setPosition(100, 100);*/
-
         int x = 0;
 
         std::cout << "Opened mainMenuWindow" << std::endl;
 
-        while (menu.isOpen())
+        while (menuWindow.isOpen())
         {
             sf::Event event;
-            while (menu.pollEvent(event))
+            while (menuWindow.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
                 {
-                    menu.close();
+                    menuWindow.close();
                 }
                 if (event.type == sf::Event::KeyPressed)
                 {
@@ -515,7 +562,17 @@ public:
                         mainMenu.MoveUp();
                         break;
                     }
+                    if (event.key.code == sf::Keyboard::W)
+                    {
+                        mainMenu.MoveUp();
+                        break;
+                    }
                     if (event.key.code == sf::Keyboard::Down)
+                    {
+                        mainMenu.MoveDown();
+                        break;
+                    }
+                    if (event.key.code == sf::Keyboard::S) 
                     {
                         mainMenu.MoveDown();
                         break;
@@ -531,27 +588,27 @@ public:
                         }
                         if (x == 1)
                         {
-                            runOptionsWindow();
+                            runTestWindow(); 
+
                         }
                         if (x == 2)
                         {
                             runAboutWindow();
+                         
                         }
                         if (x == 3)
                         {
-                            menu.close();
+                            menuWindow.close();
                             break;
-
                         }
                     }
 
-                }            
-                    menu.clear();
-                    menu.draw(menuBackground);
-                    mainMenu.draw(menu);
-                    menu.draw(title);
-
-                    menu.display();
+                }    
+                    menuWindow.clear();
+                    menuWindow.draw(menuBackground);
+                    mainMenu.draw(menuWindow);
+                    menuWindow.draw(title);
+                    menuWindow.display();
             }
         }
     }
@@ -564,5 +621,4 @@ private:
 	// shows 4 different menu options to screen
 	sf::Text menu[4];
 
-   
 };
