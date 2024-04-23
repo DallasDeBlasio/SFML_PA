@@ -200,13 +200,20 @@ public:
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
-        if(herotest.maxHP> 0)
+        if(herotest.currentHP> 0)
         {
             Play.draw(herotest);// draw hero
+            Play.draw(herotest.mHealthBar.mBottomRectangle);
+
+            Play.draw(herotest.mHealthBar.mTopRectangle);
         }
-        if(bert.maxHP>0)
+        if(bert.currentHP >0)
         {
             Play.draw(bert);
+            Play.draw(bert.mHealthBar.mBottomRectangle);
+
+            Play.draw(bert.mHealthBar.mTopRectangle); 
+
         }
         //Play.draw(kurt);
         Play.draw(poop);
@@ -314,7 +321,7 @@ public:
             sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
             bert.movementDirection = unitBounceDirection * 1000.f;
             bert.speed = 700;
-            bert.maxHP -= herotest.mDamage;
+            bert.currentHP -= herotest.mDamage;
             bert.invinciblityTime = 0.01f;   
         }
 
@@ -325,7 +332,7 @@ public:
             sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
             herotest.movementDirection = unitBounceDirection * 20.f;
             herotest.speed = 700;
-            herotest.maxHP -= bert.mDamage;
+            herotest.currentHP -= bert.mDamage;
             herotest.invinciblityTime = 0.01f;
 
         }

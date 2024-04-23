@@ -136,6 +136,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="characterList.cpp" />
     <ClCompile Include="characterNode.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Snail.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="characterList.hpp" />
     <ClInclude Include="characterNode.hpp" />
+    <ClInclude Include="HealthBar.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Snail.hpp" />
     <ClInclude Include="source.hpp" />
