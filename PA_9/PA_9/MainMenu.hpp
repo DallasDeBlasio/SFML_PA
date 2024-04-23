@@ -51,10 +51,11 @@ public:
 
         menuSelected = -1;
     }
+    
     ~MainMenu()
     {
         std::cout << "destroying main menu" << std::endl;
-        exit(0);  
+ 
     }
 
     void draw(sf::RenderWindow& window)
@@ -69,7 +70,7 @@ public:
     {
         if (menuSelected - 1 >= 0)
         {
-            menu[menuSelected].setFillColor(sf::Color::Blue);
+            menu[menuSelected].setFillColor(sf::Color::Blue); 
 
             menuSelected--;
             if (menuSelected == -1)
@@ -93,6 +94,10 @@ public:
         }
     }
 
+    /// <summary>
+    /// returns the menu currently selected
+    /// </summary>
+    /// <returns>int</returns>
     int menuPressed()
     {
         return menuSelected;
@@ -431,6 +436,7 @@ public:
                         if (x == 3)
                         {
                             menuWindow.close();
+                            exit(0);
                             break;
                         }
                     }
@@ -443,6 +449,16 @@ public:
                     menuWindow.display();
             }
         }
+    }
+
+    void setMenuSelected(int newNum)
+    {
+        menuSelected = newNum;  
+    }
+
+    sf::Text getMenu(int num)
+    {
+        return menu[num];  
     }
 
 private:
