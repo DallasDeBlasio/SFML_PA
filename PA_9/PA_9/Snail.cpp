@@ -1,4 +1,5 @@
 #include "Snail.hpp"
+#include "player.hpp"
 
 Snail::Snail(int scale, int width, int height) : Character(scale, width, height, 0.1f)
 {
@@ -14,7 +15,7 @@ Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(s
 	//sf::Vector2f()
 }
 
-void Snail::moveTowardsTarget(Character target, float  deltaTime)
+void Snail::moveV(Character target, float  deltaTime)
 {
 	sf::Vector2f moveToTargetVector(target.getPosition().x - this->getPosition().x, target.getPosition().y - this->getPosition().y);
 
@@ -41,6 +42,51 @@ void Snail::moveTowardsTarget(Character target, float  deltaTime)
 		}
 	}
 
-	this->moveV(deltaTime);
+	Character::moveV(deltaTime);
 
+}
+
+void Snail::X_and_Y_Spawn_Locations(float& x, float& y)
+{
+	this->X_and_Y_Spawn_Locations(x, y, rand() % 4 + 1);
+}
+
+void Snail::X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint)
+{
+	switch (spawnPoint)
+	{
+	case 1:
+	{
+		x =  0 + this->width * this->mScale / 2.f;
+		y = 0 + this->width * this->mScale / 2.f;
+		break;
+	}
+	case 2:
+	{
+		x = 0 + this->width * this->mScale / 2.f;
+		y = 1080 - this->width * this->mScale / 2.f;
+		break;
+	}	
+	case 3:
+	{
+		x = 1920 - this->width * this->mScale / 2.f;
+		y = 0 + this->width * this->mScale / 2.f;
+		break;
+	}	
+	case 4:
+	{
+		x = 1920 - this->width * this->mScale / 2.f;
+		y = 1080 - this->width * this->mScale / 2.f;
+		break;
+	}
+
+	}
+}
+
+void Snail::interacts(Player hero)
+{
+	if (this->getGlobalBounds().intersects(hero.getGlobalBounds()))
+	{
+
+	}
 }

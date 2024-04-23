@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include "player.hpp"
 
 int speedFactor = 2000;
 
@@ -178,6 +179,11 @@ void Character::moveV(float  deltaTime)
 
 }
 
+void Character::moveV(Character target, float deltaTime)
+{
+	std::cout << "Improper Call of two parameter moveV\n";
+}
+
 
 
 
@@ -260,10 +266,30 @@ void Character::fillTextureList(textureNode*& startFrame, int numFrames, float X
 	}
 }
 
+void Character::interacts(Player hero)
+{
+	if (hero.getGlobalBounds().intersects(this->getGlobalBounds()))
+	{
+		std::cout << "Character has touched hero";
+	}
+}
+
 //void Character::moveV(float deltaTime)
 //{
 //	this->movmentSpeed 
 //}
+
+void Character::X_and_Y_Spawn_Locations(float& x, float& y)
+{
+	this->X_and_Y_Spawn_Locations(x, y, rand());
+}
+
+void Character::X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint)
+{
+	std::cout << "spawnPoints";
+	x = 0 + this->width * this->mScale / 2.f;
+	y = 0 + this->width * this->mScale / 2.f;
+}
 
 void Character::shouldITurnAround(sf::Vector2f directionVector)
 {

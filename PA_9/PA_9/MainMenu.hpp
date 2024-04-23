@@ -104,7 +104,7 @@ public:
 
     bool runPlayWindow() 
     { 
-
+        srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
         Play.clear();
@@ -227,7 +227,11 @@ public:
         Play.clear();
         
         Play.draw(room1);//draw first room
-
+        Play.draw(poop);
+        Play.draw(spawnner);
+        Play.draw(spawnner1);
+        Play.draw(spawnner2);
+        Play.draw(spawnner3);
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
@@ -248,12 +252,8 @@ public:
         }
 
         //Play.draw(kurt);
-        Merge-Me-Daddy
-        Play.draw(poop);
-        Play.draw(spawnner);
-        Play.draw(spawnner1);
-        Play.draw(spawnner2);
-        Play.draw(spawnner3);
+        //Merge-Me-Daddy
+
         //Play.draw(poop);
         //Play.draw(CharacterList.pHead.)
 
@@ -261,19 +261,33 @@ public:
 
         CharacterNode* pCur = CharacterList.pHead;
 
+
+
         while (pCur != nullptr)
         {
-            //if (pCur->currentHP == 0)
-            //{
-            //    delete pCur
-            //}
-            //else
-            //{
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+            {
+                pCur->mCharacter->currentHP = 0;
+            }
+
+            if (pCur->mCharacter->currentHP == 0)
+            {
+                CharacterNode* deleteMe = pCur;
+                pCur = pCur->pNext;
+                CharacterList.deleteCharacter(deleteMe->mCharacter);
+            }
+            else
+            {
             Play.draw(*(pCur->mCharacter));
-            //pCur->mCharacter->moveV(DeltaTime.asSeconds());
-            //pCur->mCharacter.
-            //}
+            pCur->mCharacter->moveV(herotest,DeltaTime.asSeconds());
+            pCur->mCharacter->interacts(herotest);
+            //((Snail*)(pCur->mCharacter))->moveV(herotest, DeltaTime.asSeconds());//NEED TO REPLACE WITH SOMETHING
             pCur = pCur->pNext;
+
+            }
+
+
         }
 
 
@@ -330,6 +344,7 @@ public:
 
 
 
+
         if (herotest.attacking)
         {
             if (attackCoolDown == 0 || attackCoolDown > herotest.attackLength)
@@ -361,9 +376,9 @@ public:
             herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
         }
 
-        kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        kurt.moveV(herotest, DeltaTime.asSeconds());
         
-        bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        bert.moveV(herotest, DeltaTime.asSeconds());
 
         if(!herotest.attacking)
         {
@@ -426,11 +441,15 @@ public:
 
         if (spawnEnemy)
         {
-            Character* pNewCharacter = new Snail(2, 32, 20, 0.15);
+            float snailSpeed = (rand() % 24 + 1) / 100.f;
+            Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
             //pNewCharacter.
             spawnEnemy = false;
             CharacterList.insertAtFront(pNewCharacter);
-            pNewCharacter->setPosition(pNewCharacter->width * pNewCharacter->mScale / 2.f, pNewCharacter->height * pNewCharacter->mScale / 2.f);
+            float x = 0;//pNewCharacter->width * pNewCharacter->mScale / 2.f;
+            float y = 0;//pNewCharacter->height * pNewCharacter->mScale / 2.f;
+            pNewCharacter->X_and_Y_Spawn_Locations(x, y);
+            pNewCharacter->setPosition(x,y);
             //Play.draw(pNewCharacter);
 
         }

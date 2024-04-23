@@ -9,5 +9,10 @@ public:
 	Snail(int scale, int width, int height, float initialSpeed);
 
 
-	void moveTowardsTarget(Character target , float  deltaTime);
+	void moveV(Character target , float  deltaTime);
+	void X_and_Y_Spawn_Locations(float& x, float& y);
+	void X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint);
+
+	void interacts(Player hero);
+
 };

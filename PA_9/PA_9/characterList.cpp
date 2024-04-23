@@ -38,6 +38,16 @@ void characterList::deleteCharacter(Character* newCharacter)
 	}
 }
 
+bool characterList::isEmpty(void)
+{
+	bool empty = false;
+	if (this->pHead = nullptr)
+	{
+		empty = true;
+	}
+	return empty;
+}
+
 characterList::characterList()
 {
 	this->pHead = nullptr;
