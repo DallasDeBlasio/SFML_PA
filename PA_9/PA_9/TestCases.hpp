@@ -12,10 +12,6 @@ public:
 	// READ ME
 	// make sure your test functions return bool. Connor will take care of diplaying messages to the screen 
 
-	void runTestCases()
-	{
-
-	}
 
 	/// <summary>
 	/// tests MoveUp() function

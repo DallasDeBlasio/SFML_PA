@@ -6,6 +6,8 @@
 #include "Character.hpp"
 #include "Snail.hpp"
 
+#include <chrono>
+#include <thread>
 class MainMenu
 {
 public:
@@ -224,7 +226,7 @@ public:
         }
         return true;
     }
-    void runTestWindow()
+    void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow
     {
         sf::RenderWindow Options(sf::VideoMode(1920, 1080), "Options Window");
         std::cout << "Opened runOptionsWindow" << std::endl;
@@ -238,8 +240,12 @@ public:
         //---------------------------------------------------------<<<
 
         sf::Text optionsTitle;
-        sf::Text option1;
+        sf::Text test1;
+        sf::Text test2;
         sf::Font optionsFont;
+        sf::Text test1Result;
+        sf::Text test2Result;
+
         if (!optionsFont.loadFromFile("BungeeSpice-Regular.ttf"))
         {
             std::cout << "Error Loading testing title Font\n";
@@ -252,10 +258,35 @@ public:
         optionsTitle.setFont(optionsFont);
         //---------------------------------------------------------<<<
 
-        //option1 settings-----------------------------------------<<<
-        option1.setCharacterSize(30);
-        option1.setString("");
+        //test1 settings-----------------------------------------<<<
+        test1.setCharacterSize(40);
+        test1.setString("Testing MoveUp(): ");
+        test1.setPosition(500, 300);
+        test1.setFont(optionsFont);
         //---------------------------------------------------------<<<
+        //Test1 result settings------------------------------------<<<
+        test1Result.setCharacterSize(40);
+        test1Result.setString("Testing");
+        test1Result.setFillColor(sf::Color::Blue);
+        test1Result.setPosition(950, 300);
+        test1Result.setFont(optionsFont); 
+        //---------------------------------------------------------<<<
+        //test2 settings-------------------------------------------<<<
+        test2.setCharacterSize(40);
+        test2.setString("Testing MoveDown(): ");
+        test2.setPosition(500, 400);
+        test2.setFont(optionsFont);
+        //---------------------------------------------------------<<<
+        //Test2 result settings------------------------------------<<<
+        test2Result.setCharacterSize(40);
+        test2Result.setString("Testing");
+        test2Result.setFillColor(sf::Color::Blue);
+        test2Result.setPosition(1020, 400);
+        test2Result.setFont(optionsFont);
+        //---------------------------------------------------------<<<
+
+        int x = 0;
+
         while (Options.isOpen()) 
         {
             sf::Event someEvent;
@@ -276,13 +307,62 @@ public:
                 }
             }
 
-
-
+          
             Options.draw(optionsBackground);
             Options.draw(optionsTitle);
-            Options.draw(option1);
+            Options.draw(test1);
+            Options.draw(test1Result);
+            Options.draw(test2); 
+            Options.draw(test2Result);
             Options.display();
             Options.clear();
+
+            //so the test functions are ran only once
+            if (x == 0)
+            {
+                std::string testingString("Testing");
+                std::string testingDot(".");
+                for (int i = 0; i < 4; i++)
+                {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+                    testingString = testingString + testingDot; 
+
+                    test1Result.setString(testingString);
+                    test2Result.setString(testingString);
+
+                    Options.draw(optionsBackground);
+                    Options.draw(optionsTitle);
+                    Options.draw(test1);
+                    Options.draw(test1Result);
+                    Options.draw(test2);
+                    Options.draw(test2Result);
+                    Options.display();
+                    Options.clear();
+                }
+                // set result string to passed and color to green
+                if (testMoveUp())
+                {
+                    test1Result.setString("PASSED");
+                    test1Result.setFillColor(sf::Color::Green);
+                }
+                else // set result string to failed and color to red
+                {
+                    test1Result.setString("FAILED");
+                    test1Result.setFillColor(sf::Color::Red);
+                }
+                if (testMoveDown()) 
+                {
+                    test2Result.setString("PASSED");
+                    test2Result.setFillColor(sf::Color::Green);
+                }
+                else
+                {
+                    test2Result.setString("FAILED");
+                    test2Result.setFillColor(sf::Color::Red);
+                }
+
+                x++;
+            }
         }
     }
     void runAboutWindow()
@@ -320,7 +400,7 @@ public:
         }
         aboutText.setLineSpacing(1.5);
         aboutText.setCharacterSize(30);
-        aboutText.setString("Made by Dallas DeBlasio, Connor Chase, James Richards-Perhatch, and Asa Fischer,\nwe present SNAIL RUN; our our final project for CptS_122. SNAIL RUN is a birds-eye\nview game where the player fights (or runs) from evil snails who want to\ntake away your vast riches and imortality. ***ill make a better description\nwhen more of the game is done***\n\nCONTROLS:\nMove (WASD).\nNavigate menu (WS) or UP and DOWN arrows.\nAttack (space)\nGo back to MainMenu (Esc)");
+        aboutText.setString("Made by Dallas DeBlasio, Connor Chase, James Richards-Perhatch, and Asa Fischer,\nwe present SNAIL RUN; our our final project for CptS_122. SNAIL RUN is a birds-eye\nview game where the player fights (or runs) from evil snails who want to\ntake away your vast riches and imortality.\n\nCONTROLS:\nMove (WASD).\nNavigate menu (WS) or UP and DOWN arrows.\nAttack (space)\nGo back to MainMenu (Esc)");
         aboutText.setPosition(200, 250);
         aboutText.setFont(aboutTextFont); 
         //---------------------------------------------------------------------<<<
@@ -436,6 +516,7 @@ public:
                         if (x == 3)
                         {
                             menuWindow.close();
+                            std::cout << "Exiting" << std::endl; 
                             exit(0);
                             break;
                         }
@@ -461,6 +542,8 @@ public:
         return menu[num];  
     }
 
+
+
 private:
 
 	int menuSelected;
@@ -469,4 +552,53 @@ private:
 	// shows 4 different menu options to screen
 	sf::Text menu[4];
 
+
+    /// <summary>
+/// tests MoveUp() function
+/// </summary>
+/// <param name=""></param>
+/// <returns>true or false</returns>
+    bool testMoveUp(void)
+    {
+        MainMenu test(500, 500);
+        test.setMenuSelected(1);
+        test.MoveUp();
+        sf::Text testText = test.getMenu(test.menuPressed());
+
+        if (test.menuPressed() == 0)
+        {
+            if (testText.getFillColor() == sf::Color::Red)
+            {
+                std::cout << "testMoveUp: true" << std::endl;
+                return true;
+            }
+        }
+        std::cout << "testMoveUp: false" << std::endl;
+        return false;
+    }
+
+    /// <summary>
+/// tests MoveDown() function
+/// </summary>
+/// <param name=""></param>
+/// <returns>true or false</returns>
+    bool testMoveDown(void)
+    {
+        MainMenu test(500, 500);
+        test.setMenuSelected(1);
+        test.MoveDown();
+
+        sf::Text testText = test.getMenu(test.menuPressed());
+
+        if (test.menuPressed() == 2)
+        {
+            if (testText.getFillColor() == sf::Color::Red)
+            {
+                std::cout << "testMoveDown: true" << std::endl;
+                return true;
+            }
+        }
+        std::cout << "testMoveDown: false" << std::endl;
+        return false;
+    }
 };
