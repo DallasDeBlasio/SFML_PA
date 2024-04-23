@@ -158,9 +158,6 @@
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="DialogBox.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Media Include="Hes_gonna_shoot_you.MP4" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
