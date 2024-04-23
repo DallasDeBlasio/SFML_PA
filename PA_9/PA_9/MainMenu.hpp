@@ -280,9 +280,28 @@ public:
             else
             {
             Play.draw(*(pCur->mCharacter));
+            Play.draw(pCur->mCharacter->mHealthBar.mBottomRectangle);
+            Play.draw(pCur->mCharacter->mHealthBar.mTopRectangle);
+
+
             pCur->mCharacter->moveV(herotest,DeltaTime.asSeconds());
             pCur->mCharacter->interacts(herotest);
-            //((Snail*)(pCur->mCharacter))->moveV(herotest, DeltaTime.asSeconds());//NEED TO REPLACE WITH SOMETHING
+            herotest.interacts(*(pCur->mCharacter));
+
+            if (pCur->mCharacter->invinciblityTime > 0.f)
+            {
+                if (pCur->mCharacter->invinciblityTime > 0.25f)
+                {
+                    pCur->mCharacter->invinciblityTime = 0.f;
+                }
+                else
+                {
+                    pCur->mCharacter->invinciblityTime += DeltaTime.asSeconds();
+                }
+            }
+
+
+            
             pCur = pCur->pNext;
 
             }
@@ -387,29 +406,10 @@ public:
 
         DeltaTime = timer.getElapsedTime();
 
+        herotest.interacts(bert);
 
-        if (bert.invinciblityTime == 0 && herotest.weaponHitBox.getGlobalBounds().intersects(bert.getGlobalBounds()))
-        {
-            sf::Vector2f bounceDirection(bert.getPosition().x - herotest.getPosition().x, bert.getPosition().y - herotest.getPosition().y);
-            float bounceSpeed = getVectorManitude(bounceDirection);
-            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            bert.movementDirection = unitBounceDirection * 1000.f;
-            bert.speed = 700;
-            bert.currentHP -= herotest.mDamage;
-            bert.invinciblityTime = 0.01f;   
-        }
+        bert.interacts(herotest);
 
-        if (herotest.invinciblityTime == 0 && bert.getGlobalBounds().intersects(herotest.hitbox.getGlobalBounds()))
-        {
-            sf::Vector2f bounceDirection(herotest.getPosition().x - bert.getPosition().x, herotest.getPosition().y - bert.getPosition().y);
-            float bounceSpeed = getVectorManitude(bounceDirection);
-            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            herotest.movementDirection = unitBounceDirection * 100.f;
-            herotest.speed = 700;
-            herotest.currentHP -= bert.mDamage;
-            herotest.invinciblityTime = 0.01f;
-
-        }
 
 
         if (bert.invinciblityTime > 0.f)

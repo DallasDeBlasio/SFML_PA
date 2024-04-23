@@ -1,5 +1,6 @@
 #include "Character.hpp"
 #include "player.hpp"
+#include "Snail.hpp"
 
 int speedFactor = 2000;
 
@@ -266,11 +267,19 @@ void Character::fillTextureList(textureNode*& startFrame, int numFrames, float X
 	}
 }
 
-void Character::interacts(Player hero)
+void Character::interacts(Player& hero)
 {
 	if (hero.getGlobalBounds().intersects(this->getGlobalBounds()))
 	{
 		std::cout << "Character has touched hero";
+	}
+}
+
+void Character::interacts(Snail& hero)
+{
+	if (hero.getGlobalBounds().intersects(this->getGlobalBounds()))
+	{
+		std::cout << "Character has touched snail";
 	}
 }
 

@@ -6,6 +6,7 @@
 //#include "player.hpp"
 
 class Player;
+class Snail;
 
 class Character:public sf::Sprite
 {
@@ -38,7 +39,9 @@ public:
 
 	//virtual void moveV(float  deltaTime);// moves hero speed distance along movementDirection
 	
-	virtual void interacts(Player hero);
+	virtual void interacts(Player &hero);
+	virtual void interacts(Snail& hero);
+
 
 	int facing; //-1 = left, 1 = right
 	int mScale;

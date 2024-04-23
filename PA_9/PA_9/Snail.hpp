@@ -13,6 +13,6 @@ public:
 	void X_and_Y_Spawn_Locations(float& x, float& y);
 	void X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint);
 
-	void interacts(Player hero);
+	void interacts(Player &hero);
 
 };
