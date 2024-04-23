@@ -1,4 +1,6 @@
 #include "Character.hpp"
+#include "player.hpp"
+#include "Snail.hpp"
 
 int speedFactor = 2000;
 
@@ -178,6 +180,11 @@ void Character::moveV(float  deltaTime)
 
 }
 
+void Character::moveV(Character target, float deltaTime)
+{
+	std::cout << "Improper Call of two parameter moveV\n";
+}
+
 
 
 
@@ -260,10 +267,38 @@ void Character::fillTextureList(textureNode*& startFrame, int numFrames, float X
 	}
 }
 
+void Character::interacts(Player& hero)
+{
+	if (hero.getGlobalBounds().intersects(this->getGlobalBounds()))
+	{
+		std::cout << "Character has touched hero";
+	}
+}
+
+void Character::interacts(Snail& hero)
+{
+	if (hero.getGlobalBounds().intersects(this->getGlobalBounds()))
+	{
+		std::cout << "Character has touched snail";
+	}
+}
+
 //void Character::moveV(float deltaTime)
 //{
 //	this->movmentSpeed 
 //}
+
+void Character::X_and_Y_Spawn_Locations(float& x, float& y)
+{
+	this->X_and_Y_Spawn_Locations(x, y, rand());
+}
+
+void Character::X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint)
+{
+	std::cout << "spawnPoints";
+	x = 0 + this->width * this->mScale / 2.f;
+	y = 0 + this->width * this->mScale / 2.f;
+}
 
 void Character::shouldITurnAround(sf::Vector2f directionVector)
 {
@@ -304,7 +339,7 @@ void Character::decayMovment(float  deltaTime)
 {
 	if (this->movementDirection.x > 1)
 	{
-		this->movementDirection.x -= 0.1 * deltaTime;
+		this->movementDirection.x -= 0.1;
 		//this->movementDirection.x -= this->movementDirection.x * 0.000001f;//this->movementSpeed
 	}
 	else if (this->movementDirection.x < -1)

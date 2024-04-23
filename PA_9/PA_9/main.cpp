@@ -13,7 +13,7 @@ int main()
 
 
 	mainMenu.mainMenuWindow();
-	return 0;
+	return 14;
 }
 
 

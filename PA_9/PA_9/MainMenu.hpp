@@ -57,7 +57,6 @@ public:
     ~MainMenu()
     {
         std::cout << "destroying main menu" << std::endl;
-        exit(0);  
     }
 
     void draw(sf::RenderWindow& window)
@@ -104,8 +103,10 @@ public:
 
     bool runPlayWindow() 
     { 
+        srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
         DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
+        Play.clear();
 
 
         
@@ -170,14 +171,14 @@ public:
 
 
         Snail bert(2, 32, 20);
-        bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+        //bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
-        bert.setTexture(bert.currentFrame->frame);
+        //bert.setTexture(bert.currentFrame->frame);
 
         Snail kurt(2, 32, 20, 0.15);
-        kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+        //kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
         kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
-        kurt.setTexture(kurt.currentFrame->frame);
+        //kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
 
@@ -189,8 +190,9 @@ public:
         float attackCoolDown = 0;
 
 
-        
-
+        characterList CharacterList;
+        bool spawnEnemy = true;
+        float enemySpawnTimer = 0.f;
 
         while (Play.isOpen())
         {
@@ -222,8 +224,13 @@ public:
 
         //wipe previous screen
         Play.clear();
-
+        
         Play.draw(room1);//draw first room
+        Play.draw(poop);
+        Play.draw(spawnner);
+        Play.draw(spawnner1);
+        Play.draw(spawnner2);
+        Play.draw(spawnner3);
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
@@ -242,12 +249,65 @@ public:
             Play.draw(bert.mHealthBar.mTopRectangle); 
 
         }
+
         //Play.draw(kurt);
-        Play.draw(poop);
-        Play.draw(spawnner);
-        Play.draw(spawnner1);
-        Play.draw(spawnner2);
-        Play.draw(spawnner3);
+        //Merge-Me-Daddy
+
+        //Play.draw(poop);
+        //Play.draw(CharacterList.pHead.)
+
+
+
+        CharacterNode* pCur = CharacterList.pHead;
+
+
+
+        while (pCur != nullptr)
+        {
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+            {
+                pCur->mCharacter->currentHP = 0;
+            }
+
+            if (pCur->mCharacter->currentHP == 0)
+            {
+                CharacterNode* deleteMe = pCur;
+                pCur = pCur->pNext;
+                CharacterList.deleteCharacter(deleteMe->mCharacter);
+            }
+            else
+            {
+            Play.draw(*(pCur->mCharacter));
+            Play.draw(pCur->mCharacter->mHealthBar.mBottomRectangle);
+            Play.draw(pCur->mCharacter->mHealthBar.mTopRectangle);
+
+
+            pCur->mCharacter->moveV(herotest,DeltaTime.asSeconds());
+            pCur->mCharacter->interacts(herotest);
+            herotest.interacts(*(pCur->mCharacter));
+
+            if (pCur->mCharacter->invinciblityTime > 0.f)
+            {
+                if (pCur->mCharacter->invinciblityTime > 0.25f)
+                {
+                    pCur->mCharacter->invinciblityTime = 0.f;
+                }
+                else
+                {
+                    pCur->mCharacter->invinciblityTime += DeltaTime.asSeconds();
+                }
+            }
+
+
+            
+            pCur = pCur->pNext;
+
+            }
+
+
+        }
+
 
         Play.display();//display drawings
 
@@ -302,6 +362,7 @@ public:
 
 
 
+
         if (herotest.attacking)
         {
             if (attackCoolDown == 0 || attackCoolDown > herotest.attackLength)
@@ -333,8 +394,9 @@ public:
             herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
         }
 
-        kurt.moveTowardsTarget(herotest, DeltaTime.asSeconds());
-        bert.moveTowardsTarget(herotest, DeltaTime.asSeconds());
+        kurt.moveV(herotest, DeltaTime.asSeconds());
+        
+        bert.moveV(herotest, DeltaTime.asSeconds());
 
         if(!herotest.attacking)
         {
@@ -343,29 +405,10 @@ public:
 
         DeltaTime = timer.getElapsedTime();
 
+        herotest.interacts(bert);
 
-        if (bert.invinciblityTime == 0 && herotest.weaponHitBox.getGlobalBounds().intersects(bert.getGlobalBounds()))
-        {
-            sf::Vector2f bounceDirection(bert.getPosition().x - herotest.getPosition().x, bert.getPosition().y - herotest.getPosition().y);
-            float bounceSpeed = getVectorManitude(bounceDirection);
-            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            bert.movementDirection = unitBounceDirection * 1000.f;
-            bert.speed = 700;
-            bert.currentHP -= herotest.mDamage;
-            bert.invinciblityTime = 0.01f;   
-        }
+        bert.interacts(herotest);
 
-        if (herotest.invinciblityTime == 0 && bert.getGlobalBounds().intersects(herotest.hitbox.getGlobalBounds()))
-        {
-            sf::Vector2f bounceDirection(herotest.getPosition().x - bert.getPosition().x, herotest.getPosition().y - bert.getPosition().y);
-            float bounceSpeed = getVectorManitude(bounceDirection);
-            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-            herotest.movementDirection = unitBounceDirection * 20.f;
-            herotest.speed = 700;
-            herotest.currentHP -= bert.mDamage;
-            herotest.invinciblityTime = 0.01f;
-
-        }
 
 
         if (bert.invinciblityTime > 0.f)
@@ -392,6 +435,36 @@ public:
             }
         }
 
+
+        //        Snail kurt(2, 32, 20, 0.15);
+
+        if (spawnEnemy)
+        {
+            float snailSpeed = (rand() % 19    + 1) / 100.f;
+            Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
+            //pNewCharacter.
+            spawnEnemy = false;
+            CharacterList.insertAtFront(pNewCharacter);
+            float x = 0;//pNewCharacter->width * pNewCharacter->mScale / 2.f;
+            float y = 0;//pNewCharacter->height * pNewCharacter->mScale / 2.f;
+            pNewCharacter->X_and_Y_Spawn_Locations(x, y);
+            pNewCharacter->setPosition(x,y);
+            //Play.draw(pNewCharacter);
+
+        }
+        else
+        {
+            if (enemySpawnTimer > 5)
+            {
+                spawnEnemy = true;
+                enemySpawnTimer = 0.f;
+            }
+            else
+            {
+                enemySpawnTimer += DeltaTime.asSeconds();
+            }
+        }
+
         
         //std::cout << herotest.movmentSpeed << std::endl;
    
@@ -415,7 +488,6 @@ public:
             ////temp
             //Play.draw(box.getOriginPoint());
 
-            //Play.display();
             //Play.clear();
         }
         return true;
@@ -586,6 +658,7 @@ public:
                 if (event.type == sf::Event::Closed)
                 {
                     menuWindow.close();
+                    exit(0);
                 }
                 if (event.type == sf::Event::KeyPressed)
                 {

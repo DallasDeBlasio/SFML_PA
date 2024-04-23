@@ -1,3 +1,5 @@
+#pragma once
+
 #include "source.hpp"
 #include "Character.hpp"
 
@@ -17,6 +19,7 @@ public:
 	Player(int scale, int width, int height, float initialSpeed);
 
 
+	void interacts(Character& badGuy);
 
 
 	void attackOne(void);
