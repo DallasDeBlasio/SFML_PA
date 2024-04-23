@@ -304,7 +304,7 @@ void Character::decayMovment(float  deltaTime)
 {
 	if (this->movementDirection.x > 1)
 	{
-		this->movementDirection.x -= 0.1 * deltaTime;
+		this->movementDirection.x -= 0.1;
 		//this->movementDirection.x -= this->movementDirection.x * 0.000001f;//this->movementSpeed
 	}
 	else if (this->movementDirection.x < -1)

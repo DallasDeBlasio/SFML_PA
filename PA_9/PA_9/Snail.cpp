@@ -2,11 +2,16 @@
 
 Snail::Snail(int scale, int width, int height) : Character(scale, width, height, 0.1f)
 {
+	this->fillTextureList(this->currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+
 }
 
 Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(scale, width, height, initialSpeed)
 {
 	//this->speed = initialSpeed * 1000;
+	this->fillTextureList(this->currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
+	this->setTexture(this->currentFrame->frame);
+	//sf::Vector2f()
 }
 
 void Snail::moveTowardsTarget(Character target, float  deltaTime)
