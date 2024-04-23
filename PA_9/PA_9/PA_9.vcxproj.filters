@@ -39,6 +39,9 @@
     <ClCompile Include="characterList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp">
@@ -68,5 +71,14 @@
     <ClInclude Include="characterList.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HealthBar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCases.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Hes_gonna_shoot_you.MP4" />
   </ItemGroup>
 </Project>
