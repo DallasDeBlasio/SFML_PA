@@ -111,6 +111,19 @@ public:
     bool runPlayWindow() 
     { 
         float runTime = 0;
+        float runTimeFinal = 0;
+      //  std::string temp;
+       // temp = runTime; 
+        std::string temp = std::to_string(runTime);  
+
+        sf::Text run;
+        run.setString(temp); 
+        sf::Font runFont;
+        runFont.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+        run.setFillColor(sf::Color::Red);
+        run.setCharacterSize(50);
+        run.setPosition(830, 10);
+        run.setFont(runFont);
 
         srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
@@ -120,7 +133,7 @@ public:
 
 
         // start screen
-        DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,200), 100);
+        DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,60), 100);
         startBox.LoadFontFromFile("Creepster-Regular.ttf"); 
         //startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
 
@@ -258,16 +271,6 @@ public:
             {
                 std::cout << "Player Died!" << std::endl;
                 break;
-                sf::Event deathEvent;
-                while (!Play.pollEvent(deathEvent))
-                {
-                    if (deathEvent.type == sf::Event::KeyPressed)
-                    {
-                        Play.close();
-                        std::cout << "Closed runPlayWindow" << std::endl;
-                    }
-                }
-
             }
 
         timer.restart();
@@ -285,6 +288,11 @@ public:
         Play.draw(spawnner2);
         Play.draw(spawnner3);
 
+        //temp = runTime;
+        temp = std::to_string(runTime); 
+        run.setString(temp);
+
+        Play.draw(run);
         // below play.draw() functions added by connor
          
         int x = runTime; 
@@ -558,6 +566,53 @@ public:
             //Play.clear();
         }
 
+   /*     sf::Color deathScreenColor(55, 55, 55);
+        sf::RectangleShape deathScreen;
+        deathScreen.setSize(sf::Vector2f(1920, 1080));
+        deathScreen.setFillColor(deathScreenColor); */
+
+        sf::Text deathScreen;
+        sf::Font deathFont;
+        deathFont.loadFromFile("Creepster-Regular.ttf");
+        deathScreen.setFillColor(sf::Color::Red); 
+        deathScreen.setFont(deathFont);
+        deathScreen.setCharacterSize(200);
+        deathScreen.setPosition(650, 300);
+        deathScreen.setString("You Died");
+
+        sf::Text blob;
+        sf::Font blobFont;
+        blobFont.loadFromFile("Creepster-Regular.ttf");
+        blob.setFillColor(sf::Color::Red);
+        blob.setFont(deathFont);
+        blob.setCharacterSize(40);
+        blob.setPosition(770, 550);
+        blob.setString("Press Escape to continue");
+     
+        sf::Event deathEvent; 
+        
+       // while (Play.pollEvent(deathEvent)) 
+        while (1 == 1)
+        {
+            while (!Play.pollEvent(deathEvent))
+            {
+                Play.draw(deathScreen);
+                Play.draw(blob);
+                Play.display();
+
+                //if (deathEvent.key.code == sf::Event::KeyPressed) 
+                //{
+                //    break;
+                ////}
+            }
+            if (deathEvent.key.code == sf::Keyboard::Escape) 
+            { 
+                break;
+            }
+        }
+      // std::this_thread::sleep_for(std::chrono::seconds(1));
+        Play.close(); 
+        std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
     void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow
