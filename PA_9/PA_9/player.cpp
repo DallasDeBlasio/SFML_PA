@@ -21,7 +21,7 @@ void Player::interacts(Character& badGuy)
 		sf::Vector2f bounceDirection(badGuy.getPosition().x - this->getPosition().x, badGuy.getPosition().y - this->getPosition().y);
 		float bounceSpeed = getVectorManitude(bounceDirection);
 		sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-		badGuy.movementDirection = unitBounceDirection * 1000.f;
+		badGuy.movementDirection = unitBounceDirection * 1250.f;
 		badGuy.speed = 700;
 		badGuy.currentHP -= this->mDamage;
 		badGuy.invinciblityTime = 0.01f;
