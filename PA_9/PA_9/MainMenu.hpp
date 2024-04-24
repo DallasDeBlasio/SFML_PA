@@ -190,6 +190,8 @@ public:
         poop.setTexture(newtexture);
         poop.setPosition(100, 100);
 
+
+        //makes all of the wells
         sf::Texture well;
         well.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
 
@@ -234,6 +236,7 @@ public:
         //spawnner3.setPosition(0, 1080 - 33 * 3);
         //spawnner3.scale(3, 3);
 
+        //makes all the rocks
         sf::Texture rock;
         rock.loadFromFile("Assets/map.png", sf::IntRect(633, 250, 100, 100));
         Object rocky;
@@ -313,6 +316,8 @@ public:
         Play.clear();
         
         Play.draw(room1);//draw first room
+
+        //draw all the objects that cant be passed through
         Play.draw(rocky);
         Play.draw(rocky2);
         Play.draw(rocky3);
@@ -370,10 +375,7 @@ public:
         //Play.draw(poop);
         //Play.draw(CharacterList.pHead.)
 
-
-
-        CharacterNode* pCur = CharacterList.pHead;
-
+        //all the checks for collisions
         rocky.isColliding(rocky, herotest);
         rocky2.isColliding(rocky2, herotest);
         rocky3.isColliding(rocky3, herotest);
@@ -382,8 +384,16 @@ public:
         spawnner2.isColliding(spawnner2, herotest);
         spawnner3.isColliding(spawnner3, herotest);
 
+
+
+        CharacterNode* pCur = CharacterList.pHead;
+
+       
+
+
         while (pCur != nullptr)
         {
+            //checks for collisions with the snail
             rocky.isColliding(rocky, *(pCur->mCharacter));
             rocky2.isColliding(rocky2, *(pCur->mCharacter));
             rocky3.isColliding(rocky3, *(pCur->mCharacter));

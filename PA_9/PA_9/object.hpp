@@ -13,6 +13,5 @@ public:
 	void spawnWell3(sf::Texture well);
 	void spawnWell4(sf::Texture well);
 	bool isColliding(Object& rocky, Character& sprite2);
-	//bool isColliding(Object& rocky, Character& herotest);
 
 };
