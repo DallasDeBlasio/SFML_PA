@@ -352,7 +352,7 @@ public:
         if (herotest.attackTimer != 0)
         {
             herotest.attackTimer += DeltaTime.asSeconds();
-            herotest.coolDownBar.setScale(sf::Vector2f(herotest.attackTimer / herotest.attackLength / 2, 1.f)); 
+            herotest.coolDownBar.setScale(sf::Vector2f(herotest.attackTimer / herotest.attackLength / 3, 1.f)); 
             herotest.coolDownBar.setPosition(sf::Vector2f(herotest.getPosition().x, herotest.getPosition().y + herotest.height * 1.75));
 
             if (herotest.attackTimer > herotest.attackCoolDown)
