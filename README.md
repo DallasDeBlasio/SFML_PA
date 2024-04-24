@@ -6,12 +6,16 @@ We present SNAIL RUN; our our final project for CptS_122.
 SNAIL RUN is a birds-eye view game where the player fights (or runs) from evil snails who want to take away your vast riches and imortality.
 
 CONTROLS: 
-Move (WASD) 
-Navigate menu (WS) or UP and DOWN arrows.
-nAttack (space)
-Go back to MainMenu (Esc)
+Navigate menu: (WS) or UP and DOWN arrows
+Menu Select: (Enter)
+Movement: (WASD) 
+Attack: (space)
+Go back to MainMenu: (Esc)
 
 Link to explanation video:
+
+The testing tab in menu does indeed run the testing function we created.
+Our five testing functions are in the private function sector of MainMenu.hpp
 
 OUTSIDE ART WORKS
 {
