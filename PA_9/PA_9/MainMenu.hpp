@@ -8,6 +8,7 @@
 #include "player.hpp"
 #include "characterNode.hpp"
 #include "characterList.hpp"
+#include "object.hpp"
 
 #include <chrono>
 #include <thread>
@@ -191,31 +192,61 @@ public:
 
         sf::Texture well;
         well.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        sf::Sprite spawnner;
-        spawnner.setTexture(well);
-        spawnner.setPosition(0, 0);
-        spawnner.scale(3, 3);
 
-        //sf::Texture well1;
-        //well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        sf::Sprite spawnner1;
-        spawnner1.setTexture(well);
-        spawnner1.setPosition(1920 - 30*3, 0);
-        spawnner1.scale(3, 3);
+        Object spawnner;
+        spawnner.spawnWell1(well);
 
-        //sf::Texture well2;
-        //well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        sf::Sprite spawnner2;
-        spawnner2.setTexture(well);
-        spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
-        spawnner2.scale(3, 3);
+        Object spawnner2;
+        spawnner2.spawnWell2(well);
 
-        //sf::Texture well3;
-        //well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        sf::Sprite spawnner3;
-        spawnner3.setTexture(well);
-        spawnner3.setPosition(0, 1080 - 33 * 3);
-        spawnner3.scale(3, 3);
+        Object spawnner3;
+        spawnner3.spawnWell3(well);
+
+        Object spawnner1;
+        spawnner1.spawnWell4(well);
+
+        sf::Texture wellith;
+        wellith.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+
+        //Object spawnner;
+        //spawnner.setTexture(well);
+        //spawnner.setPosition(0, 0);
+        //spawnner.scale(3, 3);
+
+        ////sf::Texture well1;
+        ////well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner1;
+        //spawnner1.setTexture(well);
+        //spawnner1.setPosition(1920 - 30*3, 0);
+        //spawnner1.scale(3, 3);
+
+        ////sf::Texture well2;
+        ////well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner2;
+        //spawnner2.setTexture(well);
+        //spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
+        //spawnner2.scale(3, 3);
+
+        ////sf::Texture well3;
+        ////well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner3;
+        //spawnner3.setTexture(well);
+        //spawnner3.setPosition(0, 1080 - 33 * 3);
+        //spawnner3.scale(3, 3);
+
+        sf::Texture rock;
+        rock.loadFromFile("Assets/map.png", sf::IntRect(633, 250, 100, 100));
+        Object rocky;
+        rocky.spawnTree(rock);
+
+        Object rocky2;
+        rocky2.spawnTree(rock);
+
+        Object rocky3;
+        rocky3.spawnTree(rock);
+
+        sf::Texture rockith;
+        rockith.loadFromFile("Assets/map.png", sf::IntRect(260, 299, 19, 14));
       
 
 
@@ -282,6 +313,9 @@ public:
         Play.clear();
         
         Play.draw(room1);//draw first room
+        Play.draw(rocky);
+        Play.draw(rocky2);
+        Play.draw(rocky3);
         Play.draw(poop);
         Play.draw(spawnner);
         Play.draw(spawnner1);
@@ -340,10 +374,19 @@ public:
 
         CharacterNode* pCur = CharacterList.pHead;
 
-
+        rocky.isColliding(rocky, herotest);
+        rocky2.isColliding(rocky2, herotest);
+        rocky3.isColliding(rocky3, herotest);
+        spawnner.isColliding(spawnner, herotest);
+        spawnner1.isColliding(spawnner1, herotest);
+        spawnner2.isColliding(spawnner2, herotest);
+        spawnner3.isColliding(spawnner3, herotest);
 
         while (pCur != nullptr)
         {
+            rocky.isColliding(rocky, *(pCur->mCharacter));
+            rocky2.isColliding(rocky2, *(pCur->mCharacter));
+            rocky3.isColliding(rocky3, *(pCur->mCharacter));
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
             {
@@ -384,10 +427,11 @@ public:
             pCur = pCur->pNext;
 
             }
+           
 
 
         }
-        Play.draw(herotest.weaponHitBox);
+        //Play.draw(herotest.weaponHitBox);
 
         Play.display();//display drawings
 

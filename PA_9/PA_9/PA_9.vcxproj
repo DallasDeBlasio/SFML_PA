@@ -138,6 +138,7 @@
     <ClCompile Include="characterNode.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Snail.cpp" />
     <ClCompile Include="source.cpp" />
@@ -148,6 +149,8 @@
     <ClInclude Include="characterList.hpp" />
     <ClInclude Include="characterNode.hpp" />
     <ClInclude Include="HealthBar.hpp" />
+    <ClInclude Include="object.hpp" />
+    <ClInclude Include="objectList.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Snail.hpp" />
     <ClInclude Include="source.hpp" />
