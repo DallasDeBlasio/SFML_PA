@@ -67,7 +67,7 @@ public:
 //}
 
 
-	bool testCharacterVectorMovement(void)
+	bool testCharacterVectorMovement(void)   //hfjfkjhgkjg
 	{
 		bool succeeded = false;
 		Character testCharacter(1,2,2,0.001); //0.001 multiplied by speed factor should create a speed of 2
@@ -114,7 +114,7 @@ public:
 	//	return succeeded;
 	//}
 
-		bool testSnailMovePolymorphism(void)
+		bool testSnailMovePolymorphism(void)   //daufhajkldshlkjsadjlkaf
 	{
 		bool succeeded = false;
 		Character* testSnail = new Snail(1, 4, 4 , 0.001);
@@ -171,7 +171,7 @@ public:
 			return succeeded;
 		}
 
-		bool testVectorUtility(void)
+		bool testVectorUtility(void)  //jidhsilfghdfghksjldfghlkjdfhg
 		{
 			bool succeeded = false;
 
