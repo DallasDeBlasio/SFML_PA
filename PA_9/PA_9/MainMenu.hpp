@@ -339,18 +339,18 @@ public:
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
+       
+        Play.draw(herotest);// draw hero
+        Play.draw(herotest.mHealthBar.mBottomRectangle);
         if(herotest.currentHP> 0) //if player is alive
         {
             //Play.draw(herotest.hitbox);
-            Play.draw(herotest);// draw hero
-            Play.draw(herotest.mHealthBar.mBottomRectangle);
             Play.draw(herotest.mHealthBar.mTopRectangle);
-            if (!herotest.canAttack())
-            {
-                Play.draw(herotest.coolDownBar);
-            }
         }
-
+        if (!herotest.canAttack())
+        {
+            Play.draw(herotest.coolDownBar);
+        }
 
         //all the checks for collisions
         rocky.isColliding(rocky, herotest);
