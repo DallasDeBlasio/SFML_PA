@@ -248,6 +248,10 @@ public:
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
             Play.draw(herotest.mHealthBar.mTopRectangle);
+            if (herotest.attackTimer != 0)
+            {
+                Play.draw(herotest.coolDownBar);
+            }
         }
         //if(bert.currentHP >0)
         //{
@@ -348,6 +352,9 @@ public:
         if (herotest.attackTimer != 0)
         {
             herotest.attackTimer += DeltaTime.asSeconds();
+            herotest.coolDownBar.setScale(sf::Vector2f(herotest.attackTimer / herotest.attackLength / 2, 1.f)); 
+            herotest.coolDownBar.setPosition(sf::Vector2f(herotest.getPosition().x, herotest.getPosition().y + herotest.height * 1.75));
+
             if (herotest.attackTimer > herotest.attackCoolDown)
             {
                 herotest.attackTimer = 0;

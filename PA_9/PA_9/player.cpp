@@ -12,6 +12,11 @@ Player::Player(int scale, int width, int height, float initialSpeed): Character(
 	this->weaponHitBox.setSize(sf::Vector2f(width * this->mScale, height * 2/3 * this->mScale));
 	this->weaponHitBox.setOrigin(sf::Vector2f(this->weaponHitBox.getSize().x / 2, this->weaponHitBox.getSize().y / 2));
 	//this->weaponHitBox.
+
+	this->coolDownBar.setFillColor(sf::Color().White);
+	this->coolDownBar.setSize(sf::Vector2f(width * scale, 6.f));
+	this->coolDownBar.setOrigin(sf::Vector2f(width * scale / 2, 6.f / 2));
+	this->coolDownBar.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y - height * scale / 2)); 
 }
 
 void Player::interacts(Character& badGuy)
