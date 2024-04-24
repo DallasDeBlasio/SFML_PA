@@ -14,6 +14,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 //#include <Windows.h>
 

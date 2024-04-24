@@ -6,6 +6,7 @@
 #include "Character.hpp"
 #include "Snail.hpp"
 #include "player.hpp"
+#include "object.hpp"
 #include "characterNode.hpp"
 #include "characterList.hpp"
 
@@ -21,6 +22,7 @@ public:
             std::cout << "Error Loading Menu Selections Font\n";
         }
 
+        srand(time(0));
 
         // display different menu options to screen
 
@@ -167,6 +169,19 @@ public:
         spawnner3.setPosition(0, 1080 - 33 * 3);
         spawnner3.scale(3, 3);
       
+        sf::Texture rock;
+        rock.loadFromFile("Assets/map.png", sf::IntRect(633, 250, 100, 100));
+        Object rocky;
+        rocky.spawnTree(rock);
+
+        Object rocky2;
+        rocky2.spawnTree(rock);
+
+        Object rocky3;
+        rocky3.spawnTree(rock);
+
+        sf::Texture rockith;
+        rockith.loadFromFile("Assets/map.png", sf::IntRect(260, 299, 19, 14));
 
 
         Snail bert(2, 32, 20);
@@ -227,6 +242,9 @@ public:
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
+        Play.draw(rocky);
+        Play.draw(rocky2);
+        Play.draw(rocky3);
         if(herotest.currentHP> 0)
         {
             Play.draw(herotest);// draw hero
@@ -248,8 +266,36 @@ public:
         Play.draw(spawnner1);
         Play.draw(spawnner2);
         Play.draw(spawnner3);
+        
 
         Play.display();//display drawings
+
+        if (rocky.isColliding(herotest, rocky))
+        {
+            sf::Vector2f bounceDirection(herotest.getPosition().x - rocky.getPosition().x, herotest.getPosition().y - rocky.getPosition().y);
+            float bounceSpeed = getVectorManitude(bounceDirection);
+            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
+            herotest.movementDirection = unitBounceDirection * 10.f;
+            herotest.speed = 400;
+        }
+
+        if (rocky2.isColliding(herotest, rocky2))
+        {
+            sf::Vector2f bounceDirection(herotest.getPosition().x - rocky.getPosition().x, herotest.getPosition().y - rocky.getPosition().y);
+            float bounceSpeed = getVectorManitude(bounceDirection);
+            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
+            herotest.movementDirection = unitBounceDirection * 10.f;
+            herotest.speed = 400;
+        }
+
+        if (rocky3.isColliding(herotest, rocky3))
+        {
+            sf::Vector2f bounceDirection(herotest.getPosition().x - rocky.getPosition().x, herotest.getPosition().y - rocky.getPosition().y);
+            float bounceSpeed = getVectorManitude(bounceDirection);
+            sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
+            herotest.movementDirection = unitBounceDirection * 10.f;
+            herotest.speed = 400;
+        }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.attacking)//if s pressed
         {
