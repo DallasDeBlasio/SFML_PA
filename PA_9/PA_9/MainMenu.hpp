@@ -243,7 +243,7 @@ public:
         //Play.draw(herotest.weaponHitBox);
         if(herotest.currentHP> 0)
         {
-            Play.draw(herotest.hitbox);
+            //Play.draw(herotest.hitbox);
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
