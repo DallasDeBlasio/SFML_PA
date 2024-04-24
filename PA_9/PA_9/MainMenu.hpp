@@ -196,37 +196,37 @@ public:
         spawnner.setPosition(0, 0);
         spawnner.scale(3, 3);
 
-        sf::Texture well1;
-        well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well1;
+        //well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner1;
-        spawnner1.setTexture(well1);
+        spawnner1.setTexture(well);
         spawnner1.setPosition(1920 - 30*3, 0);
         spawnner1.scale(3, 3);
 
-        sf::Texture well2;
-        well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well2;
+        //well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner2;
-        spawnner2.setTexture(well2);
+        spawnner2.setTexture(well);
         spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
         spawnner2.scale(3, 3);
 
-        sf::Texture well3;
-        well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well3;
+        //well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner3;
-        spawnner3.setTexture(well3);
+        spawnner3.setTexture(well);
         spawnner3.setPosition(0, 1080 - 33 * 3);
         spawnner3.scale(3, 3);
       
 
 
-        Snail bert(2, 32, 20);
+        //Snail bert(2, 32, 20);
         //bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
+        //bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
         //bert.setTexture(bert.currentFrame->frame);
 
-        Snail kurt(2, 32, 20, 0.15);
+        //Snail kurt(2, 32, 20, 0.15);
         //kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
+        //kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
         //kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
@@ -236,7 +236,7 @@ public:
         sf::Clock timer;//credit martin
         sf::Time DeltaTime;//credit martin
         //DeltaTime.
-        float attackCoolDown = 0;
+        //float attackCoolDown = 0;
 
 
         characterList CharacterList;
@@ -311,19 +311,24 @@ public:
         //Play.draw(herotest.weaponHitBox);
         if(herotest.currentHP> 0)
         {
+            Play.draw(herotest.hitbox);
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
             Play.draw(herotest.mHealthBar.mTopRectangle);
+            if (herotest.attackTimer != 0)
+            {
+                Play.draw(herotest.coolDownBar);
+            }
         }
-        if(bert.currentHP >0)
-        {
-            Play.draw(bert);
-            Play.draw(bert.mHealthBar.mBottomRectangle);
+        //if(bert.currentHP >0)
+        //{
+        //    Play.draw(bert);
+        //    Play.draw(bert.mHealthBar.mBottomRectangle);
 
-            Play.draw(bert.mHealthBar.mTopRectangle); 
+        //    Play.draw(bert.mHealthBar.mTopRectangle); 
 
-        }
+        //}
 
         //Play.draw(kurt);
         //Merge-Me-Daddy
@@ -382,7 +387,7 @@ public:
 
 
         }
-
+        Play.draw(herotest.weaponHitBox);
 
         Play.display();//display drawings
 
@@ -412,25 +417,28 @@ public:
         }
         
 
-        if (attackCoolDown != 0)
+        if (herotest.attackTimer != 0)
         {
-            attackCoolDown += DeltaTime.asSeconds();
-            if (attackCoolDown > herotest.attackCoolDown)
+            herotest.attackTimer += DeltaTime.asSeconds();
+            herotest.coolDownBar.setScale(sf::Vector2f(herotest.attackTimer / herotest.attackLength / 2, 1.f)); 
+            herotest.coolDownBar.setPosition(sf::Vector2f(herotest.getPosition().x, herotest.getPosition().y + herotest.height * 1.75));
+
+            if (herotest.attackTimer > herotest.attackCoolDown)
             {
-                attackCoolDown = 0;
+                herotest.attackTimer = 0;
             }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
-            if (attackCoolDown == 0)
+            if (herotest.attackTimer == 0)
             {
                 herotest.attacking = true;
                 herotest.setTexture(herotest.initalAttackNode->frame, true);
                 herotest.setWeaponHitBox();
                 
 
-                attackCoolDown = 0.001;
+                herotest.attackTimer = 0.001;
             }
         }
 
@@ -440,7 +448,7 @@ public:
 
         if (herotest.attacking)
         {
-            if (attackCoolDown == 0 || attackCoolDown > herotest.attackLength)
+            if (herotest.attackTimer == 0 || herotest.attackTimer > herotest.attackLength)
             {
                 herotest.attacking = false;
                 herotest.setTexture(herotest.currentFrame->frame, true);
@@ -451,12 +459,12 @@ public:
                 float i = 0;
                 i = (float)herotest.attackLength / (float)herotest.numAttackFrames / 6;
                 textureNode* pCurAttack = herotest.initalAttackNode;
-                if (0.1 < attackCoolDown)
+                if (0.1 < herotest.attackTimer)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
                 }
-                if (0.15 < attackCoolDown)
+                if (0.15 < herotest.attackTimer)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
@@ -466,12 +474,12 @@ public:
         }
         else
         {
-            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
+            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth + herotest.weaponHitBox.getSize().x, windowLength + herotest.weaponHitBox.getSize().y));
         }
 
-        kurt.moveV(herotest, DeltaTime.asSeconds());
+       // kurt.moveV(herotest, DeltaTime.asSeconds());
         
-        bert.moveV(herotest, DeltaTime.asSeconds());
+       // bert.moveV(herotest, DeltaTime.asSeconds());
 
         if(!herotest.attacking)
         {
@@ -480,13 +488,13 @@ public:
 
         DeltaTime = timer.getElapsedTime();
 
-        herotest.interacts(bert);
+        //herotest.interacts(bert);
 
-        bert.interacts(herotest);
+        //bert.interacts(herotest);
 
 
 
-        if (bert.invinciblityTime > 0.f)
+ /*       if (bert.invinciblityTime > 0.f)
         {
             if (bert.invinciblityTime > 0.25f)
             {
@@ -496,7 +504,7 @@ public:
             {
                 bert.invinciblityTime += DeltaTime.asSeconds();
             }
-        }
+        }*/
 
         if (herotest.invinciblityTime > 0.f)
         {
@@ -524,12 +532,14 @@ public:
             float y = 0;//pNewCharacter->height * pNewCharacter->mScale / 2.f;
             pNewCharacter->X_and_Y_Spawn_Locations(x, y);
             pNewCharacter->setPosition(x,y);
-            //Play.draw(pNewCharacter);
+            pNewCharacter->speed = 750;
+            //pNewCharacter->movmentSpeed(700);
+
 
         }
         else
         {
-            if (enemySpawnTimer > 5)
+            if (enemySpawnTimer > 10)
             {
                 spawnEnemy = true;
                 enemySpawnTimer = 0.f;
