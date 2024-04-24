@@ -600,9 +600,18 @@ public:
         sf::Text optionsTitle;
         sf::Text test1;
         sf::Text test2;
+        sf::Text test3;
+        sf::Text test4;
+        sf::Text test5;
+
         sf::Font optionsFont;
         sf::Text test1Result;
         sf::Text test2Result;
+        sf::Text test3Result;
+        sf::Text test4Result;
+        sf::Text test5Result;
+
+
 
         if (!optionsFont.loadFromFile("BungeeSpice-Regular.ttf"))
         {
@@ -642,7 +651,42 @@ public:
         test2Result.setPosition(1020, 400);
         test2Result.setFont(optionsFont);
         //---------------------------------------------------------<<<
+        //test 3 settings------------------------------------------<<<
+        test3.setCharacterSize(40);
+        test3.setString("testSnailMovePolymorphism(): ");
+        test3.setPosition(500, 500);
+        test3.setFont(optionsFont);
 
+        test3Result.setCharacterSize(40);
+        test3Result.setString("Testing");
+        test3Result.setFillColor(sf::Color::Blue); 
+        test3Result.setPosition(1283, 500);
+        test3Result.setFont(optionsFont); 
+        //---------------------------------------------------------<<<
+        //test 4 settings------------------------------------------<<<
+        test4.setCharacterSize(40);
+        test4.setString("testVectorUtility(): ");
+        test4.setPosition(500, 600);
+        test4.setFont(optionsFont);
+
+        test4Result.setCharacterSize(40);
+        test4Result.setString("Testing");
+        test4Result.setFillColor(sf::Color::Blue);
+        test4Result.setPosition(1030, 600);
+        test4Result.setFont(optionsFont);
+        //---------------------------------------------------------<<<
+        //test 5 settings------------------------------------------<<<
+        test5.setCharacterSize(40);
+        test5.setString("testCharacterVectorMovement(): ");
+        test5.setPosition(500, 700);
+        test5.setFont(optionsFont);
+
+        test5Result.setCharacterSize(40);
+        test5Result.setString("Testing");
+        test5Result.setFillColor(sf::Color::Blue);
+        test5Result.setPosition(1325, 700);
+        test5Result.setFont(optionsFont);
+        //---------------------------------------------------------<<<
         int x = 0;
 
         while (Options.isOpen()) 
@@ -672,6 +716,12 @@ public:
             Options.draw(test1Result);
             Options.draw(test2); 
             Options.draw(test2Result);
+            Options.draw(test3); 
+            Options.draw(test3Result); 
+            Options.draw(test4);
+            Options.draw(test4Result);
+            Options.draw(test5);
+            Options.draw(test5Result);
             Options.display();
             Options.clear();
 
@@ -687,6 +737,10 @@ public:
 
                     test1Result.setString(testingString);
                     test2Result.setString(testingString);
+                    test3Result.setString(testingString);
+                    test4Result.setString(testingString);
+                    test5Result.setString(testingString);
+
 
                     Options.draw(optionsBackground);
                     Options.draw(optionsTitle);
@@ -694,6 +748,12 @@ public:
                     Options.draw(test1Result);
                     Options.draw(test2);
                     Options.draw(test2Result);
+                    Options.draw(test3);
+                    Options.draw(test3Result);
+                    Options.draw(test4);
+                    Options.draw(test4Result);
+                    Options.draw(test5); 
+                    Options.draw(test5Result);
                     Options.display();
                     Options.clear();
                 }
@@ -718,7 +778,36 @@ public:
                     test2Result.setString("FAILED");
                     test2Result.setFillColor(sf::Color::Red);
                 }
-
+                if (testSnailMovePolymorphism()) 
+                {
+                    test3Result.setString("PASSED");
+                    test3Result.setFillColor(sf::Color::Green);
+                }
+                else // set result string to failed and color to red
+                {
+                    test3Result.setString("FAILED");
+                    test3Result.setFillColor(sf::Color::Red);
+                }
+                if (testVectorUtility()) 
+                {
+                    test4Result.setString("PASSED");
+                    test4Result.setFillColor(sf::Color::Green);
+                }
+                else // set result string to failed and color to red
+                {
+                    test4Result.setString("FAILED");
+                    test4Result.setFillColor(sf::Color::Red);
+                }
+                if (testCharacterVectorMovement()) 
+                {
+                    test5Result.setString("PASSED");
+                    test5Result.setFillColor(sf::Color::Green);
+                }
+                else // set result string to failed and color to red
+                {
+                    test5Result.setString("FAILED");
+                    test5Result.setFillColor(sf::Color::Red);
+                }
                 x++;
             }
         }
@@ -912,7 +1001,7 @@ private:
 
 
     /// <summary>
-/// tests MoveUp() function
+/// tests MoveUp() function -- written by connor
 /// </summary>
 /// <param name=""></param>
 /// <returns>true or false</returns>
@@ -936,7 +1025,7 @@ private:
     }
 
     /// <summary>
-/// tests MoveDown() function
+/// tests MoveDown() function -- written by connor
 /// </summary>
 /// <param name=""></param>
 /// <returns>true or false</returns>
@@ -958,5 +1047,98 @@ private:
         }
         std::cout << "testMoveDown: false" << std::endl;
         return false;
+    }
+
+    bool testSnailMovePolymorphism(void)   // -- written by james
+    {
+        bool succeeded = false;
+        Character* testSnail = new Snail(1, 4, 4, 0.001);
+        testSnail->setPosition(4, 4);
+        testSnail->movementDirection = sf::Vector2f(0, 0);//movement direction away from player
+        Player testPlayer(1, 4, 4, 0.2);
+        testPlayer.setPosition(10, 10);
+
+        sf::Vector2f initialDistanceBetweenCharacterAndSnail(testPlayer.getPosition().x - testSnail->getPosition().x, testPlayer.getPosition().y - testSnail->getPosition().y);
+
+        testSnail->moveV(testPlayer, 1);//if the polymorphism fails, then the snail will not move. If it works, the snail will get closer to the player
+
+        sf::Vector2f finalDistanceBetweenCharacterAndSnail(testPlayer.getPosition().x - testSnail->getPosition().x, testPlayer.getPosition().y - testSnail->getPosition().y);
+
+        //if the snail's moveV polymorphism works, inital distance should be larger than final distance since the testsnail should have moved towards the player
+        if (getVectorManitude(initialDistanceBetweenCharacterAndSnail) > getVectorManitude(finalDistanceBetweenCharacterAndSnail))
+        {
+            succeeded = true;
+        }
+
+        return succeeded;
+    }
+
+    bool testVectorUtility(void)  //jidhsilfghdfghksjldfghlkjdfhg
+    {
+        bool succeeded = false;
+
+        if (testUnitVector() && testVectorMagnitude())
+        {
+            succeeded = true;
+        }
+
+        return succeeded;
+    }
+
+    bool testVectorMagnitude(void)
+    {
+        bool succeeded = false;
+        sf::Vector2f oneByOneVector(1, 1);
+        float oneByOneExpectedMagnitude = sqrt(2);
+
+        sf::Vector2f vectorWithMagnitdueFive(4, 3);
+        float magnitudeFive = 5.f;
+        if (getVectorManitude(oneByOneVector) == oneByOneExpectedMagnitude && getVectorManitude(vectorWithMagnitdueFive) == 5.f)
+        {
+            succeeded = true;
+        }
+
+        return succeeded;
+    }
+
+    bool testUnitVector(void)
+    {
+        bool succeeded = false;
+        sf::Vector2f oneByOneVector(1, 1);
+        sf::Vector2f oneByOneExpectedUnitVector(1.f / sqrt(2), 1.f / sqrt(2));
+
+
+        sf::Vector2f fourByThreeVector(4, 3);
+        sf::Vector2f fourByThreeExpectedUnitVector(4.f / 5.f, 3.f / 5.f);
+        if (getUnitVector(oneByOneVector).x == oneByOneExpectedUnitVector.x && getUnitVector(oneByOneVector).y == oneByOneExpectedUnitVector.y && getUnitVector(fourByThreeVector).x == fourByThreeExpectedUnitVector.x && getUnitVector(fourByThreeVector).y == fourByThreeExpectedUnitVector.y)
+        {
+            succeeded = true;
+        }
+
+        return succeeded;
+    }
+
+    bool testCharacterVectorMovement(void)   //hfjfkjhgkjg
+    {
+        bool succeeded = false;
+        Character testCharacter(1, 2, 2, 0.001); //0.001 multiplied by speed factor should create a speed of 2
+        testCharacter.setPosition(sf::Vector2f(0, 0));
+        testCharacter.movementDirection = sf::Vector2f(1, 0);
+        testCharacter.moveV(1);//should move testCharacter to position (2,0)
+        testCharacter.movementDirection = sf::Vector2f(0, 1);
+        testCharacter.moveV(1);//should move testCharacter to position (2,2)
+        testCharacter.movementDirection = sf::Vector2f(1, 1);
+        testCharacter.moveV(1);// should move testCharacter to position (2 + sqrt(2), 2 + sqrt(2))
+        float x = testCharacter.getPosition().x;
+        float y = testCharacter.getPosition().y;
+        float expected_X = 2 + sqrt(2);
+        float expected_Y = 2 + sqrt(2);
+
+        if (x == expected_X && y == expected_Y)//should travel 2 + sqrt(2) in both the x and y direction
+        {
+            succeeded = true;
+            //std::cout << "Yeah";
+        }
+        return succeeded;
     }
 };
