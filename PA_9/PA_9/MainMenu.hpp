@@ -8,6 +8,7 @@
 #include "player.hpp"
 #include "characterNode.hpp"
 #include "characterList.hpp"
+#include "TestCases.hpp"
 
 #include <chrono>
 #include <thread>
@@ -177,11 +178,7 @@ public:
         herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
         herotest.setTexture(herotest.currentFrame->frame);
         herotest.fillTextureList(herotest.initalAttackNode, 3, 16, 297, herotest.width * 2, herotest.height, true, 48, "Assets/tempHero.png", false);
-        //herotest.fillTextureList(herotest.initalAttackNode, 3, 16 * 2, 297, herotest.width, herotest.height, true, 48, "Assets/tempHero.png");
 
-
-       // herotest.initalAttackNode = new textureNode();
-        //herotest.initalAttackNode->frame.loadFromFile("Assets/tempHero.png", sf::IntRect(16+48, 297, 32, 31));
 
         sf::Texture newtexture;
         newtexture.loadFromFile("Assets/tempHero.png", sf::IntRect(16 + 48, 297, 16 * 2, 31));
@@ -196,38 +193,22 @@ public:
         spawnner.setPosition(0, 0);
         spawnner.scale(3, 3);
 
-        //sf::Texture well1;
-        //well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner1;
         spawnner1.setTexture(well);
         spawnner1.setPosition(1920 - 30*3, 0);
         spawnner1.scale(3, 3);
 
-        //sf::Texture well2;
-        //well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner2;
         spawnner2.setTexture(well);
         spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
         spawnner2.scale(3, 3);
 
-        //sf::Texture well3;
-        //well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner3;
         spawnner3.setTexture(well);
         spawnner3.setPosition(0, 1080 - 33 * 3);
         spawnner3.scale(3, 3);
       
 
-
-        //Snail bert(2, 32, 20);
-        //bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        //bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
-        //bert.setTexture(bert.currentFrame->frame);
-
-        //Snail kurt(2, 32, 20, 0.15);
-        //kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        //kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
-        //kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
 
@@ -242,6 +223,13 @@ public:
         characterList CharacterList;
         bool spawnEnemy = true;
         float enemySpawnTimer = 0.f;
+
+        TestCases testMe;
+
+        if (testMe.testCharacterVectorMovement())
+        {
+            std::cout << "yeah";
+        }
 
         while (Play.isOpen())
         {
@@ -311,7 +299,7 @@ public:
         //Play.draw(herotest.weaponHitBox);
         if(herotest.currentHP> 0)
         {
-            Play.draw(herotest.hitbox);
+            //Play.draw(herotest.hitbox);
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
@@ -321,21 +309,8 @@ public:
                 Play.draw(herotest.coolDownBar);
             }
         }
-        //if(bert.currentHP >0)
-        //{
-        //    Play.draw(bert);
-        //    Play.draw(bert.mHealthBar.mBottomRectangle);
 
-        //    Play.draw(bert.mHealthBar.mTopRectangle); 
-
-        //}
-
-        //Play.draw(kurt);
-        //Merge-Me-Daddy
-
-        //Play.draw(poop);
-        //Play.draw(CharacterList.pHead.)
-
+        
 
 
         CharacterNode* pCur = CharacterList.pHead;
@@ -387,7 +362,7 @@ public:
 
 
         }
-        Play.draw(herotest.weaponHitBox);
+        //Play.draw(herotest.weaponHitBox);
 
         Play.display();//display drawings
 
@@ -550,23 +525,7 @@ public:
             }
         }
 
-        
-        //std::cout << herotest.movmentSpeed << std::endl;
-   
 
-
-
-
-        //if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-        //{
-        //    herotest.movementDirection.y = 0;
-        //    herotest.movementDirection.x = -125;
-        //    herotest.speed = 2000;
-        //}
-        
-        //std::cout << herotest.movementDirection.x << ", " << herotest.movementDirection.y <<herotest.movementDirection.y << std::endl;
-        //std::cout << herotest.speed << std::endl << std::endl;
-        //st
             //Play.draw(box.getBox());
             //Play.draw(box.getText());
 

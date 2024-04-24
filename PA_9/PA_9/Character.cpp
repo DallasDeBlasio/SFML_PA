@@ -2,61 +2,24 @@
 #include "player.hpp"
 #include "Snail.hpp"
 
-int speedFactor = 2000;
+int speedFactor = 2000;//because delta time is such a small number, we must in turn multiply the characters speed by an aposing large number to movement to be where we want it
 
 Character::Character(): Character(1,50,50,0.2)
 {
-	//this->maxHP = 30;
-	//this->mDamage = 5;
-	//this->movmentSpeed = 0.2 * speedFactor;
-	//this->speed = this->movmentSpeed;
-	//this->facing = 1;
-	//this->mScale = 1;
-	//this->height = 50;
-	//this->width = 50;
-	//this->setScale(this->mScale, this->mScale);
-	//this->currentFrame = nullptr;
-
-
-	//this->setOrigin(this->width / 2.f, this->height / 2.f);
-	//this->walkFrame = 0;
-
-
-	//this->movementDirection = sf::Vector2f(0.f, 0.f);
-
 }
 
 Character::Character(int scale, int width, int height) :Character(scale, width, height, 0.2) //: Sprite()
 {
-	//this->maxHP = 30;
-	//this->mDamage = 5;
-	//this->movmentSpeed = 0.2 * speedFactor;
-	//this->speed = this->movmentSpeed;
-	//this->facing = 1;
-	//this->mScale = scale;
-	//this->width = width;
-	//this->height = height;
-	//this->setOrigin(this->width / 2.0, this->height / 2.0);//sets origin to center of object
-	//this->walkFrame = 0;
-	//this->currentFrame = nullptr;
-
-	//this->setScale(this->mScale, this->mScale);
-
-	//this->movementDirection = sf::Vector2f(0.f, 0.f);
-	//this->hitbox.setSize(this->getGlobalBounds().getSize());
-	//this->hitbox.setPosition(this->getGlobalBounds().getPosition());
-
 }
 
 Character::Character(int scale, int width, int height, float initialSpeed):Sprite()
 {
 	this->maxHP = 30;
 	this->currentHP = this->maxHP;
-	this->mDamage = 5;
-	this->movmentSpeed = initialSpeed * speedFactor;
-	this->speed = this->movmentSpeed;
-
-	this->facing = 1;
+	this->mDamage = 5;//damage the character does to others
+	this->movmentSpeed = initialSpeed * speedFactor; //maximum speed the character should be moving under their own power
+	this->speed = this->movmentSpeed; //current speed the character is moving
+	this->facing = 1; //which direction the character is facing, -1 for left 1 for right
 	this->mScale = scale;
 	this->width = width;
 	this->height = height;
