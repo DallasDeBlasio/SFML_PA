@@ -226,7 +226,7 @@ public:
 
         TestCases testMe;
 
-        if (testMe.testCharacterVectorMovement())
+        if (testMe.testVectorUtility())
         {
             std::cout << "yeah";
         }

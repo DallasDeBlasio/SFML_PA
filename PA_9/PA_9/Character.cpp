@@ -145,7 +145,7 @@ void Character::moveV(float  deltaTime)
 
 void Character::moveV(Character target, float deltaTime)
 {
-	std::cout << "Improper Call of two parameter moveV\n";
+	this->moveV(deltaTime);
 }
 
 
