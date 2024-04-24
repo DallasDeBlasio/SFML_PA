@@ -110,15 +110,57 @@ public:
 
     bool runPlayWindow() 
     { 
+        float runTime = 0;
+        float runTimeFinal = 0;
+      //  std::string temp;
+       // temp = runTime; 
+        std::string temp = std::to_string(runTime);  
+
+        sf::Text run;
+        run.setString(temp); 
+        sf::Font runFont;
+        runFont.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+        run.setFillColor(sf::Color::Red);
+        run.setCharacterSize(50);
+        run.setPosition(830, 10);
+        run.setFont(runFont);
+
         srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
-        DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
+       // DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
         Play.clear();
-
-
-        
-
         std::cout << "Opened runPlayWindow" << std::endl; 
+
+
+        // start screen
+        DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,60), 100);
+        startBox.LoadFontFromFile("Creepster-Regular.ttf"); 
+        //startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+
+
+        //startBox.setTextSize(20);
+        //int x = 0;
+     /*   int R = 55;
+        int B = 225;
+        int G = 100;*/
+        sf::Color textColor(55,225,100); 
+        startBox.setTextColor(textColor);   
+        startBox.setBoxColor(sf::Color::Transparent);
+
+
+
+        //sf::Texture boxTexture;
+        //boxTexture.loadFromFile("Wood Floor.png");
+        //startBox.changeTexture(&boxTexture);
+
+        //DialogBox startBox2("Run From the Snails!", sf::Vector2f(515, 510), 100);
+        //startBox2.LoadFontFromFile("Creepster-Regular.ttf");
+        ////startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+
+        ////startBox.setTextSize(20);
+        //sf::Color textColor2(101, 255, 0);
+        //startBox2.setTextColor(textColor2);
+        //startBox2.setBoxColor(sf::Color::Transparent);
 
         int windowLength = 1080;
         int windowWidth = 1920;
@@ -203,6 +245,8 @@ public:
 
         while (Play.isOpen())
         {
+            runTime = DeltaTime.asSeconds() + runTime;
+
             sf::Event someEvent;
             while (Play.pollEvent(someEvent))
             {
@@ -223,6 +267,11 @@ public:
 
             // GAME WINDOW --- GAME LOOP HERE 
 
+            if (herotest.currentHP <= 0)
+            {
+                std::cout << "Player Died!" << std::endl;
+                break;
+            }
 
         timer.restart();
         
@@ -238,6 +287,25 @@ public:
         Play.draw(spawnner1);
         Play.draw(spawnner2);
         Play.draw(spawnner3);
+
+        //temp = runTime;
+        temp = std::to_string(runTime); 
+        run.setString(temp);
+
+        Play.draw(run);
+        // below play.draw() functions added by connor
+         
+        int x = runTime; 
+        
+
+        if (runTime < 5)
+        {
+            Play.draw(startBox.getBox());
+            Play.draw(startBox.getText());
+        }
+       // Play.draw(startBox2.getBox());
+       // Play.draw(startBox2.getText());
+
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
@@ -507,6 +575,54 @@ public:
 
             //Play.clear();
         }
+
+   /*     sf::Color deathScreenColor(55, 55, 55);
+        sf::RectangleShape deathScreen;
+        deathScreen.setSize(sf::Vector2f(1920, 1080));
+        deathScreen.setFillColor(deathScreenColor); */
+
+        sf::Text deathScreen;
+        sf::Font deathFont;
+        deathFont.loadFromFile("Creepster-Regular.ttf");
+        deathScreen.setFillColor(sf::Color::Red); 
+        deathScreen.setFont(deathFont);
+        deathScreen.setCharacterSize(200);
+        deathScreen.setPosition(650, 300);
+        deathScreen.setString("You Died");
+
+        sf::Text blob;
+        sf::Font blobFont;
+        blobFont.loadFromFile("Creepster-Regular.ttf");
+        blob.setFillColor(sf::Color::Red);
+        blob.setFont(deathFont);
+        blob.setCharacterSize(40);
+        blob.setPosition(770, 550);
+        blob.setString("Press Escape to continue");
+     
+        sf::Event deathEvent; 
+        
+       // while (Play.pollEvent(deathEvent)) 
+        while (1 == 1)
+        {
+            while (!Play.pollEvent(deathEvent))
+            {
+                Play.draw(deathScreen);
+                Play.draw(blob);
+                Play.display();
+
+                //if (deathEvent.key.code == sf::Event::KeyPressed) 
+                //{
+                //    break;
+                ////}
+            }
+            if (deathEvent.key.code == sf::Keyboard::Escape) 
+            { 
+                break;
+            }
+        }
+      // std::this_thread::sleep_for(std::chrono::seconds(1));
+        Play.close(); 
+        std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
     void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow

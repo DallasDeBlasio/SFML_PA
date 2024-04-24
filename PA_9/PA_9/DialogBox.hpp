@@ -33,16 +33,20 @@ public:
 
 		std::cout << "loaded Default dialog box" << std::endl; 
 	}
-	DialogBox(sf::String stringToDisplay, sf::Vector2f position)
+	DialogBox(sf::String stringToDisplay, sf::Vector2f position, int size)
 	{
 		font.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
 		text.setFont(font);
 		text.setFillColor(sf::Color::Blue);
+		text.setOutlineColor(sf::Color::Black);
+		text.setOutlineThickness(5);
 		text.setString(stringToDisplay); 
-		text.setCharacterSize(40);
+		//text.setCharacterSize(40);
+		text.setCharacterSize(size); 
 		text.setPosition(position); 
 
 		bounds = text.getLocalBounds(); 
+
 
 		//bounds.height* text.getCharacterSize();
 		//bounds.width* text.getCharacterSize();
@@ -54,6 +58,20 @@ public:
 		std::string stringForPrintDebugging = stringToDisplay; 
 		std::cout << "loaded dialog box with \"" << stringForPrintDebugging << "\"" << std::endl;  
 	}
+	void setTextColor(sf::Color color)
+	{
+		text.setFillColor(color); 
+	}
+
+	void setBoxColor(sf::Color color) 
+	{
+		box.setFillColor(color);
+	}
+
+	/*void setTextSize(int num)
+	{
+		text.setCharacterSize(num);
+	}*/
 
 	sf::RectangleShape getBox()
 	{
