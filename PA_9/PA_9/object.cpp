@@ -53,7 +53,7 @@ bool Object::isColliding(Object& rocky, Character& herotest)
 		sf::Vector2f bounceDirection(herotest.getPosition().x - rocky.getPosition().x, herotest.getPosition().y - rocky.getPosition().y);
 		float bounceSpeed = getVectorManitude(bounceDirection);
 		sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-		herotest.movementDirection = unitBounceDirection * 1.f;
+		herotest.movementDirection = unitBounceDirection * .1f;
 		herotest.speed = 40;
 		return true;
 	}
