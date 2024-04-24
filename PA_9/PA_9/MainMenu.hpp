@@ -110,15 +110,44 @@ public:
 
     bool runPlayWindow() 
     { 
+        float runTime = 0;
+
         srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
-        DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
+       // DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
         Play.clear();
-
-
-        
-
         std::cout << "Opened runPlayWindow" << std::endl; 
+
+
+        // start screen
+        DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,200), 100);
+        startBox.LoadFontFromFile("Creepster-Regular.ttf"); 
+        //startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+
+
+        //startBox.setTextSize(20);
+        //int x = 0;
+     /*   int R = 55;
+        int B = 225;
+        int G = 100;*/
+        sf::Color textColor(55,225,100); 
+        startBox.setTextColor(textColor);   
+        startBox.setBoxColor(sf::Color::Transparent);
+
+
+
+        //sf::Texture boxTexture;
+        //boxTexture.loadFromFile("Wood Floor.png");
+        //startBox.changeTexture(&boxTexture);
+
+        //DialogBox startBox2("Run From the Snails!", sf::Vector2f(515, 510), 100);
+        //startBox2.LoadFontFromFile("Creepster-Regular.ttf");
+        ////startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+
+        ////startBox.setTextSize(20);
+        //sf::Color textColor2(101, 255, 0);
+        //startBox2.setTextColor(textColor2);
+        //startBox2.setBoxColor(sf::Color::Transparent);
 
         int windowLength = 1080;
         int windowWidth = 1920;
@@ -203,6 +232,8 @@ public:
 
         while (Play.isOpen())
         {
+            runTime = DeltaTime.asSeconds() + runTime;
+
             sf::Event someEvent;
             while (Play.pollEvent(someEvent))
             {
@@ -223,6 +254,21 @@ public:
 
             // GAME WINDOW --- GAME LOOP HERE 
 
+            if (herotest.currentHP <= 0)
+            {
+                std::cout << "Player Died!" << std::endl;
+                break;
+                sf::Event deathEvent;
+                while (!Play.pollEvent(deathEvent))
+                {
+                    if (deathEvent.type == sf::Event::KeyPressed)
+                    {
+                        Play.close();
+                        std::cout << "Closed runPlayWindow" << std::endl;
+                    }
+                }
+
+            }
 
         timer.restart();
         
@@ -238,6 +284,20 @@ public:
         Play.draw(spawnner1);
         Play.draw(spawnner2);
         Play.draw(spawnner3);
+
+        // below play.draw() functions added by connor
+         
+        int x = runTime; 
+        
+
+        if (runTime < 5)
+        {
+            Play.draw(startBox.getBox());
+            Play.draw(startBox.getText());
+        }
+       // Play.draw(startBox2.getBox());
+       // Play.draw(startBox2.getText());
+
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
@@ -497,6 +557,7 @@ public:
 
             //Play.clear();
         }
+
         return true;
     }
     void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow
