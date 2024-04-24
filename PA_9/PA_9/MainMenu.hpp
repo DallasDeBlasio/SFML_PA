@@ -9,6 +9,7 @@
 #include "characterNode.hpp"
 #include "characterList.hpp"
 #include "TestCases.hpp"
+#include "object.hpp"
 
 #include <chrono>
 #include <thread>
@@ -186,27 +187,67 @@ public:
         poop.setTexture(newtexture);
         poop.setPosition(100, 100);
 
+
+        //makes all of the wells
         sf::Texture well;
         well.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        sf::Sprite spawnner;
-        spawnner.setTexture(well);
-        spawnner.setPosition(0, 0);
-        spawnner.scale(3, 3);
 
-        sf::Sprite spawnner1;
-        spawnner1.setTexture(well);
-        spawnner1.setPosition(1920 - 30*3, 0);
-        spawnner1.scale(3, 3);
 
-        sf::Sprite spawnner2;
-        spawnner2.setTexture(well);
-        spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
-        spawnner2.scale(3, 3);
+        Object spawnner;
+        spawnner.spawnWell1(well);
 
-        sf::Sprite spawnner3;
-        spawnner3.setTexture(well);
-        spawnner3.setPosition(0, 1080 - 33 * 3);
-        spawnner3.scale(3, 3);
+        Object spawnner2;
+        spawnner2.spawnWell2(well);
+
+        Object spawnner3;
+        spawnner3.spawnWell3(well);
+
+        Object spawnner1;
+        spawnner1.spawnWell4(well);
+
+        sf::Texture wellith;
+        wellith.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+
+        //Object spawnner;
+        //spawnner.setTexture(well);
+        //spawnner.setPosition(0, 0);
+        //spawnner.scale(3, 3);
+
+        ////sf::Texture well1;
+        ////well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner1;
+        //spawnner1.setTexture(well);
+        //spawnner1.setPosition(1920 - 30*3, 0);
+        //spawnner1.scale(3, 3);
+
+        ////sf::Texture well2;
+        ////well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner2;
+        //spawnner2.setTexture(well);
+        //spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
+        //spawnner2.scale(3, 3);
+
+        ////sf::Texture well3;
+        ////well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Sprite spawnner3;
+        //spawnner3.setTexture(well);
+        //spawnner3.setPosition(0, 1080 - 33 * 3);
+        //spawnner3.scale(3, 3);
+
+        //makes all the rocks
+        sf::Texture rock;
+        rock.loadFromFile("Assets/map.png", sf::IntRect(633, 250, 100, 100));
+        Object rocky;
+        rocky.spawnTree(rock);
+
+        Object rocky2;
+        rocky2.spawnTree(rock);
+
+        Object rocky3;
+        rocky3.spawnTree(rock);
+
+        sf::Texture rockith;
+        rockith.loadFromFile("Assets/map.png", sf::IntRect(260, 299, 19, 14));
       
 
 
@@ -270,6 +311,11 @@ public:
         Play.clear();
         
         Play.draw(room1);//draw first room
+
+        //draw all the objects that cant be passed through
+        Play.draw(rocky);
+        Play.draw(rocky2);
+        Play.draw(rocky3);
         Play.draw(poop);
         Play.draw(spawnner);
         Play.draw(spawnner1);
@@ -309,15 +355,29 @@ public:
             }
         }
 
-        
+
+        //all the checks for collisions
+        rocky.isColliding(rocky, herotest);
+        rocky2.isColliding(rocky2, herotest);
+        rocky3.isColliding(rocky3, herotest);
+        spawnner.isColliding(spawnner, herotest);
+        spawnner1.isColliding(spawnner1, herotest);
+        spawnner2.isColliding(spawnner2, herotest);
+        spawnner3.isColliding(spawnner3, herotest);
+
 
 
         CharacterNode* pCur = CharacterList.pHead;
 
+       
 
 
         while (pCur != nullptr)
         {
+            //checks for collisions with the snail
+            rocky.isColliding(rocky, *(pCur->mCharacter));
+            rocky2.isColliding(rocky2, *(pCur->mCharacter));
+            rocky3.isColliding(rocky3, *(pCur->mCharacter));
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
             {
@@ -358,6 +418,7 @@ public:
             pCur = pCur->pNext;
 
             }
+           
 
 
         }
@@ -466,58 +527,58 @@ public:
             //Play.draw(box.getOriginPoint());
 
             //Play.clear();
-        }
-        //herotest.currentHP = 0;
-        //Play.clear()
-        //Play.draw(herotest.mHealthBar.mBottomRectangle);
-   /*     sf::Color deathScreenColor(55, 55, 55);
-        sf::RectangleShape deathScreen;
-        deathScreen.setSize(sf::Vector2f(1920, 1080));
-        deathScreen.setFillColor(deathScreenColor); */
-
-        sf::Text deathScreen;
-        sf::Font deathFont;
-        deathFont.loadFromFile("Creepster-Regular.ttf");
-        deathScreen.setFillColor(sf::Color::Red); 
-        deathScreen.setFont(deathFont);
-        deathScreen.setCharacterSize(200);
-        deathScreen.setPosition(650, 300);
-        deathScreen.setString("You Died");
 
 
 
-        sf::Text blob;
-        sf::Font blobFont;
-        blobFont.loadFromFile("Creepster-Regular.ttf");
-        blob.setFillColor(sf::Color::Red);
-        blob.setFont(deathFont);
-        blob.setCharacterSize(40);
-        blob.setPosition(770, 550);
-        blob.setString("Press Escape to continue");
-     
-        sf::Event deathEvent; 
-        
-       // while (Play.pollEvent(deathEvent)) 
-        while (1 == 1)
+        // while (Play.pollEvent(deathEvent)) 
+        /*while (1 == 1)
+        {*/
+        if (herotest.currentHP <= 0)
         {
-            while (!Play.pollEvent(deathEvent))
-            {
+            sf::Text deathScreen;
+            sf::Font deathFont;
+            deathFont.loadFromFile("Creepster-Regular.ttf");
+            deathScreen.setFillColor(sf::Color::Red);
+            deathScreen.setFont(deathFont);
+            deathScreen.setCharacterSize(200);
+            deathScreen.setPosition(650, 300);
+            deathScreen.setString("You Died");
+
+            sf::Text blob;
+            sf::Font blobFont;
+            blobFont.loadFromFile("Creepster-Regular.ttf");
+            blob.setFillColor(sf::Color::Red);
+            blob.setFont(deathFont);
+            blob.setCharacterSize(40);
+            blob.setPosition(770, 550);
+            blob.setString("Press Escape to continue");
+
+            sf::Event deathEvent;
+
                 Play.draw(deathScreen);
                 Play.draw(blob);
                 Play.display();
 
-                //if (deathEvent.key.code == sf::Event::KeyPressed) 
-                //{
-                //    break;
-                ////}
-            }
-            if (deathEvent.key.code == sf::Keyboard::Escape) 
-            { 
-                break;
-            }
+
+                while (1 == 1)
+                {
+                    while (Play.pollEvent(deathEvent))
+                    {
+                        if (deathEvent.key.code == sf::Keyboard::Escape)
+                        {
+                            Play.close();
+                            break;
+                        }
+                    }
+                    if (!Play.isOpen())
+                    {
+                        break;
+                    }
+                }
         }
-      // std::this_thread::sleep_for(std::chrono::seconds(1));
-        Play.close(); 
+
+
+        }
         std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
