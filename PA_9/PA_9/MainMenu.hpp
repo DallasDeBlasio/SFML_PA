@@ -177,14 +177,14 @@ public:
       
 
 
-        Snail bert(2, 32, 20);
+        //Snail bert(2, 32, 20);
         //bert.fillTextureList(bert.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
+        //bert.setPosition(bert.width / 2.0f * bert.mScale, bert.height / 2.0f * bert.mScale);
         //bert.setTexture(bert.currentFrame->frame);
 
-        Snail kurt(2, 32, 20, 0.15);
+        //Snail kurt(2, 32, 20, 0.15);
         //kurt.fillTextureList(kurt.currentFrame, 3, 0, 72, true, 32, "Assets/snail.png");
-        kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
+        //kurt.setPosition(windowWidth - kurt.width / 2.0f * kurt.mScale, windowLength - kurt.height / 2.0f * kurt.mScale);
         //kurt.setTexture(kurt.currentFrame->frame);
 
         int walkframe = 0;//which frame the animation is in
@@ -243,19 +243,20 @@ public:
         //Play.draw(herotest.weaponHitBox);
         if(herotest.currentHP> 0)
         {
+            
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
             Play.draw(herotest.mHealthBar.mTopRectangle);
         }
-        if(bert.currentHP >0)
-        {
-            Play.draw(bert);
-            Play.draw(bert.mHealthBar.mBottomRectangle);
+        //if(bert.currentHP >0)
+        //{
+        //    Play.draw(bert);
+        //    Play.draw(bert.mHealthBar.mBottomRectangle);
 
-            Play.draw(bert.mHealthBar.mTopRectangle); 
+        //    Play.draw(bert.mHealthBar.mTopRectangle); 
 
-        }
+        //}
 
         //Play.draw(kurt);
         //Merge-Me-Daddy
@@ -344,25 +345,25 @@ public:
         }
         
 
-        if (attackCoolDown != 0)
+        if (herotest.attackTimer != 0)
         {
-            attackCoolDown += DeltaTime.asSeconds();
-            if (attackCoolDown > herotest.attackCoolDown)
+            herotest.attackTimer += DeltaTime.asSeconds();
+            if (herotest.attackTimer > herotest.attackCoolDown)
             {
-                attackCoolDown = 0;
+                herotest.attackTimer = 0;
             }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
-            if (attackCoolDown == 0)
+            if (herotest.attackTimer == 0)
             {
                 herotest.attacking = true;
                 herotest.setTexture(herotest.initalAttackNode->frame, true);
                 herotest.setWeaponHitBox();
                 
 
-                attackCoolDown = 0.001;
+                herotest.attackTimer = 0.001;
             }
         }
 
@@ -372,7 +373,7 @@ public:
 
         if (herotest.attacking)
         {
-            if (attackCoolDown == 0 || attackCoolDown > herotest.attackLength)
+            if (herotest.attackTimer == 0 || herotest.attackTimer > herotest.attackLength)
             {
                 herotest.attacking = false;
                 herotest.setTexture(herotest.currentFrame->frame, true);
@@ -383,12 +384,12 @@ public:
                 float i = 0;
                 i = (float)herotest.attackLength / (float)herotest.numAttackFrames / 6;
                 textureNode* pCurAttack = herotest.initalAttackNode;
-                if (0.1 < attackCoolDown)
+                if (0.1 < herotest.attackTimer)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
                 }
-                if (0.15 < attackCoolDown)
+                if (0.15 < herotest.attackTimer)
                 {
                     pCurAttack = pCurAttack->pNext;
                     herotest.setTexture(pCurAttack->frame, true);
@@ -401,9 +402,9 @@ public:
             herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
         }
 
-        kurt.moveV(herotest, DeltaTime.asSeconds());
+       // kurt.moveV(herotest, DeltaTime.asSeconds());
         
-        bert.moveV(herotest, DeltaTime.asSeconds());
+       // bert.moveV(herotest, DeltaTime.asSeconds());
 
         if(!herotest.attacking)
         {
@@ -412,13 +413,13 @@ public:
 
         DeltaTime = timer.getElapsedTime();
 
-        herotest.interacts(bert);
+        //herotest.interacts(bert);
 
-        bert.interacts(herotest);
+        //bert.interacts(herotest);
 
 
 
-        if (bert.invinciblityTime > 0.f)
+ /*       if (bert.invinciblityTime > 0.f)
         {
             if (bert.invinciblityTime > 0.25f)
             {
@@ -428,7 +429,7 @@ public:
             {
                 bert.invinciblityTime += DeltaTime.asSeconds();
             }
-        }
+        }*/
 
         if (herotest.invinciblityTime > 0.f)
         {
