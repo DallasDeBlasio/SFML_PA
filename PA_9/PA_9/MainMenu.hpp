@@ -174,9 +174,9 @@ public:
         room1.setPosition(sf::Vector2f(0.f, 0.f));//offset on map Texture to fill the window with room1
 
         Player herotest(3, 16, 31, 0.2);
-        herotest.fillTextureList(herotest.currentFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
+        herotest.fillTextureList(herotest.currentWalkFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
         herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
-        herotest.setTexture(herotest.currentFrame->frame);
+        herotest.setTexture(herotest.currentWalkFrame->frame);
         herotest.fillTextureList(herotest.initalAttackNode, 3, 16, 297, herotest.width * 2, herotest.height, true, 48, "Assets/tempHero.png", false);
 
 
@@ -252,7 +252,7 @@ public:
                     }
                 }
             }
-
+            //std::cout 
             // GAME WINDOW --- GAME LOOP HERE 
 
             if (herotest.currentHP <= 0)
@@ -297,14 +297,13 @@ public:
         //Play.draw(herotest.hitbox);
         //herotest.weaponHitBox.setFillColor(sf::Color::Black);
         //Play.draw(herotest.weaponHitBox);
-        if(herotest.currentHP> 0)
+        if(herotest.currentHP> 0) //if player is alive
         {
             //Play.draw(herotest.hitbox);
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
-
             Play.draw(herotest.mHealthBar.mTopRectangle);
-            if (herotest.attackTimer != 0)
+            if (herotest.canAttack() != 0)
             {
                 Play.draw(herotest.coolDownBar);
             }
@@ -368,118 +367,57 @@ public:
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.attacking)//if s pressed
         {
-            hasWalkFramed = true;
-            herotest.movementDirection.y += 0.1 * DeltaTime.asSeconds();
-            //herotest.setTexture(herotest.currentFrame->pNext->frame);
+            if(herotest.movementDirection.y<=0.1 * DeltaTime.asSeconds())
+            {
+                hasWalkFramed = true;
+                herotest.movementDirection.y += 0.1 * DeltaTime.asSeconds();
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.attacking)
         {
-            hasWalkFramed = true;
-            herotest.movementDirection.x += 0.1 * DeltaTime.asSeconds();
+            if (herotest.movementDirection.x <= 0.1 * DeltaTime.asSeconds())
+            {
+                hasWalkFramed = true;
+                herotest.movementDirection.x += 0.1 * DeltaTime.asSeconds();
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.attacking)
         {
-            hasWalkFramed = true;
-            herotest.movementDirection.x -= 0.1 * DeltaTime.asSeconds();
+            if (herotest.movementDirection.x >= -0.1 * DeltaTime.asSeconds())
+            {
+                hasWalkFramed = true;
+                herotest.movementDirection.x -= 0.1 * DeltaTime.asSeconds();
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.attacking)
         {
-            hasWalkFramed = true;
-            herotest.movementDirection.y -= 0.1 * DeltaTime.asSeconds();
-        }
-        
-
-        if (herotest.attackTimer != 0)
-        {
-            herotest.attackTimer += DeltaTime.asSeconds();
-            herotest.coolDownBar.setScale(sf::Vector2f(herotest.attackTimer / herotest.attackLength / 2, 1.f)); 
-            herotest.coolDownBar.setPosition(sf::Vector2f(herotest.getPosition().x, herotest.getPosition().y + herotest.height * 1.75));
-
-            if (herotest.attackTimer > herotest.attackCoolDown)
+            if (herotest.movementDirection.y >= -0.1 * DeltaTime.asSeconds())
             {
-                herotest.attackTimer = 0;
+                hasWalkFramed = true;
+                herotest.movementDirection.y -= 0.1 * DeltaTime.asSeconds();
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))//start attacking
         {
             if (herotest.attackTimer == 0)
             {
                 herotest.attacking = true;
-                herotest.setTexture(herotest.initalAttackNode->frame, true);
-                herotest.setWeaponHitBox();
-                
-
                 herotest.attackTimer = 0.001;
             }
         }
 
+        herotest.heroAttackManager(DeltaTime.asSeconds());
 
-
-
-
-        if (herotest.attacking)
-        {
-            if (herotest.attackTimer == 0 || herotest.attackTimer > herotest.attackLength)
-            {
-                herotest.attacking = false;
-                herotest.setTexture(herotest.currentFrame->frame, true);
-            }
-            else
-            {
-
-                float i = 0;
-                i = (float)herotest.attackLength / (float)herotest.numAttackFrames / 6;
-                textureNode* pCurAttack = herotest.initalAttackNode;
-                if (0.1 < herotest.attackTimer)
-                {
-                    pCurAttack = pCurAttack->pNext;
-                    herotest.setTexture(pCurAttack->frame, true);
-                }
-                if (0.15 < herotest.attackTimer)
-                {
-                    pCurAttack = pCurAttack->pNext;
-                    herotest.setTexture(pCurAttack->frame, true);
-                }
-
-            }
-        }
-        else
-        {
-            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth + herotest.weaponHitBox.getSize().x, windowLength + herotest.weaponHitBox.getSize().y));
-        }
-
-       // kurt.moveV(herotest, DeltaTime.asSeconds());
-        
-       // bert.moveV(herotest, DeltaTime.asSeconds());
-
-        if(!herotest.attacking)
+        if(!herotest.attacking)//move when not attacking
         {
             herotest.moveV(DeltaTime.asSeconds());
         }
 
         DeltaTime = timer.getElapsedTime();
-
-        //herotest.interacts(bert);
-
-        //bert.interacts(herotest);
-
-
-
- /*       if (bert.invinciblityTime > 0.f)
-        {
-            if (bert.invinciblityTime > 0.25f)
-            {
-                bert.invinciblityTime = 0.f;
-            }
-            else
-            {
-                bert.invinciblityTime += DeltaTime.asSeconds();
-            }
-        }*/
 
         if (herotest.invinciblityTime > 0.f)
         {
@@ -493,22 +431,17 @@ public:
             }
         }
 
-
-        //        Snail kurt(2, 32, 20, 0.15);
-
         if (spawnEnemy)
         {
             float snailSpeed = (rand() % 19    + 1) / 100.f;
             Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
-            //pNewCharacter.
             spawnEnemy = false;
             CharacterList.insertAtFront(pNewCharacter);
-            float x = 0;//pNewCharacter->width * pNewCharacter->mScale / 2.f;
-            float y = 0;//pNewCharacter->height * pNewCharacter->mScale / 2.f;
+            float x = 0;
+            float y = 0;
             pNewCharacter->X_and_Y_Spawn_Locations(x, y);
             pNewCharacter->setPosition(x,y);
             pNewCharacter->speed = 750;
-            //pNewCharacter->movmentSpeed(700);
 
 
         }
@@ -534,7 +467,9 @@ public:
 
             //Play.clear();
         }
-
+        //herotest.currentHP = 0;
+        //Play.clear()
+        //Play.draw(herotest.mHealthBar.mBottomRectangle);
    /*     sf::Color deathScreenColor(55, 55, 55);
         sf::RectangleShape deathScreen;
         deathScreen.setSize(sf::Vector2f(1920, 1080));
@@ -548,6 +483,8 @@ public:
         deathScreen.setCharacterSize(200);
         deathScreen.setPosition(650, 300);
         deathScreen.setString("You Died");
+
+
 
         sf::Text blob;
         sf::Font blobFont;
