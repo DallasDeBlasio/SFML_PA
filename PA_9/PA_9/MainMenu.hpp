@@ -154,24 +154,24 @@ public:
         spawnner.setPosition(0, 0);
         spawnner.scale(3, 3);
 
-        sf::Texture well1;
-        well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well1;
+        //well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner1;
-        spawnner1.setTexture(well1);
+        spawnner1.setTexture(well);
         spawnner1.setPosition(1920 - 30*3, 0);
         spawnner1.scale(3, 3);
 
-        sf::Texture well2;
-        well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well2;
+        //well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner2;
-        spawnner2.setTexture(well2);
+        spawnner2.setTexture(well);
         spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
         spawnner2.scale(3, 3);
 
-        sf::Texture well3;
-        well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
+        //sf::Texture well3;
+        //well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
         sf::Sprite spawnner3;
-        spawnner3.setTexture(well3);
+        spawnner3.setTexture(well);
         spawnner3.setPosition(0, 1080 - 33 * 3);
         spawnner3.scale(3, 3);
       
@@ -194,7 +194,7 @@ public:
         sf::Clock timer;//credit martin
         sf::Time DeltaTime;//credit martin
         //DeltaTime.
-        float attackCoolDown = 0;
+        //float attackCoolDown = 0;
 
 
         characterList CharacterList;
@@ -243,7 +243,7 @@ public:
         //Play.draw(herotest.weaponHitBox);
         if(herotest.currentHP> 0)
         {
-            
+            Play.draw(herotest.hitbox);
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
 
@@ -315,7 +315,7 @@ public:
 
 
         }
-
+        Play.draw(herotest.weaponHitBox);
 
         Play.display();//display drawings
 
@@ -399,7 +399,7 @@ public:
         }
         else
         {
-            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth, windowLength));
+            herotest.weaponHitBox.setPosition(sf::Vector2f(windowWidth + herotest.weaponHitBox.getSize().x, windowLength + herotest.weaponHitBox.getSize().y));
         }
 
        // kurt.moveV(herotest, DeltaTime.asSeconds());
@@ -457,12 +457,14 @@ public:
             float y = 0;//pNewCharacter->height * pNewCharacter->mScale / 2.f;
             pNewCharacter->X_and_Y_Spawn_Locations(x, y);
             pNewCharacter->setPosition(x,y);
-            //Play.draw(pNewCharacter);
+            pNewCharacter->speed = 750;
+            //pNewCharacter->movmentSpeed(700);
+
 
         }
         else
         {
-            if (enemySpawnTimer > 5)
+            if (enemySpawnTimer > 10)
             {
                 spawnEnemy = true;
                 enemySpawnTimer = 0.f;

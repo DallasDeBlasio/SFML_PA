@@ -85,7 +85,7 @@ void Snail::X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint)
 
 void Snail::interacts(Player &hero)
 {
-	if (hero.invinciblityTime == 0 && this->getGlobalBounds().intersects(hero.getGlobalBounds()))
+	if (hero.invinciblityTime == 0 && this->getGlobalBounds().intersects(hero.hitbox.getGlobalBounds()))
 	{
 		sf::Vector2f bounceDirection(hero.getPosition().x - this->getPosition().x, hero.getPosition().y - this->getPosition().y);
 		float bounceSpeed = getVectorManitude(bounceDirection);
