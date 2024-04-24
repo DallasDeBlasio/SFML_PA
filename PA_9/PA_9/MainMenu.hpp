@@ -574,54 +574,57 @@ public:
             //Play.draw(box.getOriginPoint());
 
             //Play.clear();
-        }
 
-   /*     sf::Color deathScreenColor(55, 55, 55);
-        sf::RectangleShape deathScreen;
-        deathScreen.setSize(sf::Vector2f(1920, 1080));
-        deathScreen.setFillColor(deathScreenColor); */
 
-        sf::Text deathScreen;
-        sf::Font deathFont;
-        deathFont.loadFromFile("Creepster-Regular.ttf");
-        deathScreen.setFillColor(sf::Color::Red); 
-        deathScreen.setFont(deathFont);
-        deathScreen.setCharacterSize(200);
-        deathScreen.setPosition(650, 300);
-        deathScreen.setString("You Died");
-
-        sf::Text blob;
-        sf::Font blobFont;
-        blobFont.loadFromFile("Creepster-Regular.ttf");
-        blob.setFillColor(sf::Color::Red);
-        blob.setFont(deathFont);
-        blob.setCharacterSize(40);
-        blob.setPosition(770, 550);
-        blob.setString("Press Escape to continue");
-     
-        sf::Event deathEvent; 
-        
-       // while (Play.pollEvent(deathEvent)) 
-        while (1 == 1)
+        // while (Play.pollEvent(deathEvent)) 
+        /*while (1 == 1)
+        {*/
+        if (herotest.currentHP <= 0)
         {
-            while (!Play.pollEvent(deathEvent))
-            {
+            sf::Text deathScreen;
+            sf::Font deathFont;
+            deathFont.loadFromFile("Creepster-Regular.ttf");
+            deathScreen.setFillColor(sf::Color::Red);
+            deathScreen.setFont(deathFont);
+            deathScreen.setCharacterSize(200);
+            deathScreen.setPosition(650, 300);
+            deathScreen.setString("You Died");
+
+            sf::Text blob;
+            sf::Font blobFont;
+            blobFont.loadFromFile("Creepster-Regular.ttf");
+            blob.setFillColor(sf::Color::Red);
+            blob.setFont(deathFont);
+            blob.setCharacterSize(40);
+            blob.setPosition(770, 550);
+            blob.setString("Press Escape to continue");
+
+            sf::Event deathEvent;
+
                 Play.draw(deathScreen);
                 Play.draw(blob);
                 Play.display();
 
-                //if (deathEvent.key.code == sf::Event::KeyPressed) 
-                //{
-                //    break;
-                ////}
-            }
-            if (deathEvent.key.code == sf::Keyboard::Escape) 
-            { 
-                break;
-            }
+
+                while (1 == 1)
+                {
+                    while (Play.pollEvent(deathEvent))
+                    {
+                        if (deathEvent.key.code == sf::Keyboard::Escape)
+                        {
+                            Play.close();
+                            break;
+                        }
+                    }
+                    if (!Play.isOpen())
+                    {
+                        break;
+                    }
+                }
         }
-      // std::this_thread::sleep_for(std::chrono::seconds(1));
-        Play.close(); 
+
+
+        }
         std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
