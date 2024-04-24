@@ -181,11 +181,7 @@ public:
         herotest.fillTextureList(herotest.initalAttackNode, 3, 16, 297, herotest.width * 2, herotest.height, true, 48, "Assets/tempHero.png", false);
 
 
-        sf::Texture newtexture;
-        newtexture.loadFromFile("Assets/tempHero.png", sf::IntRect(16 + 48, 297, 16 * 2, 31));
-        sf::Sprite poop;
-        poop.setTexture(newtexture);
-        poop.setPosition(100, 100);
+
 
 
         //makes all of the wells
@@ -316,7 +312,6 @@ public:
         Play.draw(rocky);
         Play.draw(rocky2);
         Play.draw(rocky3);
-        Play.draw(poop);
         Play.draw(spawnner);
         Play.draw(spawnner1);
         Play.draw(spawnner2);
