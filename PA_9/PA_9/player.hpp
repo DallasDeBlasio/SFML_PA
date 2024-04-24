@@ -25,7 +25,7 @@ public:
 
 	void setWeaponHitBox(void);
 
-	void heroAttackManager(float DeltaTime);
+	void playerAttackManager(float DeltaTime);
 
 	void startAttack(void);
 

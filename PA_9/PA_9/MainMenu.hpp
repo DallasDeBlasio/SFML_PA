@@ -303,7 +303,7 @@ public:
             Play.draw(herotest);// draw hero
             Play.draw(herotest.mHealthBar.mBottomRectangle);
             Play.draw(herotest.mHealthBar.mTopRectangle);
-            if (herotest.canAttack() != 0)
+            if (!herotest.canAttack())
             {
                 Play.draw(herotest.coolDownBar);
             }
@@ -410,7 +410,7 @@ public:
             }
         }
 
-        herotest.heroAttackManager(DeltaTime.asSeconds());
+        herotest.playerAttackManager(DeltaTime.asSeconds());
 
         if(!herotest.attacking)//move when not attacking
         {

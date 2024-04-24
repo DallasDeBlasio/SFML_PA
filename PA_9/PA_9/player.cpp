@@ -47,7 +47,7 @@ void Player::setWeaponHitBox(void)
 	}
 }
 
-void Player::heroAttackManager(float DeltaTime)
+void Player::playerAttackManager(float DeltaTime)
 {
 	if (!this->canAttack())//if the hero cannot attack
 	{
