@@ -5,6 +5,8 @@
 class Snail : public Character
 {
 public:
+	int mergeLevel;
+
 	Snail(int scale, int width, int height);
 	Snail(int scale, int width, int height, float initialSpeed);
 
