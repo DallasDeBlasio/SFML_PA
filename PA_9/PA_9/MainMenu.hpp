@@ -110,6 +110,7 @@ public:
 
     bool runPlayWindow() 
     { 
+        int u = 0;
         float runTime = 0;
         float runTimeFinal = 0;
       //  std::string temp;
@@ -270,7 +271,7 @@ public:
             if (herotest.currentHP <= 0)
             {
                 std::cout << "Player Died!" << std::endl;
-                break;
+              //  break;
             }
 
         timer.restart();
@@ -359,9 +360,11 @@ public:
             else
             {
             Play.draw(*(pCur->mCharacter));
-            Play.draw(pCur->mCharacter->mHealthBar.mBottomRectangle);
-            Play.draw(pCur->mCharacter->mHealthBar.mTopRectangle);
-
+            if (u == 0)
+            {
+                Play.draw(pCur->mCharacter->mHealthBar.mBottomRectangle);
+                Play.draw(pCur->mCharacter->mHealthBar.mTopRectangle);
+            }
 
             pCur->mCharacter->moveV(herotest,DeltaTime.asSeconds());
             pCur->mCharacter->interacts(herotest);
@@ -580,6 +583,10 @@ public:
         /*while (1 == 1)
         {*/
         if (herotest.currentHP <= 0)
+        {
+            u++;
+        }
+        if (herotest.currentHP <= 0 && u > 2)
         {
             sf::Text deathScreen;
             sf::Font deathFont;
