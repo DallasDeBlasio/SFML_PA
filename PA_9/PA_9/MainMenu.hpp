@@ -176,10 +176,7 @@ public:
         room1.setPosition(sf::Vector2f(0.f, 0.f));//offset on map Texture to fill the window with room1
 
         Player herotest(3, 16, 31, 0.2);
-        herotest.fillTextureList(herotest.currentWalkFrame, 4, 16, 57, true, 48, "Assets/tempHero.png");
-        herotest.setPosition(windowWidth / 2.f + herotest.width / 2.0f * herotest.mScale, windowLength / 2.f + herotest.height / 2.0f * herotest.mScale);
-        herotest.setTexture(herotest.currentWalkFrame->frame);
-        herotest.fillTextureList(herotest.initalAttackNode, 3, 16, 297, herotest.width * 2, herotest.height, true, 48, "Assets/tempHero.png", false);
+
 
 
 
@@ -344,7 +341,6 @@ public:
         Play.draw(herotest.mHealthBar.mBottomRectangle);
         if(herotest.currentHP> 0) //if player is alive
         {
-            //Play.draw(herotest.hitbox);
             Play.draw(herotest.mHealthBar.mTopRectangle);
         }
         if (!herotest.canAttack())
@@ -363,10 +359,7 @@ public:
 
 
 
-        CharacterNode* pCur = CharacterList.pHead;
-
-       
-
+        CharacterNode* pCur = CharacterList.get_pHead();
 
         while (pCur != nullptr)
         {
@@ -424,7 +417,7 @@ public:
 
         Play.display();//display drawings
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.attacking)//if s pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.isAttacking())//if s pressed
         {
             if(herotest.movementDirection.y<=0.1 * DeltaTime.asSeconds())
             {
@@ -433,7 +426,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.attacking)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.isAttacking())
         {
             if (herotest.movementDirection.x <= 0.1 * DeltaTime.asSeconds())
             {
@@ -442,7 +435,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.attacking)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.isAttacking())
         {
             if (herotest.movementDirection.x >= -0.1 * DeltaTime.asSeconds())
             {
@@ -451,7 +444,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.attacking)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.isAttacking())
         {
             if (herotest.movementDirection.y >= -0.1 * DeltaTime.asSeconds())
             {
@@ -462,21 +455,16 @@ public:
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))//start attacking
         {
-            if (herotest.attackTimer == 0)
-            {
-                herotest.attacking = true;
-                herotest.attackTimer = 0.001;
-            }
+            herotest.startAttack();
         }
 
-        herotest.playerAttackManager(DeltaTime.asSeconds());
+        herotest.playerAttackManager(DeltaTime.asSeconds());//takes care of all the behind the scenes attacking information
 
-        if(!herotest.attacking)//move when not attacking
+        if(!herotest.isAttacking())//move when not attacking
         {
             herotest.moveV(DeltaTime.asSeconds());
         }
 
-        DeltaTime = timer.getElapsedTime();
 
         if (herotest.invinciblityTime > 0.f)
         {
@@ -579,11 +567,13 @@ public:
                 }
         }
 
-
+        DeltaTime = timer.getElapsedTime();// update time elapsed per while loop cycle
+        
         }
         std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
+
     void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow
     {
         sf::RenderWindow Options(sf::VideoMode(1920, 1080), "Options Window");

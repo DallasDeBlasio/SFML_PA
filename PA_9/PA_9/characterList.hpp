@@ -1,17 +1,18 @@
 #pragma once
 
 
-//#include "source.hpp"
 #include "characterNode.hpp"
 
 
 class characterList
 {
 public:
-	CharacterNode* pHead;
+	characterList();
+	CharacterNode* get_pHead(void);
 	void insertAtFront(Character* newCharacter);
 	void deleteAtFront(void);
 	void deleteCharacter(Character* newCharacter);
 	bool isEmpty(void);
-	characterList();
+private:
+	CharacterNode* pHead;
 };
