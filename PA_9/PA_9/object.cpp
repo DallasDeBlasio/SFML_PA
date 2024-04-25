@@ -1,15 +1,18 @@
 #include "object.hpp"
 
+//constructor
 Object::Object()
 {
 
 }
 
+//destructor
 Object::~Object()
 {
 
 }
 
+//spawns the rock but says tree i dont wanna talk about it
 void Object::spawnTree(sf::Texture Rock)
 {
 	this->setTexture(Rock);
@@ -18,6 +21,7 @@ void Object::spawnTree(sf::Texture Rock)
 	this->setOrigin(9, 7);
 }
 
+//spawns all 4 wells
 void Object::spawnWell1(sf::Texture well)
 {
 	this->setTexture(well);
@@ -46,6 +50,7 @@ void Object::spawnWell4(sf::Texture well)
 	this->setScale(3, 3);
 }
 
+//very important function for detecting collisions
 bool Object::isColliding(Object& rocky, Character& herotest)
 {
 	if (rocky.getGlobalBounds().intersects(herotest.getGlobalBounds()))
