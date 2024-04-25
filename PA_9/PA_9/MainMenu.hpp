@@ -477,7 +477,7 @@ public:
         sf::RectangleShape optionsBackground;
         optionsBackground.setSize(sf::Vector2f(1920, 1080));
         sf::Texture optionsTexture;
-        optionsTexture.loadFromFile("battleback1.png");
+        optionsTexture.loadFromFile("Assets/battleback1.png");
         optionsBackground.setTexture(&optionsTexture);
         //---------------------------------------------------------<<<
 
