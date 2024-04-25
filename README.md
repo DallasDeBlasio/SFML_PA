@@ -1,5 +1,9 @@
 # SFML_PA
 
+WARNING: YOU MAY HAVE TO LINK YOUR SFML
+IF SO PLEASE CHANGE LINKER ADDITIONAL LIBRARY DIRECTORIES TO THE \lib SFML FOLDER
+AND C/C++ ADDITIONAL INCLUDE DIRECTORIES TO THE \include SFML FOLDER
+
 Snail Run was made by Asa Fischer, Connor Chase, Dallas DeBlasio, and James Richards-Perhatch. 
 
 Link to explanation video: https://youtu.be/IBSctLHXTaw
