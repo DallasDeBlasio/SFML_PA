@@ -14,7 +14,7 @@ public:
 
 	DialogBox()
 	{
-		font.loadFromFile("Jersey20-Regular.ttf");
+		font.loadFromFile("Assets/Jersey20-Regular.ttf");
 		text.setFont(font);
 		text.setFillColor(sf::Color::Blue);
 		text.setString("Default String");
@@ -35,7 +35,7 @@ public:
 	}
 	DialogBox(sf::String stringToDisplay, sf::Vector2f position, int size)
 	{
-		font.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+		font.loadFromFile("Assets/DiaryOfAn8BitMage-lYDD.ttf");
 		text.setFont(font);
 		text.setFillColor(sf::Color::Blue);
 		text.setOutlineColor(sf::Color::Black);
