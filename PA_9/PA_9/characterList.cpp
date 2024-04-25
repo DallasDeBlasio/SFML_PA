@@ -52,3 +52,8 @@ characterList::characterList()
 {
 	this->pHead = nullptr;
 }
+
+CharacterNode* characterList::get_pHead(void)
+{
+	return this->pHead;
+}
