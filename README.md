@@ -36,3 +36,11 @@ Site Link: https://opengameart.org/content/slime-snail
 License Link: https://creativecommons.org/licenses/by/3.0/
 
 }
+
+
+background -- https://opengameart.org/content/backgrounds-3
+font -- https://fonts.google.com/specimen/Bungee+Spice?query=Bungee
+font -- https://fonts.google.com/specimen/Creepster?query=Creep
+font -- https://fonts.google.com/specimen/Jersey+20?query=jersey
+font -- https://www.fontspace.com/diary-of-an-8-bit-mage-font-f28455
+
