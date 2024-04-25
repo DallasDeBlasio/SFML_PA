@@ -29,6 +29,7 @@ Character::Character(int scale, int width, int height, float initialSpeed):Sprit
 	this->height = height;
 	this->walkFrame = 0;//increments everytime moveV is called, after it reaches the desired number gets set back to 0 and switches to next walk frame
 	this->invinciblityTime = 0.f;// = 0.f;//0 if not invincible
+	this->lengthOfInvincibility = 0.25f;//maximum invisibility time
 
 	this->currentWalkFrame = nullptr;//leaves the currentWalkFrame nullptr
 	this->movementDirection = sf::Vector2f(0.f, 0.f);//sets movement direction to no desired movement
@@ -49,17 +50,47 @@ Character::Character(int scale, int width, int height, float initialSpeed):Sprit
 	this->mHealthBar.mTopRectangle.setPosition(sf::Vector2f(this->getPosition().x, this->getPosition().y + 30));
 
 }
+int Character::getCurrentHP(void)
+{
+	return this->currentHP;
+}
+float Character::getMovementSpeed(void)
+{
+	return this->movmentSpeed;
+}
+bool Character::isInvincible(void)
+{
+	bool isCurrentlyInvincible = true;
+	if (this->invinciblityTime == 0)
+	{
+		isCurrentlyInvincible = false;
+	}
+	return isCurrentlyInvincible;
+}
+void Character::setSpeed(float newSpeed)
+{
+	this->speed = newSpeed;
+}
+void Character::makeInvincible(void)
+{
+	this->invinciblityTime = 0.01;
+}
+void Character::takeDamage(int Damage)
+{
+	this->currentHP -= Damage;
+}
 //
 
 void Character::moveV(float  deltaTime)// moves chracater speed distance along movementDirection
 {
-	if (this->speed < this->movmentSpeed)
+	this->setTexture(this->currentWalkFrame->frame, true);//makes sure that if the character can move, they are in the current walking animation
+	if (this->speed < this->movmentSpeed)//always reset speed to movement speed if it was made too small
 	{
 		this->speed = this->movmentSpeed;
 	}
 	sf::Vector2f unitVector(getUnitVector(this->movementDirection));
 	sf::Vector2f speed_in_direction_unitVector = unitVector * this->speed;
-	speed_in_direction_unitVector *= deltaTime;
+	speed_in_direction_unitVector *= deltaTime;//removes frame rate as an aspect of speed : martin helped a lot with this
 
 	if (speed_in_direction_unitVector.x < 0)//left side boundry
 	{
@@ -149,6 +180,21 @@ void Character::moveV(float  deltaTime)// moves chracater speed distance along m
 void Character::moveV(Character target, float deltaTime)//by default just calles moveV
 {
 	this->moveV(deltaTime);
+}
+
+void Character::invincibilityManager(float DeltaTime)//takes care of all invincibiliy backwork
+{
+	if (this->isInvincible())//if is invincible
+	{
+		if (this->invinciblityTime > this->lengthOfInvincibility)//if invincibility time should be over set it to 0
+		{
+			this->invinciblityTime = 0.f;
+		}
+		else //add time to invincibile
+		{
+			this->invinciblityTime += DeltaTime;
+		}
+	}
 }
 
 

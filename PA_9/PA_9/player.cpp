@@ -11,7 +11,7 @@ Player::Player(int scale, int width, int height, float initialSpeed): Character(
 	this->attackLength = 0.5;//how long it takes to complete the attacking motion
 	this->attackCoolDown = 1.5;//how long between the start of an attack, and the the next attack
 	this->attackTimer = 0;//timer that manages the time between attack
-	this->attacking = false;//whether the hero is in the attacking animation
+	//this->attacking = false;//whether the hero is in the attacking animation
 
 	//setting weapon hitbox
 	this->weaponHitBox.setSize(sf::Vector2f(width * this->mScale, height * 2/3 * this->mScale));
@@ -36,14 +36,14 @@ Player::Player(int scale, int width, int height, float initialSpeed): Character(
 void Player::interacts(Character& badGuy)
 {
 	//if enemy is not invincible && weaponHitBox intesects enemy
-	if (badGuy.invinciblityTime == 0 && this->weaponHitBox.getGlobalBounds().intersects(badGuy.getGlobalBounds()))
+	if (!badGuy.isInvincible() && this->weaponHitBox.getGlobalBounds().intersects(badGuy.getGlobalBounds()))
 	{
 		sf::Vector2f bounceDirection(badGuy.getPosition().x - this->getPosition().x, badGuy.getPosition().y - this->getPosition().y);//vector from hero to bad guy//will launch in this direction
 		sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);//unit vector in direction bounce direction
 		badGuy.movementDirection = unitBounceDirection * 0.4f;//set movement diretion for enemy
-		badGuy.speed = 700;
-		badGuy.currentHP -= this->mDamage;//reduce enemy health
-		badGuy.invinciblityTime = 0.1f;//stops hitting the enemy multiple times
+		badGuy.setSpeed(700);
+		badGuy.takeDamage(this->mDamage);//reduce enemy health
+		badGuy.makeInvincible();
 	}
 }
 
@@ -78,13 +78,6 @@ void Player::playerAttackManager(float DeltaTime)//takes care of all the behind 
 
 	if (this->isAttacking())//if is attacking
 	{
-		if (this->attackTimer > this->attackLength) //if the player is done with the attacking animation
-		{
-			this->attacking = false;
-			this->setTexture(this->currentWalkFrame->frame, true);//set back to walking frames
-		}
-		else
-		{
 			textureNode* pCurAttack = this->initalAttackNode;//pCur is the animation frame that will be drawn
 			this->setWeaponHitBox();
 
@@ -97,7 +90,6 @@ void Player::playerAttackManager(float DeltaTime)//takes care of all the behind 
 				pCurAttack = pCurAttack->pNext;
 			}
 			this->setTexture(pCurAttack->frame, true);//set attack frame
-		}
 	}
 	else
 	{
@@ -110,7 +102,6 @@ void Player::startAttack(void)//let the rest of the data members know the attack
 {
 	if (this->canAttack())//if can attack
 	{
-		this->attacking = true;
 		this->attackTimer = 0.001;
 	}
 }

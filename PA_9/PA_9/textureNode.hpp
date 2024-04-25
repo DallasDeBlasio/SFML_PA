@@ -9,8 +9,5 @@ class textureNode
 public:
 	textureNode* pNext;
 	sf::Texture frame;
-
-
 	textureNode();
-
 };

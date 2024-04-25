@@ -1,14 +1,11 @@
 #pragma once
 #include "source.hpp"
-//#include <SFML/Graphics.hpp>
-//#include <iostream>
 #include "DialogBox.hpp"
 #include "Character.hpp"
 #include "Snail.hpp"
 #include "player.hpp"
 #include "characterNode.hpp"
 #include "characterList.hpp"
-#include "TestCases.hpp"
 #include "object.hpp"
 
 #include <chrono>
@@ -120,8 +117,6 @@ public:
         int u = 0;
         float runTime = 0;
         float runTimeFinal = 0;
-      //  std::string temp;
-       // temp = runTime; 
         std::string temp = std::to_string(runTime);  
 
         sf::Text run;
@@ -135,7 +130,6 @@ public:
 
         srand((unsigned int)time(NULL));
         sf::RenderWindow Play(sf::VideoMode(1920, 1080), "SNAIL GAME SNAIL GAME");
-       // DialogBox box("hello world\n>_<\nnext row\nanother row", sf::Vector2f(400,400));
         Play.clear();
         std::cout << "Opened runPlayWindow" << std::endl; 
 
@@ -143,32 +137,10 @@ public:
         // start screen
         DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,60), 100);
         startBox.LoadFontFromFile("Creepster-Regular.ttf"); 
-        //startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
 
-
-        //startBox.setTextSize(20);
-        //int x = 0;
-     /*   int R = 55;
-        int B = 225;
-        int G = 100;*/
         sf::Color textColor(55,225,100); 
         startBox.setTextColor(textColor);   
         startBox.setBoxColor(sf::Color::Transparent);
-
-
-
-        //sf::Texture boxTexture;
-        //boxTexture.loadFromFile("Wood Floor.png");
-        //startBox.changeTexture(&boxTexture);
-
-        //DialogBox startBox2("Run From the Snails!", sf::Vector2f(515, 510), 100);
-        //startBox2.LoadFontFromFile("Creepster-Regular.ttf");
-        ////startBox.LoadFontFromFile("DiaryOfAn8BitMage-lYDD.ttf");
-
-        ////startBox.setTextSize(20);
-        //sf::Color textColor2(101, 255, 0);
-        //startBox2.setTextColor(textColor2);
-        //startBox2.setBoxColor(sf::Color::Transparent);
 
         int windowLength = 1080;
         int windowWidth = 1920;
@@ -182,69 +154,29 @@ public:
 
         Player herotest(3, 16, 31, 0.2);
 
-
-
-
-
-
         //makes all of the wells
         sf::Texture well;
         well.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-
-
         Object spawnner;
         spawnner.spawnWell1(well);
-
         Object spawnner2;
         spawnner2.spawnWell2(well);
-
         Object spawnner3;
         spawnner3.spawnWell3(well);
-
         Object spawnner1;
         spawnner1.spawnWell4(well);
-
         sf::Texture wellith;
         wellith.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-
-        //Object spawnner;
-        //spawnner.setTexture(well);
-        //spawnner.setPosition(0, 0);
-        //spawnner.scale(3, 3);
-
-        ////sf::Texture well1;
-        ////well1.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        //sf::Sprite spawnner1;
-        //spawnner1.setTexture(well);
-        //spawnner1.setPosition(1920 - 30*3, 0);
-        //spawnner1.scale(3, 3);
-
-        ////sf::Texture well2;
-        ////well2.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        //sf::Sprite spawnner2;
-        //spawnner2.setTexture(well);
-        //spawnner2.setPosition(1920 - 30 * 3, 1080-33*3);
-        //spawnner2.scale(3, 3);
-
-        ////sf::Texture well3;
-        ////well3.loadFromFile("Assets/map.png", sf::IntRect(833, 544, 30, 33));
-        //sf::Sprite spawnner3;
-        //spawnner3.setTexture(well);
-        //spawnner3.setPosition(0, 1080 - 33 * 3);
-        //spawnner3.scale(3, 3);
 
         //makes all the rocks
         sf::Texture rock;
         rock.loadFromFile("Assets/map.png", sf::IntRect(633, 250, 100, 100));
         Object rocky;
         rocky.spawnTree(rock);
-
         Object rocky2;
         rocky2.spawnTree(rock);
-
         Object rocky3;
         rocky3.spawnTree(rock);
-
         sf::Texture rockith;
         rockith.loadFromFile("Assets/map.png", sf::IntRect(260, 299, 19, 14));
       
@@ -254,22 +186,15 @@ public:
 
 
     //
+        //this makes it so that the physics are less dependent on frame rate
+        //obviously if the frame rate is super low, then less imputs will be read
         sf::Clock timer;//credit martin
         sf::Time DeltaTime;//credit martin
-        //DeltaTime.
-        //float attackCoolDown = 0;
-
+ 
 
         characterList CharacterList;
         bool spawnEnemy = true;
         float enemySpawnTimer = 0.f;
-
-        TestCases testMe;
-
-        if (testMe.testVectorUtility())
-        {
-            std::cout << "yeah";
-        }
 
         // game loop
         while (Play.isOpen())
@@ -295,13 +220,11 @@ public:
                     }
                 }
             }
-            //std::cout 
             // GAME WINDOW --- GAME LOOP HERE 
 
-            if (herotest.currentHP <= 0)
+            if (herotest.getCurrentHP() <= 0)
             {
                 std::cout << "Player Died!" << std::endl;
-              //  break;
             }
 
         timer.restart();
@@ -338,16 +261,10 @@ public:
             Play.draw(startBox.getBox());
             Play.draw(startBox.getText());
         }
-       // Play.draw(startBox2.getBox());
-       // Play.draw(startBox2.getText());
-
-        //Play.draw(herotest.hitbox);
-        //herotest.weaponHitBox.setFillColor(sf::Color::Black);
-        //Play.draw(herotest.weaponHitBox);
        
         Play.draw(herotest);// draw hero
-        Play.draw(herotest.mHealthBar.mBottomRectangle);
-        if(herotest.currentHP> 0) //if player is alive
+        Play.draw(herotest.mHealthBar.mBottomRectangle);//draw hp bar base
+        if(herotest.getCurrentHP() > 0) //if player is alive
         {
             Play.draw(herotest.mHealthBar.mTopRectangle);
         }
@@ -366,7 +283,7 @@ public:
         spawnner3.isColliding(spawnner3, herotest);
 
 
-
+        //Traverse Character List
         CharacterNode* pCur = CharacterList.get_pHead();
 
         while (pCur != nullptr)
@@ -376,12 +293,8 @@ public:
             rocky2.isColliding(rocky2, *(pCur->mCharacter));
             rocky3.isColliding(rocky3, *(pCur->mCharacter));
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
-            {
-                pCur->mCharacter->currentHP = 0;
-            }
 
-            if (pCur->mCharacter->currentHP == 0)
+            if (pCur->mCharacter->getCurrentHP() == 0)//if 0 hp delete character
             {
                 CharacterNode* deleteMe = pCur;
                 pCur = pCur->pNext;
@@ -397,20 +310,10 @@ public:
             }
 
             pCur->mCharacter->moveV(herotest,DeltaTime.asSeconds());
-            pCur->mCharacter->interacts(herotest);
-            herotest.interacts(*(pCur->mCharacter));
+            pCur->mCharacter->interacts(herotest);//attack hero if intersects
+            herotest.interacts(*(pCur->mCharacter));//get attacked if hero hits character
 
-            if (pCur->mCharacter->invinciblityTime > 0.f)
-            {
-                if (pCur->mCharacter->invinciblityTime > 0.25f)
-                {
-                    pCur->mCharacter->invinciblityTime = 0.f;
-                }
-                else
-                {
-                    pCur->mCharacter->invinciblityTime += DeltaTime.asSeconds();
-                }
-            }
+            pCur->mCharacter->invincibilityManager(DeltaTime.asSeconds());
 
 
             
@@ -421,11 +324,10 @@ public:
 
 
         }
-        //Play.draw(herotest.weaponHitBox);
 
         Play.display();//display drawings
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.isAttacking())//if s pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !herotest.isAttacking())//read downward input
         {
             if(herotest.movementDirection.y<=0.1 * DeltaTime.asSeconds())
             {
@@ -434,7 +336,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.isAttacking())
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !herotest.isAttacking())//read right input
         {
             if (herotest.movementDirection.x <= 0.1 * DeltaTime.asSeconds())
             {
@@ -443,7 +345,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.isAttacking())
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !herotest.isAttacking())//read left input
         {
             if (herotest.movementDirection.x >= -0.1 * DeltaTime.asSeconds())
             {
@@ -452,7 +354,7 @@ public:
             }
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.isAttacking())
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !herotest.isAttacking())//read up input
         {
             if (herotest.movementDirection.y >= -0.1 * DeltaTime.asSeconds())
             {
@@ -473,20 +375,9 @@ public:
             herotest.moveV(DeltaTime.asSeconds());
         }
 
+        herotest.invincibilityManager(DeltaTime.asSeconds());
 
-        if (herotest.invinciblityTime > 0.f)
-        {
-            if (herotest.invinciblityTime > 0.25f)
-            {
-                herotest.invinciblityTime = 0.f;
-            }
-            else
-            {
-                herotest.invinciblityTime += DeltaTime.asSeconds();
-            }
-        }
-
-        if (spawnEnemy)
+        if (spawnEnemy)//spawn enemy
         {
             float snailSpeed = (rand() % 19    + 1) / 100.f;
             Character* pNewCharacter = new Snail(2, 32, 20, snailSpeed);
@@ -496,11 +387,10 @@ public:
             float y = 0;
             pNewCharacter->X_and_Y_Spawn_Locations(x, y);
             pNewCharacter->setPosition(x,y);
-            pNewCharacter->speed = 750;
 
 
         }
-        else
+        else//spawn an enemy every 10 seconds
         {
             if (enemySpawnTimer > 10)
             {
@@ -514,25 +404,17 @@ public:
         }
 
 
-            //Play.draw(box.getBox());
-            //Play.draw(box.getText());
-
-            ////temp
-            //Play.draw(box.getOriginPoint());
-
-            //Play.clear();
 
 
 
-        // while (Play.pollEvent(deathEvent)) 
-        /*while (1 == 1)
-        {*/
+
+ 
         // used to let the program run 2 or so extra frames after the player dies, otherwise the players health will show non-empty
-        if (herotest.currentHP <= 0)
+        if (herotest.getCurrentHP() <= 0)
         {
             u++;
         }
-        if (herotest.currentHP <= 0 && u > 2)
+        if (herotest.getCurrentHP() <= 0 && u > 2)
         {
             // set text and font settnig for the death screen text
             // variable are created within the if statement so that they are created only once and dont slow the game down
@@ -1132,7 +1014,7 @@ private:
         return succeeded;
     }
 
-    bool testCharacterVectorMovement(void)   //hfjfkjhgkjg
+    bool testCharacterVectorMovement(void)  
     {
         bool succeeded = false;
         Character testCharacter(1, 2, 2, 0.001); //0.001 multiplied by speed factor should create a speed of 2

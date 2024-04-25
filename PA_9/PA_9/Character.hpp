@@ -10,15 +10,7 @@ class Snail;
 
 class Character:public sf::Sprite
 {
-public:
-	//default character constructor
-	Character();
-
-	Character(int scale, int width, int height);//default sprite constructor
-	Character(int scale, int width, int height , float initialSpeed);//default sprite constructor
-
-
-
+protected:
 	int maxHP;
 	int currentHP;//character dies when this reaches 0
 	int mDamage;//damage the character does to others
@@ -29,9 +21,27 @@ public:
 	int width;
 	int height;
 	int walkFrame;//increments everytime moveV is called, after it reaches the desired number gets set back to 0 and switches to next walk frame
-	float invinciblityTime;// = 0.f;//0 if not invincible
 
 	textureNode* currentWalkFrame;//holds the linked list 
+
+
+public:
+	//default character constructor
+	Character();
+
+	Character(int scale, int width, int height);//default sprite constructor
+	Character(int scale, int width, int height , float initialSpeed);//default sprite constructor
+
+	int getCurrentHP(void);
+	float getMovementSpeed(void);
+
+	bool isInvincible(void);//returns true if invincible
+
+	void setSpeed(float newSpeed);
+	void makeInvincible(void);//makes invincibilityTime 
+
+	void takeDamage(int Damage);//subtracts damage from current hp
+
 	sf::RectangleShape hitbox;
 	sf::Vector2f movementDirection;//points in the direction of movement, should decay back to 0,0 under no outside influence
 	HealthBar mHealthBar;//character's health bar
@@ -41,7 +51,7 @@ public:
 	virtual void moveV(float  deltaTime);// moves chracater speed distance along movementDirection
 	virtual void moveV(Character target, float  deltaTime); //calls moveV
 
-
+	void invincibilityManager(float DeltaTime);//takes care of all invincibiliy backwork
 
 	// true for horizontal spacing, false for verticle
 	// gap is the gap between same position in frames
@@ -65,7 +75,11 @@ public:
 	//changes x and y to the position that would place the character's upper left corner at 0,0//spawnPoint is ignored
 	virtual void X_and_Y_Spawn_Locations(float& x, float& y, int spawnPoint);
 
+
+
 private:
+
+
 
 	//turns the character around when unit Vector points in the direction the character is not facing
 	void shouldITurnAround(sf::Vector2f directionVector);
@@ -77,5 +91,6 @@ private:
 	void decayMovment(float  deltaTime);
 	void decaySpeed(float  deltaTime);
 
-	
+	float invinciblityTime;// = 0.f;//0 if not invincible
+	float lengthOfInvincibility;//maximum invisibility time
 };

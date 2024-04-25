@@ -13,6 +13,7 @@ Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(s
 {
 	this->fillTextureList(this->currentWalkFrame, 3, 0, 72, true, 32, "Assets/snail.png");
 	this->setTexture(this->currentWalkFrame->frame);
+	this->speed = 700;
 }
 
 //Overridden Snail moveV (moves snail towards whatever target is selected
@@ -57,15 +58,15 @@ void Snail::X_and_Y_Spawn_Locations(float& x, float& y)
 //if snail is touching player, attack player
 void Snail::interacts(Player &hero)
 {
-	if (hero.invinciblityTime == 0 && this->getGlobalBounds().intersects(hero.hitbox.getGlobalBounds()))
+	if (!hero.isInvincible() && this->getGlobalBounds().intersects(hero.hitbox.getGlobalBounds()))
 	{
 		sf::Vector2f bounceDirection(hero.getPosition().x - this->getPosition().x, hero.getPosition().y - this->getPosition().y);
 		float bounceSpeed = getVectorManitude(bounceDirection);
 		sf::Vector2f unitBounceDirection = getUnitVector(bounceDirection);
-		hero.speed = hero.movmentSpeed * 2;
+		hero.setSpeed(hero.getMovementSpeed() * 2);
 		hero.movementDirection = unitBounceDirection * 0.25f;
-		hero.currentHP -= hero.mDamage;
-		hero.invinciblityTime = 0.2f;
+		hero.takeDamage(this->mDamage);
+		hero.makeInvincible();
 
 		//std::cout << hero.movementDirection.x << "," << hero.movementDirection.y << "\n";
 	}

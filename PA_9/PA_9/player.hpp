@@ -12,7 +12,6 @@ private:
 	float attackLength;//how long it takes to complete the attacking motion
 	float attackCoolDown;//how long between the start of an attack, and the the next attack
 	float attackTimer;//timer that manages the time between attack
-	bool attacking;//whether the hero is in the attacking animation
 
 	sf::RectangleShape weaponHitBox;//hit box for when the hero is attacking
 

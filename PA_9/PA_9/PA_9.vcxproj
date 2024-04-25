@@ -160,7 +160,6 @@
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Snail.hpp" />
     <ClInclude Include="source.hpp" />
-    <ClInclude Include="TestCases.hpp" />
     <ClInclude Include="textureNode.hpp" />
   </ItemGroup>
   <ItemGroup>
