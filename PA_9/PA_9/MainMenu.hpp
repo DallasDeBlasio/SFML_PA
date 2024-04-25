@@ -17,7 +17,7 @@ public:
     MainMenu(double width, double height)
     {
         // load font for menu text
-        if (!font.loadFromFile("Jersey20-Regular.ttf"))
+        if (!font.loadFromFile("Assets/Jersey20-Regular.ttf"))
         {
             std::cout << "Error Loading Menu Selections Font\n";
         }
@@ -122,7 +122,7 @@ public:
         sf::Text run;
         run.setString(temp); 
         sf::Font runFont;
-        runFont.loadFromFile("DiaryOfAn8BitMage-lYDD.ttf");
+        runFont.loadFromFile("Assets/DiaryOfAn8BitMage-lYDD.ttf");
         run.setFillColor(sf::Color::Red);
         run.setCharacterSize(50);
         run.setPosition(830, 10);
@@ -136,7 +136,7 @@ public:
 
         // start screen
         DialogBox startBox("Run From the Snails!!!", sf::Vector2f(550,60), 100);
-        startBox.LoadFontFromFile("Creepster-Regular.ttf"); 
+        startBox.LoadFontFromFile("Assets/Creepster-Regular.ttf"); 
 
         sf::Color textColor(55,225,100); 
         startBox.setTextColor(textColor);   
@@ -420,7 +420,7 @@ public:
             // variable are created within the if statement so that they are created only once and dont slow the game down
             sf::Text deathScreen;
             sf::Font deathFont;
-            deathFont.loadFromFile("Creepster-Regular.ttf");
+            deathFont.loadFromFile("Assets/Creepster-Regular.ttf");
             deathScreen.setFillColor(sf::Color::Red);
             deathScreen.setFont(deathFont);
             deathScreen.setCharacterSize(200);
@@ -429,7 +429,7 @@ public:
 
             sf::Text blob;
             sf::Font blobFont;
-            blobFont.loadFromFile("Creepster-Regular.ttf");
+            blobFont.loadFromFile("Assets/Creepster-Regular.ttf");
             blob.setFillColor(sf::Color::Red);
             blob.setFont(deathFont);
             blob.setCharacterSize(40);
@@ -497,7 +497,7 @@ public:
 
 
 
-        if (!optionsFont.loadFromFile("BungeeSpice-Regular.ttf"))
+        if (!optionsFont.loadFromFile("Assets/BungeeSpice-Regular.ttf"))
         {
             std::cout << "Error Loading testing title Font\n";
         }
@@ -705,7 +705,7 @@ public:
         sf::RectangleShape aboutBackground;
         aboutBackground.setSize(sf::Vector2f(1920, 1080));
         sf::Texture aboutTexture;
-        aboutTexture.loadFromFile("battleback1.png");
+        aboutTexture.loadFromFile("Assets/battleback1.png");
         aboutBackground.setTexture(&aboutTexture); 
 
         //--------------------------------------------------------------------<<<
@@ -713,7 +713,7 @@ public:
         sf::Text aboutTitle;
         sf::Font aboutFont;
         // load font
-        if (!aboutFont.loadFromFile("BungeeSpice-Regular.ttf"))  
+        if (!aboutFont.loadFromFile("Assets/BungeeSpice-Regular.ttf"))  
         {
             std::cout << "Error Loading about title Font\n";
         }
@@ -726,7 +726,7 @@ public:
         // font and text setting for main block of text
         sf::Text aboutText;
         sf::Font aboutTextFont;
-        if (!aboutTextFont.loadFromFile("BungeeSpice-Regular.ttf"))
+        if (!aboutTextFont.loadFromFile("Assets/BungeeSpice-Regular.ttf"))
         {
             std::cout << "Error Loading about title Font\n";
         }
@@ -777,14 +777,14 @@ public:
         sf::RectangleShape menuBackground;
         menuBackground.setSize(sf::Vector2f(1920, 1080));
         sf::Texture menuTexture;
-        menuTexture.loadFromFile("battleback1.png");
+        menuTexture.loadFromFile("Assets/battleback1.png");
         menuBackground.setTexture(&menuTexture);
 
         // game title
 
         sf::Text title;
         sf::Font titleFont;
-        if (!titleFont.loadFromFile("BungeeSpice-Regular.ttf")) 
+        if (!titleFont.loadFromFile("Assets/BungeeSpice-Regular.ttf")) 
         {
             std::cout << "Error Loading Title Font\n";
         }
