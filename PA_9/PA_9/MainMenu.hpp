@@ -35,7 +35,7 @@ public:
         menu[0].setCharacterSize(90);
         menu[0].setPosition(835, 300);
 
-        // option option
+        // testing option
         menu[1].setFont(font);
         menu[1].setFillColor(sf::Color::Blue);
         menu[1].setString("TESTING");
@@ -72,6 +72,7 @@ public:
             window.draw(menu[index]);
         }
     }
+    // moves menu selection up and changes color of selectd option to red
     void MoveUp()
     {
         if (menuSelected - 1 >= 0)
@@ -86,6 +87,8 @@ public:
             menu[menuSelected].setFillColor(sf::Color::Red);
         }
     }
+    // moves menu selection down and changes color of selectd option to red
+
     void MoveDown()
     {
         if (menuSelected + 1 <= 4)
@@ -109,9 +112,11 @@ public:
         return menuSelected;
     }
 
-
+    // runs the window that the game loop is in. 
     bool runPlayWindow() 
     { 
+        // variables used by the program
+
         int u = 0;
         float runTime = 0;
         float runTimeFinal = 0;
@@ -269,10 +274,13 @@ public:
             std::cout << "yeah";
         }
 
+        // game loop
         while (Play.isOpen())
         {
+            // calculate total run time for program
             runTime = DeltaTime.asSeconds() + runTime;
 
+            // detects if game window was closed
             sf::Event someEvent;
             while (Play.pollEvent(someEvent))
             {
@@ -327,7 +335,7 @@ public:
          
         int x = runTime; 
         
-
+        // stops drawing the starting text after roughly 5 seconds
         if (runTime < 5)
         {
             Play.draw(startBox.getBox());
@@ -531,12 +539,15 @@ public:
         // while (Play.pollEvent(deathEvent)) 
         /*while (1 == 1)
         {*/
+        // used to let the program run 2 or so extra frames after the player dies, otherwise the players health will show non-empty
         if (herotest.currentHP <= 0)
         {
             u++;
         }
         if (herotest.currentHP <= 0 && u > 2)
         {
+            // set text and font settnig for the death screen text
+            // variable are created within the if statement so that they are created only once and dont slow the game down
             sf::Text deathScreen;
             sf::Font deathFont;
             deathFont.loadFromFile("Creepster-Regular.ttf");
@@ -561,7 +572,8 @@ public:
                 Play.draw(blob);
                 Play.display();
 
-
+            // program enters an infinite loop to dispaly the death screen until the user hits escape
+            // this also stops the game from running when the player dies
                 while (1 == 1)
                 {
                     while (Play.pollEvent(deathEvent))
@@ -584,7 +596,7 @@ public:
         std::cout << "Closed runPlayWindow" << std::endl;
         return true;
     }
-    void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow
+    void runTestWindow() // *Note - runTestWindow used to be runOptionsWindow, so some of the names may not fit the context
     {
         sf::RenderWindow Options(sf::VideoMode(1920, 1080), "Options Window");
         std::cout << "Opened runOptionsWindow" << std::endl;
@@ -812,6 +824,7 @@ public:
             }
         }
     }
+    // runs the window displaying about information
     void runAboutWindow()
     {
         sf::RenderWindow About(sf::VideoMode(1920, 1080), "About window");
@@ -851,9 +864,11 @@ public:
         aboutText.setPosition(200, 250);
         aboutText.setFont(aboutTextFont); 
         //---------------------------------------------------------------------<<<
+        // loops the text to be displayed 
         while (About.isOpen()) 
         {
             sf::Event someEvent;
+            // detects when to close the program 
             while (About.pollEvent(someEvent))
             {
                 if (someEvent.type == sf::Event::Closed)
@@ -878,7 +893,8 @@ public:
         }
     }
 
-	
+	// runs the main menu. from this window, the user can select other windows to open from.
+    // other windows always go back to the main menu window
     void mainMenuWindow()
     {
         // window for main menu
@@ -908,7 +924,7 @@ public:
         int x = 0;
 
         std::cout << "Opened mainMenuWindow" << std::endl;
-
+        // calls move up and down to highlight the users selection in red
         while (menuWindow.isOpen())
         {
             sf::Event event;
@@ -950,16 +966,20 @@ public:
                             runPlayWindow(); 
                             //menu.close();
                         }
+                        // testing selected. open test window
                         if (x == 1)
                         {
                             runTestWindow(); 
 
                         }
+                        // about selected. opens about window 
                         if (x == 2)
                         {
                             runAboutWindow();
                          
                         }
+                        // exit selected
+                        // exits the program
                         if (x == 3)
                         {
                             menuWindow.close();
@@ -979,11 +999,13 @@ public:
         }
     }
 
+    // sets the menu selection
     void setMenuSelected(int newNum)
     {
         menuSelected = newNum;  
     }
 
+    //returns menu selection
     sf::Text getMenu(int num)
     {
         return menu[num];  
@@ -993,7 +1015,9 @@ public:
 
 private:
 
+    // the menu selected
 	int menuSelected;
+    // font used for the menu options
 	sf::Font font;
 
 	// shows 4 different menu options to screen
