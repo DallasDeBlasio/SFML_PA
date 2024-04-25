@@ -13,7 +13,7 @@ Snail::Snail(int scale, int width, int height, float initialSpeed) : Character(s
 {
 	this->fillTextureList(this->currentWalkFrame, 3, 0, 72, true, 32, "Assets/snail.png");
 	this->setTexture(this->currentWalkFrame->frame);
-	this->speed = 700;
+	//this->speed = 700;
 }
 
 //Overridden Snail moveV (moves snail towards whatever target is selected

@@ -83,7 +83,10 @@ void Character::takeDamage(int Damage)
 
 void Character::moveV(float  deltaTime)// moves chracater speed distance along movementDirection
 {
-	this->setTexture(this->currentWalkFrame->frame, true);//makes sure that if the character can move, they are in the current walking animation
+	if (this->currentWalkFrame != nullptr)
+	{
+		this->setTexture(this->currentWalkFrame->frame, true);//makes sure that if the character can move, they are in the current walking animation
+	}
 	if (this->speed < this->movmentSpeed)//always reset speed to movement speed if it was made too small
 	{
 		this->speed = this->movmentSpeed;

@@ -387,7 +387,7 @@ public:
             float y = 0;
             pNewCharacter->X_and_Y_Spawn_Locations(x, y);
             pNewCharacter->setPosition(x,y);
-
+            pNewCharacter->setSpeed(700);
 
         }
         else//spawn an enemy every 10 seconds
