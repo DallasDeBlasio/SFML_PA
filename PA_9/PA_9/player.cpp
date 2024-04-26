@@ -33,6 +33,14 @@ Player::Player(int scale, int width, int height, float initialSpeed): Character(
 	this->fillTextureList(this->initalAttackNode, 3, 16, 297, this->width * 2, this->height, true, 48, "Assets/tempHero.png", false);
 }
 
+Player::~Player()
+{
+	if (this->initalAttackNode != nullptr)
+	{
+		delete this->initalAttackNode;
+	}
+}
+
 void Player::interacts(Character& badGuy)
 {
 	//if enemy is not invincible && weaponHitBox intesects enemy

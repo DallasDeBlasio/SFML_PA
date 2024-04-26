@@ -53,6 +53,15 @@ characterList::characterList()
 	this->pHead = nullptr;
 }
 
+characterList::~characterList()
+{
+	if (this->pHead != nullptr)
+	{
+		delete this->pHead;
+	}
+
+}
+
 CharacterNode* characterList::get_pHead(void)
 {
 	return this->pHead;

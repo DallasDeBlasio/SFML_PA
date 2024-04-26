@@ -8,6 +8,7 @@ class characterList
 {
 public:
 	characterList();
+	~characterList();
 	CharacterNode* get_pHead(void);
 	void insertAtFront(Character* newCharacter);
 	void deleteCharacter(Character* newCharacter);

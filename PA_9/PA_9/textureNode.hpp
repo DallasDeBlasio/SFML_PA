@@ -10,4 +10,5 @@ public:
 	textureNode* pNext;
 	sf::Texture frame;
 	textureNode();
+	~textureNode();
 };

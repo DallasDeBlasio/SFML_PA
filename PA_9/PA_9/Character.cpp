@@ -9,6 +9,14 @@ Character::Character(): Character(1,50,50,0.2)
 {
 }
 
+Character::~Character()
+{
+	if (this->currentWalkFrame != nullptr)
+	{
+		delete this->currentWalkFrame;
+	}
+}
+
 // characater constructor with scale, width, and height as parameters
 Character::Character(int scale, int width, int height) :Character(scale, width, height, 0.2) 
 {

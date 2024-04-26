@@ -28,6 +28,7 @@ protected:
 public:
 	//default character constructor
 	Character();
+	~Character();
 
 	Character(int scale, int width, int height);//default sprite constructor
 	Character(int scale, int width, int height , float initialSpeed);//default sprite constructor

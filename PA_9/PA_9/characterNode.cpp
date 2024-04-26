@@ -14,7 +14,10 @@ CharacterNode::CharacterNode(Character* newCharacter)
 
 CharacterNode::~CharacterNode()
 {
-	delete this->mCharacter;
+	if(this->mCharacter != nullptr)
+	{
+		delete this->mCharacter;
+	}
 	if(this->pNext!= nullptr)
 	{
 		delete this->pNext;

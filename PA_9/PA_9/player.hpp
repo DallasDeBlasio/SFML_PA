@@ -22,7 +22,7 @@ public:
 	sf::RectangleShape coolDownBar;// a bar to demonstrate when the player can attack again
 
 	Player(int scale, int width, int height, float initialSpeed);//player constructor
-
+	~Player();
 
 
 	void interacts(Character& badGuy);//player attacking enemey
